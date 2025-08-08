@@ -1,10 +1,13 @@
 import random
 import json
 from datetime import datetime
+from timeseries_data import TimeSeriesDataManager
 
 class PersonaGenerator:
     def __init__(self, config=None):
         self.config = config if config else self._load_default_config()
+        self.ts_manager = TimeSeriesDataManager()
+        self.current_year = 2024  # 기본 생성 연도
 
     def _load_default_config(self):
         # 한국 인구통계 및 문화적 특성을 반영한 기본 설정 (근사치)
@@ -73,17 +76,25 @@ class PersonaGenerator:
         return random.choices(items, weights=weights, k=1)[0]
 
     def _generate_demographics(self, constraints):
+        # 연도별 인구통계 데이터 가져오기
+        year = constraints.get("year", self.current_year)
+        year_data = self.ts_manager.get_year_data(year)
+        
+        # 연도별 연령 분포 적용
+        age_distribution = year_data.get("demographic_trends", {}).get("age_distribution", self.config["age_distribution"])
+        regional_distribution = year_data.get("demographic_trends", {}).get("regional_distribution", self.config["regional_distribution"])
+        
         # 연령 생성 (constraints의 age_range를 우선 적용)
         if "age_range" in constraints:
             age_min, age_max = constraints["age_range"]
             age = random.randint(age_min, age_max)
         else:
-            age_group = self._weighted_choice(self.config["age_distribution"])
+            age_group = self._weighted_choice(age_distribution)
             age_min, age_max = map(int, age_group.split('-')) if '-' in age_group else (int(age_group.replace('+', '')), 100)
             age = random.randint(age_min, age_max)
         
         gender = constraints.get("gender", self._weighted_choice(self.config["gender_ratio"]))
-        location = constraints.get("location", self._weighted_choice(self.config["regional_distribution"]))
+        location = constraints.get("location", self._weighted_choice(regional_distribution))
         
         # 교육 수준 (연령에 따라 가중치 조정)
         education_weights = self.config["education_levels"].copy()

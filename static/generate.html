@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Peoples - Generator</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/neo-brutalism.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -42,17 +43,17 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" placeholder="e.g., Seoul">
             </div>
-            <button id="generateBtn">Generate People</button>
+            <button id="generateBtn" class="neo-button">Generate People</button>
             <div id="generateResult" class="result-box"></div>
         </section>
 
         <section class="management-section">
             <h2>Data Management</h2>
-            <button id="deleteAllBtn">Delete All Virtual People</button>
+            <button id="deleteAllBtn" class="neo-button neo-button--warning">Delete All Virtual People</button>
             <div id="deleteResult" class="result-box"></div>
         </section>
     </div>
 
-    <script src="/static/generate_script.js"></script>
+    <script src="generate_script.js"></script>
 </body>
 </html>
