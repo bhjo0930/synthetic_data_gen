@@ -3,51 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>페르소나 생성 Playground</title>
+    <title>Virtual Peoples - Generator</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>페르소나 생성 Playground</h1>
+        <h1><i class="fas fa-users"></i> Virtual Peoples - Generator</h1>
 
         <nav>
-            <a href="/generate.html">페르소나 생성</a> |
-            <a href="/search.html">페르소나 검색</a>
+            <a href="/generate.html">Generate People</a> |
+            <a href="/search.html">Analytics Dashboard</a>
         </nav>
 
         <section class="generate-section">
-            <h2>페르소나 생성</h2>
+            <h2>Generate Virtual People</h2>
             <div class="input-group">
-                <label for="count">생성할 페르소나 수:</label>
+                <label for="count">Number of People:</label>
                 <input type="number" id="count" value="1" min="1">
             </div>
             <div class="input-group">
-                <label for="age_range_min">나이 범위 (최소):</label>
-                <input type="number" id="age_range_min" placeholder="예: 20">
+                <label for="age_range_min">Age Range (Min):</label>
+                <input type="number" id="age_range_min" placeholder="e.g., 20">
             </div>
             <div class="input-group">
-                <label for="age_range_max">나이 범위 (최대):</label>
-                <input type="number" id="age_range_max" placeholder="예: 30">
+                <label for="age_range_max">Age Range (Max):</label>
+                <input type="number" id="age_range_max" placeholder="e.g., 30">
             </div>
             <div class="input-group">
-                <label for="gender">성별:</label>
+                <label for="gender">Gender:</label>
                 <select id="gender">
-                    <option value="">선택 안 함</option>
-                    <option value="남성">남성</option>
-                    <option value="여성">여성</option>
+                    <option value="">Any</option>
+                    <option value="남성">Male</option>
+                    <option value="여성">Female</option>
                 </select>
             </div>
             <div class="input-group">
-                <label for="location">지역:</label>
-                <input type="text" id="location" placeholder="예: 서울">
+                <label for="location">Location:</label>
+                <input type="text" id="location" placeholder="e.g., Seoul">
             </div>
-            <button id="generateBtn">페르소나 생성</button>
+            <button id="generateBtn">Generate People</button>
             <div id="generateResult" class="result-box"></div>
         </section>
 
         <section class="management-section">
-            <h2>데이터 관리</h2>
-            <button id="deleteAllBtn">모든 페르소나 삭제</button>
+            <h2>Data Management</h2>
+            <button id="deleteAllBtn">Delete All Virtual People</button>
             <div id="deleteResult" class="result-box"></div>
         </section>
     </div>

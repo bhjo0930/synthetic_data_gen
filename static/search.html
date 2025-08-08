@@ -3,127 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>페르소나 검색 Playground</title>
+    <title>Virtual Peoples - Analysis Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>페르소나 검색 Playground</h1>
+    <div class="olap-container">
+        <header class="olap-header">
+            <h1><i class="fas fa-users"></i> Virtual Peoples - Analysis Dashboard</h1>
+            <nav>
+                <a href="/generate.html"><i class="fas fa-plus-circle"></i> Generate People</a>
+                <a href="/search.html" class="active"><i class="fas fa-chart-line"></i> Analytics</a>
+            </nav>
+        </header>
 
-        <nav>
-            <a href="/generate.html">페르소나 생성</a> |
-            <a href="/search.html">페르소나 검색</a>
-        </nav>
+        <div class="olap-layout">
+            <!-- 좌측 슬라이서 패널 -->
+            <aside class="slicer-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-sliders-h"></i> 다차원 필터</h3>
+                    <div class="panel-controls">
+                        <button id="clearFilters" class="btn-secondary" title="필터 초기화">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button id="applyFilters" class="btn-primary" title="필터 적용">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
 
-        <section class="search-section">
-            <h2>페르소나 검색</h2>
-            <div class="filter-grid">
-                <div class="input-group">
-                    <label for="search_age_min">나이 (최소):</label>
-                    <input type="number" id="search_age_min" placeholder="예: 25">
-                </div>
-                <div class="input-group">
-                    <label for="search_age_max">나이 (최대):</label>
-                    <input type="number" id="search_age_max" placeholder="예: 35">
-                </div>
-                <div class="input-group">
-                    <label for="search_gender">성별:</label>
-                    <select id="search_gender">
-                        <option value="">선택 안 함</option>
-                        <option value="남성">남성</option>
-                        <option value="여성">여성</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="search_location">지역:</label>
-                    <input type="text" id="search_location" placeholder="예: 서울">
-                </div>
-                <div class="input-group">
-                    <label for="search_occupation">직업:</label>
-                    <input type="text" id="search_occupation" placeholder="예: 사무직">
-                </div>
-                <div class="input-group">
-                    <label for="search_education">교육 수준:</label>
-                    <select id="search_education">
-                        <option value="">선택 안 함</option>
-                        <option value="초졸">초졸</option>
-                        <option value="중졸">중졸</option>
-                        <option value="고졸">고졸</option>
-                        <option value="대졸">대졸</option>
-                        <option value="대학원졸">대학원졸</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="search_income_bracket">소득 분위:</label>
-                    <select id="search_income_bracket">
-                        <option value="">선택 안 함</option>
-                        <option value="하위 20%">하위 20%</option>
-                        <option value="20-40%">20-40%</option>
-                        <option value="40-60%">40-60%</option>
-                        <option value="60-80%">60-80%</option>
-                        <option value="상위 20%">상위 20%</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="search_marital_status">결혼 상태:</label>
-                    <select id="search_marital_status">
-                        <option value="">선택 안 함</option>
-                        <option value="미혼">미혼</option>
-                        <option value="기혼">기혼</option>
-                        <option value="이혼">이혼</option>
-                        <option value="사별">사별</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="search_interests">관심사 (부분 일치):</label>
-                    <input type="text" id="search_interests" placeholder="예: 여행">
-                </div>
-                <div class="input-group">
-                    <label for="search_personality_trait">성격 특성 (부분 일치):</label>
-                    <input type="text" id="search_personality_trait" placeholder="예: 호기심 많음">
-                </div>
-                <div class="input-group">
-                    <label for="search_value">가치관 (부분 일치):</label>
-                    <input type="text" id="search_value" placeholder="예: 가족">
-                </div>
-                <div class="input-group">
-                    <label for="search_lifestyle_attribute">라이프스타일 (부분 일치):</label>
-                    <input type="text" id="search_lifestyle_attribute" placeholder="예: 워라밸 중시">
-                </div>
-                <div class="input-group">
-                    <label for="search_media_consumption">미디어 소비 (부분 일치):</label>
-                    <input type="text" id="search_media_consumption" placeholder="예: 유튜브">
-                </div>
-                <div class="input-group">
-                    <label for="search_shopping_habit">쇼핑 습관 (부분 일치):</label>
-                    <input type="text" id="search_shopping_habit" placeholder="예: 온라인 쇼핑">
-                </div>
-                <div class="input-group">
-                    <label for="search_social_relations">사회적 관계 (부분 일치):</label>
-                    <input type="text" id="search_social_relations" placeholder="예: 선후배">
-                </div>
-            </div>
-            <button id="searchBtn">페르소나 검색</button>
-            
-            <div class="chart-container">
-                <h3>검색 결과 통계</h3>
-                <div class="chart-row">
-                    <div class="chart-item"><canvas id="ageChart"></canvas></div>
-                    <div class="chart-item"><canvas id="genderChart"></canvas></div>
-                </div>
-                <div class="chart-row">
-                    <div class="chart-item"><canvas id="locationChart"></canvas></div>
-                    <div class="chart-item"><canvas id="occupationChart"></canvas></div>
-                </div>
-            </div>
+                <div class="slicer-group">
+                    <div class="slicer-section collapsed">
+                        <div class="slicer-header" data-target="demographics">
+                            <i class="fas fa-user"></i>
+                            <span>인구 통계학적 특성</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="slicer-content" id="demographics">
+                            <div class="filter-item">
+                                <label>나이 범위</label>
+                                <div class="range-inputs">
+                                    <input type="number" id="search_age_min" placeholder="최소" class="range-input">
+                                    <span>~</span>
+                                    <input type="number" id="search_age_max" placeholder="최대" class="range-input">
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label>성별</label>
+                                <div class="checkbox-group" id="genderSlicer">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="남성"> 남성
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="여성"> 여성
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label>지역</label>
+                                <input type="text" id="search_location" placeholder="지역명 입력" class="text-input">
+                            </div>
+                            <div class="filter-item">
+                                <label>직업</label>
+                                <input type="text" id="search_occupation" placeholder="직업명 입력" class="text-input">
+                            </div>
+                        </div>
+                    </div>
 
-            <div id="searchResult" class="persona-grid"></div>
-        </section>
+                    <div class="slicer-section collapsed">
+                        <div class="slicer-header" data-target="education">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>교육 & 경제적 특성</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="slicer-content" id="education">
+                            <div class="filter-item">
+                                <label>교육 수준</label>
+                                <div class="checkbox-group" id="educationSlicer">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="초졸"> 초졸
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="중졸"> 중졸
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="고졸"> 고졸
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="대졸"> 대졸
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="대학원졸"> 대학원졸
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label>소득 분위</label>
+                                <div class="checkbox-group" id="incomeSlicer">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="하위 20%"> 하위 20%
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="20-40%"> 20-40%
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="40-60%"> 40-60%
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="60-80%"> 60-80%
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="상위 20%"> 상위 20%
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label>결혼 상태</label>
+                                <div class="checkbox-group" id="maritalSlicer">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="미혼"> 미혼
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="기혼"> 기혼
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="이혼"> 이혼
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="사별"> 사별
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="slicer-section collapsed">
+                        <div class="slicer-header" data-target="psychographic">
+                            <i class="fas fa-brain"></i>
+                            <span>심리 통계학적 특성</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="slicer-content" id="psychographic">
+                            <div class="filter-item">
+                                <label>관심사</label>
+                                <input type="text" id="search_interests" placeholder="관심사 검색" class="text-input">
+                            </div>
+                            <div class="filter-item">
+                                <label>가치관</label>
+                                <input type="text" id="search_value" placeholder="가치관 검색" class="text-input">
+                            </div>
+                            <div class="filter-item">
+                                <label>라이프스타일</label>
+                                <input type="text" id="search_lifestyle_attribute" placeholder="라이프스타일 검색" class="text-input">
+                            </div>
+                            <div class="filter-item">
+                                <label>성격 특성</label>
+                                <input type="text" id="search_personality_trait" placeholder="성격 특성 검색" class="text-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slicer-section collapsed">
+                        <div class="slicer-header" data-target="behavioral">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>행동 패턴</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="slicer-content" id="behavioral">
+                            <div class="filter-item">
+                                <label>미디어 소비</label>
+                                <input type="text" id="search_media_consumption" placeholder="미디어 소비 패턴" class="text-input">
+                            </div>
+                            <div class="filter-item">
+                                <label>쇼핑 습관</label>
+                                <input type="text" id="search_shopping_habit" placeholder="쇼핑 습관" class="text-input">
+                            </div>
+                            <div class="filter-item">
+                                <label>사회적 관계</label>
+                                <input type="text" id="search_social_relations" placeholder="사회적 관계" class="text-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 메인 분석 영역 -->
+            <main class="analysis-main">
+                <!-- 상단 KPI 카드 -->
+                <section class="kpi-section">
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="totalPersonas">0</div>
+                        <div class="kpi-label">Total Virtual People</div>
+                        <div class="kpi-icon"><i class="fas fa-users"></i></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="avgAge">0</div>
+                        <div class="kpi-label">Average Age</div>
+                        <div class="kpi-icon"><i class="fas fa-birthday-cake"></i></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="topLocation">-</div>
+                        <div class="kpi-label">Top Location</div>
+                        <div class="kpi-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="genderRatio">0:0</div>
+                        <div class="kpi-label">Gender Ratio</div>
+                        <div class="kpi-icon"><i class="fas fa-venus-mars"></i></div>
+                    </div>
+                </section>
+
+                <!-- 다차원 분석 차트 -->
+                <section class="chart-section">
+                    <div class="chart-tabs">
+                        <button class="tab-button active" data-tab="overview">Overview</button>
+                        <button class="tab-button" data-tab="demographics">Demographics</button>
+                        <button class="tab-button" data-tab="psychographics">Psychographics</button>
+                        <button class="tab-button" data-tab="behavior">Behavior</button>
+                    </div>
+
+                    <div class="tab-content active" id="overview">
+                        <div class="chart-grid-4">
+                            <div class="chart-card">
+                                <h4>Age Distribution</h4>
+                                <canvas id="ageChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Gender Distribution</h4>
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Location Distribution</h4>
+                                <canvas id="locationChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Occupation Distribution</h4>
+                                <canvas id="occupationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="demographics">
+                        <div class="chart-grid-2">
+                            <div class="chart-card">
+                                <h4>Education Level</h4>
+                                <canvas id="educationChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Income Distribution</h4>
+                                <canvas id="incomeChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Marital Status</h4>
+                                <canvas id="maritalChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Age-Education Matrix</h4>
+                                <canvas id="ageEducationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="psychographics">
+                        <div class="chart-grid-2">
+                            <div class="chart-card">
+                                <h4>Interests Cloud</h4>
+                                <div id="interestsWordcloud" class="wordcloud-container"></div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Values Analysis</h4>
+                                <div id="valuesWordcloud" class="wordcloud-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="behavior">
+                        <div class="chart-grid-2">
+                            <div class="chart-card">
+                                <h4>Media Consumption</h4>
+                                <canvas id="mediaChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Shopping Habits</h4>
+                                <canvas id="shoppingChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Social Relations</h4>
+                                <div id="socialWordcloud" class="wordcloud-container"></div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Lifestyle Traits</h4>
+                                <div id="lifestyleWordcloud" class="wordcloud-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pivot Table -->
+                <section class="pivot-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-table"></i> Pivot Table</h3>
+                        <div class="pivot-controls">
+                            <select id="pivotRows" class="pivot-select">
+                                <option value="age_group">Age Group</option>
+                                <option value="gender">Gender</option>
+                                <option value="location">Location</option>
+                                <option value="education">Education</option>
+                                <option value="occupation">Occupation</option>
+                            </select>
+                            <span>×</span>
+                            <select id="pivotCols" class="pivot-select">
+                                <option value="gender">Gender</option>
+                                <option value="education">Education</option>
+                                <option value="income_bracket">Income</option>
+                                <option value="marital_status">Marital Status</option>
+                            </select>
+                            <button id="generatePivot" class="btn-primary">
+                                <i class="fas fa-sync-alt"></i> Generate
+                            </button>
+                        </div>
+                    </div>
+                    <div id="pivotTable" class="pivot-table-container"></div>
+                </section>
+
+                <!-- Detailed Data Grid -->
+                <section class="data-grid-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-list"></i> Detailed Data</h3>
+                        <div class="grid-controls">
+                            <span class="result-count">Total <span id="resultCount">0</span> people</span>
+                            <button id="exportBtn" class="btn-secondary">
+                                <i class="fas fa-download"></i> Export Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dataGrid" class="data-grid-container"></div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Data Management Section -->
         <section class="management-section">
-            <h2>데이터 관리</h2>
-            <button id="deleteAllBtn">모든 페르소나 삭제</button>
+            <h3><i class="fas fa-database"></i> Data Management</h3>
+            <button id="deleteAllBtn" class="btn-danger">
+                <i class="fas fa-trash"></i> Delete All Virtual People
+            </button>
             <div id="deleteResult" class="result-box"></div>
         </section>
     </div>
