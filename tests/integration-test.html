@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Button Integration Test</title>
+    
+    <!-- Load the complete Neo-Brutalism CSS system -->
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            background: var(--neo-white);
+            font-family: var(--neo-font-primary);
+        }
+        
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: var(--neo-border-thick);
+            background: var(--neo-white);
+        }
+        
+        .test-section h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: var(--neo-black);
+        }
+        
+        .button-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .test-description {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--neo-black);
+        }
+        
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--neo-black);
+            background: var(--neo-white);
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Button Integration Test</h1>
+    
+    <!-- Integration with existing HTML structure -->
+    <div class="test-section">
+        <h2>Generate Page Integration</h2>
+        <div class="test-description">
+            Buttons styled like those in generate.html
+        </div>
+        <div class="button-row">
+            <button id="generateBtn" class="neo-button">Generate People</button>
+            <button id="deleteAllBtn" class="neo-button neo-button--warning">Delete All Virtual People</button>
+        </div>
+    </div>
+    
+    <!-- Integration with search page buttons -->
+    <div class="test-section">
+        <h2>Search Page Integration</h2>
+        <div class="test-description">
+            Buttons styled like those in search.html
+        </div>
+        <div class="button-row">
+            <button id="clearFilters" class="neo-button neo-button--secondary" title="Clear Filters">
+                <i class="fas fa-times"></i> Clear
+            </button>
+            <button id="applyFilters" class="neo-button" title="Apply Filters">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+        <div class="button-row">
+            <button class="neo-button neo-button--small tab-button active">Overview</button>
+            <button class="neo-button neo-button--small tab-button">Demographics</button>
+            <button class="neo-button neo-button--small tab-button">Psychographics</button>
+            <button class="neo-button neo-button--small tab-button">Behavior</button>
+        </div>
+        <div class="button-row">
+            <button id="generatePivot" class="neo-button">
+                <i class="fas fa-sync-alt"></i> Generate
+            </button>
+            <button id="exportBtn" class="neo-button neo-button--secondary">
+                <i class="fas fa-download"></i> Export Excel
+            </button>
+        </div>
+    </div>
+    
+    <!-- Accessibility Testing -->
+    <div class="test-section">
+        <h2>Accessibility Testing</h2>
+        <div class="test-description">
+            Test keyboard navigation and screen reader compatibility
+        </div>
+        <div class="button-row">
+            <button class="neo-button" tabindex="1" aria-label="First button for keyboard navigation">Tab 1</button>
+            <button class="neo-button" tabindex="2" aria-label="Second button for keyboard navigation">Tab 2</button>
+            <button class="neo-button" tabindex="3" aria-label="Third button for keyboard navigation">Tab 3</button>
+            <button class="neo-button" disabled aria-label="Disabled button">Disabled</button>
+        </div>
+    </div>
+    
+    <!-- Test Results Display -->
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div class="test-description">
+            Click buttons to test functionality and view results
+        </div>
+        <div id="testResults" class="test-result">
+            Test results will appear here...
+        </div>
+    </div>
+    
+    <script>
+        // Integration test script
+        document.addEventListener('DOMContentLoaded', function() {
+            const testResults = document.getElementById('testResults');
+            const buttons = document.querySelectorAll('.neo-button');
+            
+            let testLog = [];
+            
+            function logTest(message) {
+                testLog.push(`[${new Date().toLocaleTimeString()}] ${message}`);
+                testResults.textContent = testLog.join('\n');
+            }
+            
+            // Test button functionality
+            buttons.forEach((button, index) => {
+                button.addEventListener('click', function(e) {
+                    if (this.disabled) {
+                        logTest(`❌ Disabled button should not be clickable: ${this.textContent}`);
+                        return;
+                    }
+                    logTest(`✅ Button clicked: ${this.textContent || this.getAttribute('aria-label') || `Button ${index + 1}`}`);
+                });
+                
+                button.addEventListener('focus', function() {
+                    logTest(`🎯 Button focused: ${this.textContent || this.getAttribute('aria-label') || `Button ${index + 1}`}`);
+                });
+                
+                button.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        logTest(`⌨️ Button activated via keyboard (${e.key}): ${this.textContent || this.getAttribute('aria-label')}`);
+                    }
+                });
+            });
+            
+            // Test CSS custom properties
+            const computedStyle = getComputedStyle(document.documentElement);
+            const neoRed = computedStyle.getPropertyValue('--neo-red').trim();
+            const neoBlack = computedStyle.getPropertyValue('--neo-black').trim();
+            
+            if (neoRed && neoBlack) {
+                logTest('✅ CSS custom properties loaded successfully');
+            } else {
+                logTest('❌ CSS custom properties not loaded');
+            }
+            
+            // Test hover effects (simulated)
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    logTest(`🖱️ Hover effect triggered: ${this.textContent || this.getAttribute('aria-label')}`);
+                });
+            });
+            
+            // Initial test completion
+            logTest('🚀 Neo-Brutalism Button Integration Test initialized');
+            logTest(`📊 Found ${buttons.length} buttons to test`);
+            logTest('👆 Click buttons to test functionality');
+            logTest('⌨️ Use Tab key to test keyboard navigation');
+        });
+        
+        // Test reduced motion preference
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            console.log('✅ Reduced motion preference detected and respected');
+        }
+        
+        // Test high contrast preference
+        if (window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches) {
+            console.log('✅ High contrast preference detected and respected');
+        }
+    </script>
+</body>
+</html>

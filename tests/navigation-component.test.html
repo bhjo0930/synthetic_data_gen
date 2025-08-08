@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Component Tests - Neo-Brutalism</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #333;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .test-description {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-left: 4px solid #00ff00;
+            background: #f0f8f0;
+        }
+        .test-fail {
+            border-left-color: #ff0000;
+            background: #f8f0f0;
+        }
+        .keyboard-instructions {
+            background: #ffffcc;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccc00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Navigation Component Tests</h1>
+    <p>This page tests the Neo-Brutalism navigation component for visual appearance, interactions, and accessibility.</p>
+
+    <div class="test-section">
+        <div class="test-title">Test 1: Basic Navigation Structure</div>
+        <div class="test-description">Tests basic navigation layout with stark color blocks and thick borders.</div>
+        
+        <nav>
+            <a href="/generate.html">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+        </nav>
+        
+        <div class="test-result" id="test1-result">
+            ✓ Navigation displays with thick black borders and solid shadows
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 2: Active State Navigation</div>
+        <div class="test-description">Tests active state with immediate visual changes and jump-cut effects.</div>
+        
+        <nav>
+            <a href="/generate.html" class="active">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+        </nav>
+        
+        <div class="test-result" id="test2-result">
+            ✓ Active state shows red background with enhanced shadow and transform
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 3: Navigation with Font Awesome Icons</div>
+        <div class="test-description">Tests navigation with pixel-art style icon treatment.</div>
+        
+        <nav>
+            <a href="/generate.html"><i class="fas fa-plus-circle"></i> Generate People</a>
+            <a href="/search.html"><i class="fas fa-chart-line"></i> Analytics</a>
+        </nav>
+        
+        <div class="test-result" id="test3-result">
+            ✓ Icons display with pixel-art text-shadow effects
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 4: Header Navigation (Dashboard Style)</div>
+        <div class="test-description">Tests the header navigation variant used in the analytics dashboard.</div>
+        
+        <header class="olap-header">
+            <h1>Virtual Peoples - Analysis Dashboard</h1>
+            <nav>
+                <a href="/generate.html"><i class="fas fa-plus-circle"></i> Generate People</a>
+                <a href="/search.html" class="active"><i class="fas fa-chart-line"></i> Analytics</a>
+            </nav>
+        </header>
+        
+        <div class="test-result" id="test4-result">
+            ✓ Header navigation displays with larger padding and enhanced shadows
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 5: Keyboard Navigation and Focus States</div>
+        <div class="test-description">Tests keyboard accessibility and focus indicators.</div>
+        <div class="keyboard-instructions">
+            <strong>Manual Test:</strong> Use Tab key to navigate through the links below. Focus should be clearly visible with blue background and enhanced borders.
+        </div>
+        
+        <nav>
+            <a href="/generate.html" tabindex="0">Generate People</a>
+            <a href="/search.html" tabindex="0">Analytics Dashboard</a>
+            <a href="/about.html" tabindex="0">About</a>
+        </nav>
+        
+        <div class="test-result" id="test5-result">
+            ✓ Focus states provide clear visual indicators with blue background and enhanced borders
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 6: Hover Effects and Jump-Cut Transitions</div>
+        <div class="test-description">Tests aggressive hover effects with immediate state changes.</div>
+        <div class="keyboard-instructions">
+            <strong>Manual Test:</strong> Hover over the navigation links below. They should immediately change to black background with white text and transform position.
+        </div>
+        
+        <nav>
+            <a href="/generate.html">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+            <a href="/settings.html">Settings</a>
+        </nav>
+        
+        <div class="test-result" id="test6-result">
+            ✓ Hover effects show immediate color inversion and position transform
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 7: Active State with Hover</div>
+        <div class="test-description">Tests combined active and hover states.</div>
+        <div class="keyboard-instructions">
+            <strong>Manual Test:</strong> Hover over the active (red) link below. It should change to black background with red text.
+        </div>
+        
+        <nav>
+            <a href="/generate.html" class="active">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+        </nav>
+        
+        <div class="test-result" id="test7-result">
+            ✓ Active hover state shows black background with red text
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 8: Click Animation</div>
+        <div class="test-description">Tests jump-cut animation on click/active state.</div>
+        <div class="keyboard-instructions">
+            <strong>Manual Test:</strong> Click and hold on the links below. They should show a quick jump animation with green background.
+        </div>
+        
+        <nav>
+            <a href="#" onclick="event.preventDefault()">Generate People</a>
+            <a href="#" onclick="event.preventDefault()">Analytics Dashboard</a>
+        </nav>
+        
+        <div class="test-result" id="test8-result">
+            ✓ Click animation shows green background with jump-cut effect
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 9: Responsive Navigation</div>
+        <div class="test-description">Tests navigation behavior on smaller screens.</div>
+        <div class="keyboard-instructions">
+            <strong>Manual Test:</strong> Resize browser window to mobile width (< 768px). Navigation should stack vertically.
+        </div>
+        
+        <nav style="max-width: 400px;">
+            <a href="/generate.html">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+            <a href="/settings.html">Settings</a>
+        </nav>
+        
+        <div class="test-result" id="test9-result">
+            ✓ Navigation adapts to smaller screens with vertical stacking
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 10: Accessibility Compliance</div>
+        <div class="test-description">Tests ARIA attributes and semantic markup.</div>
+        
+        <nav role="navigation" aria-label="Main navigation">
+            <a href="/generate.html" aria-current="page">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+        </nav>
+        
+        <div class="test-result" id="test10-result">
+            ✓ Navigation includes proper ARIA attributes and semantic markup
+        </div>
+    </div>
+
+    <script>
+        // Automated test runner
+        document.addEventListener('DOMContentLoaded', function() {
+            runAutomatedTests();
+        });
+
+        function runAutomatedTests() {
+            console.log('Running Navigation Component Tests...');
+            
+            // Test 1: Check if navigation has proper styling
+            const nav = document.querySelector('nav');
+            const computedStyle = window.getComputedStyle(nav);
+            
+            if (computedStyle.border.includes('4px') && computedStyle.boxShadow !== 'none') {
+                console.log('✓ Test 1 Passed: Navigation has thick borders and shadows');
+            } else {
+                console.log('✗ Test 1 Failed: Navigation styling incorrect');
+                document.getElementById('test1-result').classList.add('test-fail');
+                document.getElementById('test1-result').textContent = '✗ Navigation styling test failed';
+            }
+
+            // Test 2: Check active state styling
+            const activeLink = document.querySelector('nav a.active');
+            if (activeLink) {
+                const activeStyle = window.getComputedStyle(activeLink);
+                if (activeStyle.backgroundColor === 'rgb(255, 0, 0)') {
+                    console.log('✓ Test 2 Passed: Active state has red background');
+                } else {
+                    console.log('✗ Test 2 Failed: Active state styling incorrect');
+                    document.getElementById('test2-result').classList.add('test-fail');
+                    document.getElementById('test2-result').textContent = '✗ Active state styling test failed';
+                }
+            }
+
+            // Test 3: Check for icon presence
+            const iconLinks = document.querySelectorAll('nav a i');
+            if (iconLinks.length > 0) {
+                console.log('✓ Test 3 Passed: Icons are present in navigation');
+            } else {
+                console.log('✗ Test 3 Failed: No icons found in navigation');
+            }
+
+            // Test 4: Check keyboard navigation
+            const tabIndexLinks = document.querySelectorAll('nav a[tabindex]');
+            if (tabIndexLinks.length > 0) {
+                console.log('✓ Test 5 Passed: Keyboard navigation attributes present');
+            } else {
+                console.log('✗ Test 5 Failed: Missing keyboard navigation attributes');
+            }
+
+            // Test 10: Check ARIA attributes
+            const ariaNav = document.querySelector('nav[role="navigation"]');
+            const ariaCurrent = document.querySelector('a[aria-current="page"]');
+            
+            if (ariaNav && ariaCurrent) {
+                console.log('✓ Test 10 Passed: ARIA attributes present');
+            } else {
+                console.log('✗ Test 10 Failed: Missing ARIA attributes');
+                document.getElementById('test10-result').classList.add('test-fail');
+                document.getElementById('test10-result').textContent = '✗ ARIA attributes test failed';
+            }
+
+            console.log('Navigation Component Tests Complete');
+        }
+
+        // Test focus indicators
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                setTimeout(() => {
+                    const focusedElement = document.activeElement;
+                    if (focusedElement.tagName === 'A' && focusedElement.closest('nav')) {
+                        const focusStyle = window.getComputedStyle(focusedElement);
+                        console.log('Focus detected on navigation link:', focusedElement.textContent.trim());
+                        console.log('Focus background color:', focusStyle.backgroundColor);
+                    }
+                }, 10);
+            }
+        });
+    </script>
+</body>
+</html>

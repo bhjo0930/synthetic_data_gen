@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Accent Component Tests</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            padding: 20px;
+            background: var(--neo-white);
+            font-family: var(--neo-font-primary);
+        }
+        
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: var(--neo-border-thick);
+            background: var(--neo-white);
+        }
+        
+        .test-item {
+            margin: 20px;
+            padding: 20px;
+            background: var(--neo-white);
+            border: var(--neo-border-thin);
+            display: inline-block;
+            min-width: 100px;
+            min-height: 60px;
+            text-align: center;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .icon-test {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Pixel-Art Accent System Tests</h1>
+    
+    <div class="test-section">
+        <h2>Corner Bracket Accents</h2>
+        <div class="test-grid">
+            <div class="test-item neo-accent-corner-tl">
+                <strong>Top Left</strong><br>
+                Red Corner
+            </div>
+            <div class="test-item neo-accent-corner-tr">
+                <strong>Top Right</strong><br>
+                Green Corner
+            </div>
+            <div class="test-item neo-accent-corner-bl">
+                <strong>Bottom Left</strong><br>
+                Yellow Corner
+            </div>
+            <div class="test-item neo-accent-corner-br">
+                <strong>Bottom Right</strong><br>
+                Blue Corner
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Geometric Accent Shapes</h2>
+        <div class="test-grid">
+            <div class="test-item neo-accent-diamond">
+                <strong>Diamond</strong><br>
+                Right Side
+            </div>
+            <div class="test-item neo-accent-triangle">
+                <strong>Triangle</strong><br>
+                Left Side
+            </div>
+            <div class="test-item neo-accent-square">
+                <strong>Square</strong><br>
+                Top Right
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Pixel-Art Icons</h2>
+        <div class="icon-test">
+            <span class="neo-icon-pixel neo-icon-arrow-right"></span>
+            <span>Arrow Right Icon</span>
+        </div>
+        <div class="icon-test">
+            <span class="neo-icon-pixel neo-icon-plus"></span>
+            <span>Plus Icon</span>
+        </div>
+        <div class="icon-test">
+            <span class="neo-icon-pixel neo-icon-cross"></span>
+            <span>Cross/X Icon</span>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Decorative Pixel Borders</h2>
+        <div class="test-grid">
+            <div class="test-item neo-accent-pixel-border-top">
+                <strong>Top Border</strong><br>
+                Pixel Pattern
+            </div>
+            <div class="test-item neo-accent-pixel-border-bottom">
+                <strong>Bottom Border</strong><br>
+                Pixel Pattern
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Combined Accent Effects</h2>
+        <div class="test-grid">
+            <div class="test-item neo-accent-combo-corners">
+                <strong>Corner Combo</strong><br>
+                Top-left + Bottom-right
+            </div>
+            <div class="test-item neo-accent-corner-tl neo-accent-diamond">
+                <strong>Multi-Accent</strong><br>
+                Corner + Diamond
+            </div>
+            <div class="test-item neo-accent-pixel-border-top neo-accent-square">
+                <strong>Border + Shape</strong><br>
+                Top border + Square
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Responsive Test (Resize Window)</h2>
+        <div class="test-grid">
+            <div class="test-item neo-accent-corner-tl neo-accent-diamond">
+                <strong>Mobile Test</strong><br>
+                Should scale down
+            </div>
+            <div class="test-item neo-accent-combo-corners">
+                <strong>Tablet Test</strong><br>
+                Responsive sizing
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Accessibility Tests</h2>
+        <p><strong>Manual Tests Required:</strong></p>
+        <ul>
+            <li>Enable high contrast mode - borders should become thicker</li>
+            <li>Enable reduced motion - no animations should occur</li>
+            <li>Test with screen reader - decorative elements should not interfere</li>
+            <li>Check color contrast ratios meet accessibility standards</li>
+        </ul>
+    </div>
+    
+    <script src="accent-component.test.js"></script>
+</body>
+</html>

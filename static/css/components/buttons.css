@@ -1,0 +1,182 @@
+/* Neo-Brutalism Button Component */
+
+/* Base button styles with flat design and thick borders */
+.neo-button {
+  /* Layout and sizing */
+  display: inline-block;
+  padding: var(--neo-space-md) var(--neo-space-lg);
+  min-height: 48px; /* Accessibility: minimum touch target */
+  
+  /* Typography */
+  font-family: var(--neo-font-primary);
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-align: center;
+  line-height: 1;
+  
+  /* Colors */
+  background: var(--neo-red);
+  color: var(--neo-black);
+  
+  /* Borders and shadows */
+  border: var(--neo-border-thick);
+  border-radius: 0; /* Sharp corners */
+  box-shadow: var(--neo-shadow-md);
+  
+  /* Transform for shadow displacement */
+  transform: translate(0, 0);
+  
+  /* Remove default button styles */
+  cursor: pointer;
+  outline: none;
+  
+  /* Instant transitions - no smooth animations */
+  transition: none;
+  
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+/* Hover state with instant color inversion */
+.neo-button:hover {
+  background: var(--neo-black);
+  color: var(--neo-red);
+  box-shadow: var(--neo-shadow-sm);
+  transform: translate(2px, 2px);
+  
+  /* Custom cursor effect */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect width="16" height="16" fill="black"/><rect x="2" y="2" width="12" height="12" fill="white"/><rect x="4" y="4" width="8" height="8" fill="black"/></svg>'), pointer;
+}
+
+/* Active state with maximum shadow displacement */
+.neo-button:active {
+  background: var(--neo-black);
+  color: var(--neo-red);
+  box-shadow: 0px 0px 0px var(--neo-black);
+  transform: translate(4px, 4px);
+}
+
+/* Focus state for accessibility */
+.neo-button:focus {
+  outline: var(--neo-border-heavy);
+  outline-offset: 2px;
+}
+
+/* Button variants */
+.neo-button--secondary {
+  background: var(--neo-green);
+  color: var(--neo-black);
+}
+
+.neo-button--secondary:hover {
+  background: var(--neo-black);
+  color: var(--neo-green);
+}
+
+.neo-button--warning {
+  background: var(--neo-yellow);
+  color: var(--neo-black);
+}
+
+.neo-button--warning:hover {
+  background: var(--neo-black);
+  color: var(--neo-yellow);
+}
+
+.neo-button--info {
+  background: var(--neo-blue);
+  color: var(--neo-white);
+}
+
+.neo-button--info:hover {
+  background: var(--neo-white);
+  color: var(--neo-blue);
+}
+
+/* Disabled state */
+.neo-button:disabled,
+.neo-button--disabled {
+  background: #CCCCCC;
+  color: #666666;
+  border-color: #666666;
+  box-shadow: 2px 2px 0px #666666;
+  cursor: not-allowed;
+  transform: translate(0, 0);
+}
+
+.neo-button:disabled:hover,
+.neo-button--disabled:hover {
+  background: #CCCCCC;
+  color: #666666;
+  box-shadow: 2px 2px 0px #666666;
+  transform: translate(0, 0);
+}
+
+/* Size variants */
+.neo-button--small {
+  padding: var(--neo-space-sm) var(--neo-space-md);
+  font-size: 14px;
+  min-height: 36px;
+}
+
+.neo-button--large {
+  padding: var(--neo-space-lg) var(--neo-space-xl);
+  font-size: 18px;
+  min-height: 56px;
+}
+
+/* Full width button */
+.neo-button--full {
+  width: 100%;
+  display: block;
+}
+
+/* Button group styles */
+.neo-button-group {
+  display: inline-flex;
+  gap: 0;
+}
+
+.neo-button-group .neo-button {
+  border-radius: 0;
+}
+
+.neo-button-group .neo-button:not(:first-child) {
+  margin-left: -4px; /* Overlap borders */
+}
+
+.neo-button-group .neo-button:hover {
+  z-index: 1;
+  position: relative;
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .neo-button {
+    transform: none !important;
+    box-shadow: var(--neo-shadow-md) !important;
+  }
+  
+  .neo-button:hover,
+  .neo-button:active {
+    transform: none !important;
+    box-shadow: var(--neo-shadow-md) !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .neo-button {
+    border-width: 6px;
+    box-shadow: 6px 6px 0px var(--neo-black);
+  }
+  
+  .neo-button:hover {
+    box-shadow: 3px 3px 0px var(--neo-black);
+  }
+}

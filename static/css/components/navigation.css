@@ -1,0 +1,241 @@
+/* Neo-Brutalism Navigation Component */
+
+/* Base Navigation Styles */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--neo-bg-primary);
+  border: var(--neo-border-thick);
+  box-shadow: var(--neo-shadow-md);
+  padding: var(--neo-space-sm);
+  margin: var(--neo-space-md) 0;
+  position: relative;
+  z-index: var(--neo-z-elevated);
+}
+
+/* Navigation Links - Stark Color Blocks */
+nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--neo-space-xs);
+  padding: var(--neo-space-sm) var(--neo-space-md);
+  background: var(--neo-bg-primary);
+  color: var(--neo-text-primary);
+  text-decoration: none;
+  font-family: var(--neo-font-primary);
+  font-size: var(--neo-text-body);
+  font-weight: var(--neo-weight-bold);
+  letter-spacing: var(--neo-spacing-normal);
+  text-transform: uppercase;
+  border: var(--neo-border-thick);
+  box-shadow: var(--neo-shadow-sm);
+  position: relative;
+  transition: none; /* No smooth transitions */
+  cursor: pointer;
+}
+
+/* Remove default link separators */
+nav a + a::before {
+  content: none;
+}
+
+/* Hover Effects - Aggressive Jump-Cut Transitions */
+nav a:hover {
+  background: var(--neo-black);
+  color: var(--neo-white);
+  box-shadow: var(--neo-shadow-md);
+  transform: translate(-2px, -2px);
+  z-index: var(--neo-z-elevated);
+}
+
+/* Active State - Immediate Visual Change */
+nav a.active,
+nav a[aria-current="page"] {
+  background: var(--neo-accent-primary);
+  color: var(--neo-white);
+  box-shadow: var(--neo-shadow-lg);
+  transform: translate(-4px, -4px);
+  z-index: var(--neo-z-elevated);
+}
+
+/* Active Hover State */
+nav a.active:hover,
+nav a[aria-current="page"]:hover {
+  background: var(--neo-black);
+  color: var(--neo-accent-primary);
+  box-shadow: var(--neo-shadow-xl);
+  transform: translate(-6px, -6px);
+}
+
+/* Focus States - Clear Keyboard Navigation Indicators */
+nav a:focus {
+  outline: none;
+  background: var(--neo-accent-info);
+  color: var(--neo-white);
+  box-shadow: 
+    var(--neo-shadow-lg),
+    0 0 0 var(--neo-border-width-heavy) var(--neo-accent-info),
+    0 0 0 calc(var(--neo-border-width-heavy) + 2px) var(--neo-black);
+  transform: translate(-4px, -4px);
+  z-index: var(--neo-z-overlay);
+}
+
+/* Focus + Active State */
+nav a.active:focus,
+nav a[aria-current="page"]:focus {
+  background: var(--neo-accent-warning);
+  color: var(--neo-black);
+  box-shadow: 
+    var(--neo-shadow-xl),
+    0 0 0 var(--neo-border-width-heavy) var(--neo-accent-warning),
+    0 0 0 calc(var(--neo-border-width-heavy) + 2px) var(--neo-black);
+}
+
+/* Pixel-Art Style Icons */
+nav a i {
+  font-size: var(--neo-text-body);
+  font-weight: var(--neo-weight-bold);
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 1;
+  /* Pixel-art effect using text-shadow */
+  text-shadow: 
+    1px 0 0 currentColor,
+    0 1px 0 currentColor,
+    -1px 0 0 currentColor,
+    0 -1px 0 currentColor;
+}
+
+/* Alternative pixel-art icons using CSS */
+nav a[href*="generate"]::before {
+  content: "⊞";
+  font-size: var(--neo-text-body-lg);
+  font-weight: var(--neo-weight-heavy);
+  margin-right: var(--neo-space-xs);
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 1;
+}
+
+nav a[href*="search"]::before,
+nav a[href*="analytics"]::before {
+  content: "▦";
+  font-size: var(--neo-text-body-lg);
+  font-weight: var(--neo-weight-heavy);
+  margin-right: var(--neo-space-xs);
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Header Navigation (for search.html) */
+.olap-header nav {
+  display: flex;
+  gap: var(--neo-space-sm);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.olap-header nav a {
+  padding: var(--neo-space-md) var(--neo-space-lg);
+  font-size: var(--neo-text-body-lg);
+  box-shadow: var(--neo-shadow-md);
+}
+
+/* Aggressive Visual Hierarchy */
+nav a:first-child {
+  border-left-width: var(--neo-border-width-heavy);
+}
+
+nav a:last-child {
+  border-right-width: var(--neo-border-width-heavy);
+}
+
+/* Jump-Cut Animation for State Changes */
+@keyframes neo-nav-jump {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-8px, -8px); }
+  100% { transform: translate(-4px, -4px); }
+}
+
+nav a:active {
+  animation: neo-nav-jump var(--neo-duration-fast) var(--neo-timing-harsh);
+  background: var(--neo-accent-secondary);
+  color: var(--neo-black);
+  box-shadow: 0 0 0 var(--neo-black);
+  transform: translate(4px, 4px);
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: var(--neo-space-xs);
+    padding: var(--neo-space-md);
+  }
+  
+  nav a {
+    width: 100%;
+    justify-content: center;
+    padding: var(--neo-space-md);
+    font-size: var(--neo-text-body-lg);
+  }
+  
+  .olap-header nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .olap-header nav a {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+/* High Contrast Mode Enhancements */
+@media (prefers-contrast: high) {
+  nav a {
+    border-width: var(--neo-border-width-heavy);
+  }
+  
+  nav a:focus {
+    box-shadow: 
+      var(--neo-shadow-xl),
+      0 0 0 calc(var(--neo-border-width-heavy) * 2) var(--neo-accent-info),
+      0 0 0 calc(var(--neo-border-width-heavy) * 2 + 4px) var(--neo-black);
+  }
+}
+
+/* Reduced Motion Fallbacks */
+@media (prefers-reduced-motion: reduce) {
+  nav a {
+    transition: none;
+  }
+  
+  nav a:active {
+    animation: none;
+  }
+  
+  nav a:hover,
+  nav a:focus,
+  nav a.active {
+    transform: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  nav {
+    display: none;
+  }
+}

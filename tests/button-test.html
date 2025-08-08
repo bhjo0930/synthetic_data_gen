@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Button Component Test</title>
+    
+    <!-- Load CSS variables and core styles -->
+    <link rel="stylesheet" href="../static/css/core/variables.css">
+    <link rel="stylesheet" href="../static/css/core/reset.css">
+    <link rel="stylesheet" href="../static/css/core/utilities.css">
+    <link rel="stylesheet" href="../static/css/components/buttons.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            background: var(--neo-white);
+            font-family: var(--neo-font-primary);
+        }
+        
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: var(--neo-border-thick);
+            background: var(--neo-white);
+        }
+        
+        .test-section h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .button-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .test-description {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--neo-black);
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Button Component Tests</h1>
+    
+    <!-- Basic Button States -->
+    <div class="test-section">
+        <h2>Basic Button States</h2>
+        <div class="test-description">
+            Test hover, active, and focus states. Hover should invert colors instantly with shadow displacement.
+        </div>
+        <div class="button-row">
+            <button class="neo-button">Primary Button</button>
+            <button class="neo-button" disabled>Disabled Button</button>
+            <a href="#" class="neo-button">Link Button</a>
+        </div>
+    </div>
+    
+    <!-- Button Variants -->
+    <div class="test-section">
+        <h2>Button Variants</h2>
+        <div class="test-description">
+            Different color variants with consistent hover behavior.
+        </div>
+        <div class="button-row">
+            <button class="neo-button">Primary (Red)</button>
+            <button class="neo-button neo-button--secondary">Secondary (Green)</button>
+            <button class="neo-button neo-button--warning">Warning (Yellow)</button>
+            <button class="neo-button neo-button--info">Info (Blue)</button>
+        </div>
+    </div>
+    
+    <!-- Button Sizes -->
+    <div class="test-section">
+        <h2>Button Sizes</h2>
+        <div class="test-description">
+            Different sizes maintaining the same visual style and hover effects.
+        </div>
+        <div class="button-row">
+            <button class="neo-button neo-button--small">Small Button</button>
+            <button class="neo-button">Regular Button</button>
+            <button class="neo-button neo-button--large">Large Button</button>
+        </div>
+        <div class="button-row">
+            <button class="neo-button neo-button--full">Full Width Button</button>
+        </div>
+    </div>
+    
+    <!-- Button Groups -->
+    <div class="test-section">
+        <h2>Button Groups</h2>
+        <div class="test-description">
+            Grouped buttons with overlapping borders and proper hover z-index handling.
+        </div>
+        <div class="neo-button-group">
+            <button class="neo-button">First</button>
+            <button class="neo-button">Second</button>
+            <button class="neo-button">Third</button>
+        </div>
+    </div>
+    
+    <!-- Accessibility Tests -->
+    <div class="test-section">
+        <h2>Accessibility Tests</h2>
+        <div class="test-description">
+            Test keyboard navigation (Tab), focus indicators, and screen reader compatibility.
+        </div>
+        <div class="button-row">
+            <button class="neo-button" tabindex="1">Tab Order 1</button>
+            <button class="neo-button" tabindex="2">Tab Order 2</button>
+            <button class="neo-button" tabindex="3">Tab Order 3</button>
+        </div>
+    </div>
+    
+    <script>
+        // Test script for button interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.neo-button');
+            
+            buttons.forEach(button => {
+                // Test click events
+                button.addEventListener('click', function(e) {
+                    if (this.tagName === 'A') {
+                        e.preventDefault();
+                    }
+                    console.log('Button clicked:', this.textContent);
+                });
+                
+                // Test keyboard events
+                button.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        console.log('Button activated via keyboard:', this.textContent);
+                    }
+                });
+                
+                // Test focus events
+                button.addEventListener('focus', function() {
+                    console.log('Button focused:', this.textContent);
+                });
+                
+                button.addEventListener('blur', function() {
+                    console.log('Button blurred:', this.textContent);
+                });
+            });
+            
+            // Log test results
+            console.log('Button component test loaded successfully');
+            console.log('Total buttons found:', buttons.length);
+        });
+    </script>
+</body>
+</html>

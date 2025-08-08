@@ -1,0 +1,318 @@
+/* Neo-Brutalism Design System - Utility Classes */
+
+/* Typography Utilities */
+.neo-text-h1 {
+  font-size: var(--neo-text-h1);
+  font-weight: var(--neo-weight-heavy);
+  letter-spacing: var(--neo-spacing-tight);
+  line-height: var(--neo-line-tight);
+}
+
+.neo-text-h2 {
+  font-size: var(--neo-text-h2);
+  font-weight: var(--neo-weight-heavy);
+  letter-spacing: var(--neo-spacing-normal);
+  line-height: var(--neo-line-tight);
+}
+
+.neo-text-h3 {
+  font-size: var(--neo-text-h3);
+  font-weight: var(--neo-weight-heavy);
+  letter-spacing: var(--neo-spacing-loose);
+  line-height: var(--neo-line-tight);
+}
+
+.neo-text-body-lg {
+  font-size: var(--neo-text-body-lg);
+  font-weight: var(--neo-weight-bold);
+  line-height: var(--neo-line-normal);
+}
+
+.neo-text-body {
+  font-size: var(--neo-text-body);
+  font-weight: var(--neo-weight-bold);
+  line-height: var(--neo-line-normal);
+}
+
+.neo-text-small {
+  font-size: var(--neo-text-small);
+  font-weight: var(--neo-weight-bold);
+  line-height: var(--neo-line-loose);
+}
+
+.neo-text-mono {
+  font-family: var(--neo-font-mono);
+  font-weight: var(--neo-weight-bold);
+}
+
+.neo-text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Color Utilities */
+.neo-bg-primary {
+  background-color: var(--neo-bg-primary);
+}
+
+.neo-bg-secondary {
+  background-color: var(--neo-bg-secondary);
+}
+
+.neo-bg-accent {
+  background-color: var(--neo-accent-primary);
+}
+
+.neo-text-primary {
+  color: var(--neo-text-primary);
+}
+
+.neo-text-inverse {
+  color: var(--neo-text-inverse);
+}
+
+.neo-text-accent {
+  color: var(--neo-accent-primary);
+}
+
+/* Border Utilities */
+.neo-border-thin {
+  border: var(--neo-border-thin);
+}
+
+.neo-border-thick {
+  border: var(--neo-border-thick);
+}
+
+.neo-border-heavy {
+  border: var(--neo-border-heavy);
+}
+
+.neo-border-top {
+  border-top: var(--neo-border-thick);
+}
+
+.neo-border-bottom {
+  border-bottom: var(--neo-border-thick);
+}
+
+.neo-border-left {
+  border-left: var(--neo-border-thick);
+}
+
+.neo-border-right {
+  border-right: var(--neo-border-thick);
+}
+
+/* Shadow Utilities */
+.neo-shadow-sm {
+  box-shadow: var(--neo-shadow-sm);
+}
+
+.neo-shadow-md {
+  box-shadow: var(--neo-shadow-md);
+}
+
+.neo-shadow-lg {
+  box-shadow: var(--neo-shadow-lg);
+}
+
+.neo-shadow-xl {
+  box-shadow: var(--neo-shadow-xl);
+}
+
+.neo-shadow-none {
+  box-shadow: none;
+}
+
+/* Spacing Utilities */
+.neo-m-xs { margin: var(--neo-space-xs); }
+.neo-m-sm { margin: var(--neo-space-sm); }
+.neo-m-md { margin: var(--neo-space-md); }
+.neo-m-lg { margin: var(--neo-space-lg); }
+.neo-m-xl { margin: var(--neo-space-xl); }
+.neo-m-0 { margin: 0; }
+
+.neo-mt-xs { margin-top: var(--neo-space-xs); }
+.neo-mt-sm { margin-top: var(--neo-space-sm); }
+.neo-mt-md { margin-top: var(--neo-space-md); }
+.neo-mt-lg { margin-top: var(--neo-space-lg); }
+.neo-mt-xl { margin-top: var(--neo-space-xl); }
+
+.neo-mb-xs { margin-bottom: var(--neo-space-xs); }
+.neo-mb-sm { margin-bottom: var(--neo-space-sm); }
+.neo-mb-md { margin-bottom: var(--neo-space-md); }
+.neo-mb-lg { margin-bottom: var(--neo-space-lg); }
+.neo-mb-xl { margin-bottom: var(--neo-space-xl); }
+
+.neo-ml-xs { margin-left: var(--neo-space-xs); }
+.neo-ml-sm { margin-left: var(--neo-space-sm); }
+.neo-ml-md { margin-left: var(--neo-space-md); }
+.neo-ml-lg { margin-left: var(--neo-space-lg); }
+.neo-ml-xl { margin-left: var(--neo-space-xl); }
+
+.neo-mr-xs { margin-right: var(--neo-space-xs); }
+.neo-mr-sm { margin-right: var(--neo-space-sm); }
+.neo-mr-md { margin-right: var(--neo-space-md); }
+.neo-mr-lg { margin-right: var(--neo-space-lg); }
+.neo-mr-xl { margin-right: var(--neo-space-xl); }
+
+.neo-p-xs { padding: var(--neo-space-xs); }
+.neo-p-sm { padding: var(--neo-space-sm); }
+.neo-p-md { padding: var(--neo-space-md); }
+.neo-p-lg { padding: var(--neo-space-lg); }
+.neo-p-xl { padding: var(--neo-space-xl); }
+.neo-p-0 { padding: 0; }
+
+.neo-pt-xs { padding-top: var(--neo-space-xs); }
+.neo-pt-sm { padding-top: var(--neo-space-sm); }
+.neo-pt-md { padding-top: var(--neo-space-md); }
+.neo-pt-lg { padding-top: var(--neo-space-lg); }
+.neo-pt-xl { padding-top: var(--neo-space-xl); }
+
+.neo-pb-xs { padding-bottom: var(--neo-space-xs); }
+.neo-pb-sm { padding-bottom: var(--neo-space-sm); }
+.neo-pb-md { padding-bottom: var(--neo-space-md); }
+.neo-pb-lg { padding-bottom: var(--neo-space-lg); }
+.neo-pb-xl { padding-bottom: var(--neo-space-xl); }
+
+.neo-pl-xs { padding-left: var(--neo-space-xs); }
+.neo-pl-sm { padding-left: var(--neo-space-sm); }
+.neo-pl-md { padding-left: var(--neo-space-md); }
+.neo-pl-lg { padding-left: var(--neo-space-lg); }
+.neo-pl-xl { padding-left: var(--neo-space-xl); }
+
+.neo-pr-xs { padding-right: var(--neo-space-xs); }
+.neo-pr-sm { padding-right: var(--neo-space-sm); }
+.neo-pr-md { padding-right: var(--neo-space-md); }
+.neo-pr-lg { padding-right: var(--neo-space-lg); }
+.neo-pr-xl { padding-right: var(--neo-space-xl); }
+
+/* Display Utilities */
+.neo-block { display: block; }
+.neo-inline { display: inline; }
+.neo-inline-block { display: inline-block; }
+.neo-flex { display: flex; }
+.neo-grid { display: grid; }
+.neo-hidden { display: none; }
+
+/* Position Utilities */
+.neo-relative { position: relative; }
+.neo-absolute { position: absolute; }
+.neo-fixed { position: fixed; }
+.neo-sticky { position: sticky; }
+
+/* Z-Index Utilities */
+.neo-z-base { z-index: var(--neo-z-base); }
+.neo-z-elevated { z-index: var(--neo-z-elevated); }
+.neo-z-overlay { z-index: var(--neo-z-overlay); }
+.neo-z-modal { z-index: var(--neo-z-modal); }
+.neo-z-tooltip { z-index: var(--neo-z-tooltip); }
+
+/* Width and Height Utilities */
+.neo-w-full { width: 100%; }
+.neo-w-auto { width: auto; }
+.neo-h-full { height: 100%; }
+.neo-h-auto { height: auto; }
+
+/* Flex Utilities */
+.neo-flex-col { flex-direction: column; }
+.neo-flex-row { flex-direction: row; }
+.neo-flex-wrap { flex-wrap: wrap; }
+.neo-flex-nowrap { flex-wrap: nowrap; }
+.neo-justify-start { justify-content: flex-start; }
+.neo-justify-center { justify-content: center; }
+.neo-justify-end { justify-content: flex-end; }
+.neo-justify-between { justify-content: space-between; }
+.neo-items-start { align-items: flex-start; }
+.neo-items-center { align-items: center; }
+.neo-items-end { align-items: flex-end; }
+.neo-items-stretch { align-items: stretch; }
+
+/* Text Alignment */
+.neo-text-left { text-align: left; }
+.neo-text-center { text-align: center; }
+.neo-text-right { text-align: right; }
+
+/* Cursor Utilities */
+.neo-cursor-pointer { cursor: pointer; }
+.neo-cursor-not-allowed { cursor: not-allowed; }
+.neo-cursor-default { cursor: default; }
+
+/* Overflow Utilities */
+.neo-overflow-hidden { overflow: hidden; }
+.neo-overflow-auto { overflow: auto; }
+.neo-overflow-scroll { overflow: scroll; }
+
+/* Accessibility Utilities */
+.neo-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.neo-not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Interaction State Utilities */
+.neo-hover-invert:hover {
+  background-color: var(--neo-text-primary);
+  color: var(--neo-bg-primary);
+}
+
+.neo-focus-outline:focus-visible {
+  outline: var(--neo-border-heavy);
+  outline-offset: 2px;
+}
+
+/* Animation Utilities */
+.neo-transition-none {
+  transition: none;
+}
+
+.neo-transition-instant {
+  transition: all var(--neo-duration-instant) var(--neo-timing-instant);
+}
+
+.neo-transition-harsh {
+  transition: all var(--neo-duration-fast) var(--neo-timing-harsh);
+}
+
+/* Responsive Utilities */
+@media (min-width: 480px) {
+  .neo-sm\:block { display: block; }
+  .neo-sm\:hidden { display: none; }
+  .neo-sm\:flex { display: flex; }
+}
+
+@media (min-width: 768px) {
+  .neo-md\:block { display: block; }
+  .neo-md\:hidden { display: none; }
+  .neo-md\:flex { display: flex; }
+}
+
+@media (min-width: 1024px) {
+  .neo-lg\:block { display: block; }
+  .neo-lg\:hidden { display: none; }
+  .neo-lg\:flex { display: flex; }
+}
+
+@media (min-width: 1200px) {
+  .neo-xl\:block { display: block; }
+  .neo-xl\:hidden { display: none; }
+  .neo-xl\:flex { display: flex; }
+}

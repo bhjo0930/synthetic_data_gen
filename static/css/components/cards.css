@@ -1,0 +1,278 @@
+/* Neo-Brutalism Card Component System */
+
+/* Base card styles with thick borders and solid drop shadows */
+.neo-card {
+  position: relative;
+  background: var(--neo-white, #FFFFFF);
+  border: var(--neo-border-thick, 4px solid #000000);
+  box-shadow: var(--neo-shadow-lg, 8px 8px 0px #000000);
+  padding: var(--neo-space-lg, 24px);
+  margin: var(--neo-space-md, 16px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--neo-space-md, 16px);
+  min-height: 200px;
+}
+
+/* Asymmetrical card variant */
+.neo-card--asymmetrical {
+  transform: rotate(-1deg);
+  margin-left: var(--neo-space-xl, 32px);
+  margin-right: var(--neo-space-sm, 8px);
+}
+
+.neo-card--asymmetrical:nth-child(even) {
+  transform: rotate(1deg);
+  margin-left: var(--neo-space-sm, 8px);
+  margin-right: var(--neo-space-xl, 32px);
+}
+
+/* Overlapping card layouts using CSS Grid and z-index */
+.neo-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--neo-space-lg, 24px);
+  position: relative;
+}
+
+.neo-card-grid .neo-card:nth-child(2n) {
+  transform: translateY(-20px);
+  z-index: 2;
+}
+
+.neo-card-grid .neo-card:nth-child(3n) {
+  transform: translateX(20px);
+  z-index: 3;
+}
+
+.neo-card-grid .neo-card:nth-child(4n) {
+  transform: translate(-15px, 15px);
+  z-index: 1;
+}
+
+/* Decorative corner elements */
+.neo-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 20px;
+  height: 20px;
+  background: var(--neo-red, #FF0000);
+  border: var(--neo-border-thin, 2px solid #000000);
+  z-index: 4;
+}
+
+.neo-card::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background: var(--neo-yellow, #FFFF00);
+  border: var(--neo-border-thin, 2px solid #000000);
+  z-index: 4;
+}
+
+/* Accent blocks for visual interest */
+.neo-card--accent-green::before {
+  background: var(--neo-green, #00FF00);
+}
+
+.neo-card--accent-blue::before {
+  background: var(--neo-blue, #0000FF);
+}
+
+.neo-card--accent-blue::after {
+  background: var(--neo-green, #00FF00);
+}
+
+/* Intentionally misaligned content arrangements */
+.neo-card__header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--neo-space-md, 16px);
+  align-items: start;
+  margin-bottom: var(--neo-space-lg, 24px);
+}
+
+.neo-card__title {
+  font-family: var(--neo-font-primary, 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--neo-black, #000000);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  transform: translateX(-4px);
+}
+
+.neo-card__meta {
+  background: var(--neo-black, #000000);
+  color: var(--neo-white, #FFFFFF);
+  padding: var(--neo-space-xs, 4px) var(--neo-space-sm, 8px);
+  border: var(--neo-border-thin, 2px solid #000000);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  align-self: end;
+  transform: translateY(8px);
+}
+
+.neo-card__content {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  gap: var(--neo-space-lg, 24px);
+  align-items: start;
+}
+
+.neo-card__text {
+  font-family: var(--neo-font-primary, 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--neo-black, #000000);
+}
+
+.neo-card__accent-block {
+  background: var(--neo-red, #FF0000);
+  border: var(--neo-border-thick, 4px solid #000000);
+  height: 60px;
+  transform: rotate(5deg) translateY(-10px);
+  position: relative;
+}
+
+.neo-card__accent-block::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: var(--neo-black, #000000);
+}
+
+/* Card variants for different layouts */
+.neo-card--stacked {
+  position: relative;
+}
+
+.neo-card--stacked::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  background: var(--neo-white, #FFFFFF);
+  border: var(--neo-border-thick, 4px solid #000000);
+  z-index: -1;
+}
+
+.neo-card--offset {
+  margin-left: var(--neo-space-xl, 32px);
+  position: relative;
+}
+
+.neo-card--offset::after {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 24px;
+  width: 20px;
+  height: calc(100% - 48px);
+  background: var(--neo-blue, #0000FF);
+  border: var(--neo-border-thin, 2px solid #000000);
+  z-index: -1;
+}
+
+/* Hover effects for interactive cards */
+.neo-card--interactive {
+  cursor: pointer;
+  transition: none;
+}
+
+.neo-card--interactive:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--neo-shadow-md, 4px 4px 0px #000000);
+}
+
+.neo-card--interactive:hover::before {
+  transform: translate(-2px, -2px);
+}
+
+.neo-card--interactive:hover::after {
+  transform: translate(2px, 2px);
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .neo-card {
+    margin: var(--neo-space-sm, 8px);
+    padding: var(--neo-space-md, 16px);
+  }
+  
+  .neo-card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--neo-space-md, 16px);
+  }
+  
+  .neo-card-grid .neo-card:nth-child(2n),
+  .neo-card-grid .neo-card:nth-child(3n),
+  .neo-card-grid .neo-card:nth-child(4n) {
+    transform: none;
+  }
+  
+  .neo-card--asymmetrical,
+  .neo-card--asymmetrical:nth-child(even) {
+    transform: none;
+    margin-left: var(--neo-space-sm, 8px);
+    margin-right: var(--neo-space-sm, 8px);
+  }
+  
+  .neo-card__header {
+    grid-template-columns: 1fr;
+    gap: var(--neo-space-sm, 8px);
+  }
+  
+  .neo-card__content {
+    grid-template-columns: 1fr;
+    gap: var(--neo-space-md, 16px);
+  }
+  
+  .neo-card__accent-block {
+    height: 40px;
+    transform: none;
+  }
+  
+  .neo-card--offset {
+    margin-left: var(--neo-space-sm, 8px);
+  }
+  
+  .neo-card--offset::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .neo-card {
+    margin: var(--neo-space-xs, 4px);
+    padding: var(--neo-space-sm, 8px);
+    min-height: 150px;
+  }
+  
+  .neo-card__title {
+    font-size: 20px;
+  }
+  
+  .neo-card__text {
+    font-size: 14px;
+  }
+  
+  .neo-card::before,
+  .neo-card::after {
+    width: 12px;
+    height: 12px;
+  }
+}

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Transition System Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            font-family: var(--neo-font-primary);
+            background: var(--neo-white);
+            color: var(--neo-black);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: var(--neo-border-thick);
+            background: var(--neo-white);
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: var(--neo-border-thin);
+            background: var(--neo-white);
+        }
+        
+        .test-button {
+            background: var(--neo-red);
+            color: var(--neo-black);
+            border: var(--neo-border-thick);
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: var(--neo-shadow-md);
+        }
+        
+        .test-button:hover {
+            background: var(--neo-black);
+            color: var(--neo-red);
+            transform: translate(2px, 2px);
+            box-shadow: var(--neo-shadow-sm);
+        }
+        
+        .test-element {
+            width: 200px;
+            height: 100px;
+            background: var(--neo-yellow);
+            border: var(--neo-border-thick);
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: var(--neo-shadow-md);
+        }
+        
+        .page-content {
+            display: none;
+            padding: 20px;
+            border: var(--neo-border-thick);
+            background: var(--neo-white);
+            margin: 20px 0;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        .accessibility-info {
+            background: var(--neo-blue);
+            color: var(--neo-white);
+            padding: 15px;
+            border: var(--neo-border-thick);
+            margin: 20px 0;
+        }
+        
+        .timing-display {
+            background: var(--neo-green);
+            color: var(--neo-black);
+            padding: 10px;
+            border: var(--neo-border-thin);
+            margin: 10px 0;
+            font-family: monospace;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Neo-Brutalism Transition System Test</h1>
+        
+        <div class="accessibility-info">
+            <strong>Accessibility Note:</strong> These transitions respect your reduced motion preferences. 
+            If you have reduced motion enabled, transitions will be instant or disabled.
+        </div>
+        
+        <!-- Flash Transition Tests -->
+        <div class="test-section">
+            <h2>Flash Transitions</h2>
+            <p>Test stark flash effects for page loading transitions</p>
+            <button class="test-button" onclick="testFlashWhite()">Flash White</button>
+            <button class="test-button" onclick="testFlashBlack()">Flash Black</button>
+            <div class="timing-display" id="flash-timing">Flash Duration: 0.1s</div>
+        </div>
+        
+        <!-- Wipe Transition Tests -->
+        <div class="test-section">
+            <h2>Wipe Transitions</h2>
+            <p>Test hard edge wipe animations for component changes</p>
+            <button class="test-button" onclick="testWipeLeft()">Wipe Left</button>
+            <button class="test-button" onclick="testWipeRight()">Wipe Right</button>
+            <button class="test-button" onclick="testWipeUp()">Wipe Up</button>
+            <button class="test-button" onclick="testWipeDown()">Wipe Down</button>
+            <div class="timing-display" id="wipe-timing">Wipe Duration: 0.3s</div>
+        </div>
+        
+        <!-- Jump Cut Tests -->
+        <div class="test-section">
+            <h2>Jump Cut Transitions</h2>
+            <p>Test sudden jump cuts between page states</p>
+            <div class="test-element" id="jump-element">Jump Cut Element</div>
+            <button class="test-button" onclick="testJumpShow()">Show Element</button>
+            <button class="test-button" onclick="testJumpHide()">Hide Element</button>
+            <div class="timing-display" id="jump-timing">Jump Duration: 0.05s</div>
+        </div>
+        
+        <!-- Page Transition Tests -->
+        <div class="test-section">
+            <h2>Page Content Transitions</h2>
+            <p>Test page content transitions with hard-edge effects</p>
+            
+            <div class="page-content active" id="page1">
+                <h3>Page 1 Content</h3>
+                <p>This is the first page content. Click the buttons below to transition between pages.</p>
+            </div>
+            
+            <div class="page-content" id="page2">
+                <h3>Page 2 Content</h3>
+                <p>This is the second page content. Notice the hard-edge transition effect.</p>
+            </div>
+            
+            <div class="page-content" id="page3">
+                <h3>Page 3 Content</h3>
+                <p>This is the third page content. All transitions maintain the Neo-Brutalism aesthetic.</p>
+            </div>
+            
+            <button class="test-button" onclick="showPage(1)">Show Page 1</button>
+            <button class="test-button" onclick="showPage(2)">Show Page 2</button>
+            <button class="test-button" onclick="showPage(3)">Show Page 3</button>
+        </div>
+        
+        <!-- Component Flash Tests -->
+        <div class="test-section">
+            <h2>Component State Changes</h2>
+            <p>Test component flash effects during state changes</p>
+            <div class="test-element" id="flash-element">Component Element</div>
+            <button class="test-button" onclick="testComponentFlash()">Flash Component</button>
+            <button class="test-button" onclick="changeComponentState()">Change State</button>
+        </div>
+        
+        <!-- Navigation Transition Tests -->
+        <div class="test-section">
+            <h2>Navigation Transitions</h2>
+            <p>Test navigation with different transition types (these will navigate to test pages)</p>
+            <button class="test-button" onclick="testNavFlash()">Navigate with Flash</button>
+            <button class="test-button" onclick="testNavWipe()">Navigate with Wipe</button>
+            <button class="test-button" onclick="testNavJump()">Navigate with Jump</button>
+            <p><small>Note: These buttons simulate navigation - they won't actually navigate in this test.</small></p>
+        </div>
+        
+        <!-- Accessibility Tests -->
+        <div class="test-section">
+            <h2>Accessibility Compliance</h2>
+            <p>Test reduced motion and accessibility features</p>
+            <button class="test-button" onclick="toggleReducedMotion()">Toggle Reduced Motion</button>
+            <button class="test-button" onclick="testAccessibility()">Test All Transitions</button>
+            <div class="timing-display" id="accessibility-status">Reduced Motion: Disabled</div>
+        </div>
+        
+        <!-- Performance Monitor -->
+        <div class="test-section">
+            <h2>Performance Monitor</h2>
+            <div class="timing-display" id="performance-monitor">
+                Transition Count: 0 | Average Duration: 0ms
+            </div>
+            <button class="test-button" onclick="resetPerformanceMonitor()">Reset Monitor</button>
+        </div>
+    </div>
+    
+    <script src="../static/neo-transitions.js"></script>
+    <script>
+        let currentPage = 1;
+        let transitionCount = 0;
+        let totalDuration = 0;
+        let performanceStart = 0;
+        
+        // Performance monitoring
+        function startPerformanceMonitor() {
+            performanceStart = performance.now();
+        }
+        
+        function endPerformanceMonitor() {
+            const duration = performance.now() - performanceStart;
+            transitionCount++;
+            totalDuration += duration;
+            
+            const avgDuration = Math.round(totalDuration / transitionCount);
+            document.getElementById('performance-monitor').textContent = 
+                `Transition Count: ${transitionCount} | Average Duration: ${avgDuration}ms`;
+        }
+        
+        function resetPerformanceMonitor() {
+            transitionCount = 0;
+            totalDuration = 0;
+            document.getElementById('performance-monitor').textContent = 
+                'Transition Count: 0 | Average Duration: 0ms';
+        }
+        
+        // Flash transition tests
+        function testFlashWhite() {
+            startPerformanceMonitor();
+            window.neoTransitions.flashTransition('white');
+            setTimeout(endPerformanceMonitor, 100);
+        }
+        
+        function testFlashBlack() {
+            startPerformanceMonitor();
+            window.neoTransitions.flashTransition('black');
+            setTimeout(endPerformanceMonitor, 100);
+        }
+        
+        // Wipe transition tests
+        function testWipeLeft() {
+            startPerformanceMonitor();
+            window.neoTransitions.wipeTransition('left', () => {
+                console.log('Wipe left callback executed');
+            });
+            setTimeout(endPerformanceMonitor, 300);
+        }
+        
+        function testWipeRight() {
+            startPerformanceMonitor();
+            window.neoTransitions.wipeTransition('right');
+            setTimeout(endPerformanceMonitor, 300);
+        }
+        
+        function testWipeUp() {
+            startPerformanceMonitor();
+            window.neoTransitions.wipeTransition('up');
+            setTimeout(endPerformanceMonitor, 300);
+        }
+        
+        function testWipeDown() {
+            startPerformanceMonitor();
+            window.neoTransitions.wipeTransition('down');
+            setTimeout(endPerformanceMonitor, 300);
+        }
+        
+        // Jump cut tests
+        function testJumpShow() {
+            startPerformanceMonitor();
+            const element = document.getElementById('jump-element');
+            window.neoTransitions.jumpCut(element, true);
+            setTimeout(endPerformanceMonitor, 50);
+        }
+        
+        function testJumpHide() {
+            startPerformanceMonitor();
+            const element = document.getElementById('jump-element');
+            window.neoTransitions.jumpCut(element, false);
+            setTimeout(endPerformanceMonitor, 50);
+        }
+        
+        // Page transition tests
+        function showPage(pageNum) {
+            startPerformanceMonitor();
+            
+            const currentPageElement = document.getElementById(`page${currentPage}`);
+            const targetPageElement = document.getElementById(`page${pageNum}`);
+            
+            if (currentPage !== pageNum) {
+                window.neoTransitions.pageTransition(currentPageElement, targetPageElement);
+                currentPage = pageNum;
+            }
+            
+            setTimeout(endPerformanceMonitor, 300);
+        }
+        
+        // Component flash tests
+        function testComponentFlash() {
+            startPerformanceMonitor();
+            const element = document.getElementById('flash-element');
+            window.neoTransitions.componentFlash(element);
+            setTimeout(endPerformanceMonitor, 50);
+        }
+        
+        function changeComponentState() {
+            const element = document.getElementById('flash-element');
+            const colors = ['var(--neo-yellow)', 'var(--neo-red)', 'var(--neo-green)', 'var(--neo-blue)'];
+            const currentColor = element.style.backgroundColor || 'var(--neo-yellow)';
+            const currentIndex = colors.indexOf(currentColor);
+            const nextIndex = (currentIndex + 1) % colors.length;
+            
+            startPerformanceMonitor();
+            window.neoTransitions.componentFlash(element);
+            
+            setTimeout(() => {
+                element.style.backgroundColor = colors[nextIndex];
+                endPerformanceMonitor();
+            }, 25);
+        }
+        
+        // Navigation tests (simulated)
+        function testNavFlash() {
+            startPerformanceMonitor();
+            console.log('Simulating navigation with flash transition');
+            window.neoTransitions.flashTransition('black');
+            setTimeout(() => {
+                console.log('Would navigate to new page');
+                endPerformanceMonitor();
+            }, 50);
+        }
+        
+        function testNavWipe() {
+            startPerformanceMonitor();
+            console.log('Simulating navigation with wipe transition');
+            window.neoTransitions.wipeTransition('right', () => {
+                console.log('Would navigate to new page');
+            });
+            setTimeout(endPerformanceMonitor, 300);
+        }
+        
+        function testNavJump() {
+            startPerformanceMonitor();
+            console.log('Simulating navigation with jump transition');
+            window.neoTransitions.jumpCut(document.body, false);
+            setTimeout(() => {
+                console.log('Would navigate to new page');
+                window.neoTransitions.jumpCut(document.body, true);
+                endPerformanceMonitor();
+            }, 50);
+        }
+        
+        // Accessibility tests
+        function toggleReducedMotion() {
+            window.neoTransitions.reducedMotion = !window.neoTransitions.reducedMotion;
+            const status = window.neoTransitions.reducedMotion ? 'Enabled' : 'Disabled';
+            document.getElementById('accessibility-status').textContent = `Reduced Motion: ${status}`;
+        }
+        
+        function testAccessibility() {
+            console.log('Testing all transitions with current accessibility settings');
+            
+            // Test each transition type
+            testFlashWhite();
+            setTimeout(testWipeLeft, 200);
+            setTimeout(testJumpShow, 500);
+            setTimeout(testComponentFlash, 700);
+            
+            console.log(`Reduced motion: ${window.neoTransitions.reducedMotion ? 'enabled' : 'disabled'}`);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Neo-Brutalism Transition System Test Page Loaded');
+            console.log('Reduced motion preference:', window.neoTransitions.reducedMotion);
+        });
+    </script>
+</body>
+</html>

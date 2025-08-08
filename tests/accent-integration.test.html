@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accent Integration Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            padding: 20px;
+            background: var(--neo-white);
+            font-family: var(--neo-font-primary);
+        }
+        
+        .integration-test {
+            margin: 20px 0;
+            padding: 20px;
+            border: var(--neo-border-thick);
+        }
+    </style>
+</head>
+<body>
+    <h1>Accent System Integration Test</h1>
+    
+    <div class="integration-test">
+        <h2>Button with Corner Accent</h2>
+        <button class="neo-button neo-accent-corner-tl" style="padding: 15px 30px; background: var(--neo-red); color: var(--neo-white); border: var(--neo-border-thick); font-weight: bold;">
+            Click Me
+        </button>
+    </div>
+    
+    <div class="integration-test">
+        <h2>Card with Multiple Accents</h2>
+        <div class="neo-card neo-accent-combo-corners neo-accent-pixel-border-top" style="padding: 20px; background: var(--neo-white); border: var(--neo-border-thick); box-shadow: var(--neo-shadow-lg);">
+            <h3>Neo-Brutalism Card</h3>
+            <p>This card demonstrates multiple accent effects working together.</p>
+            <span class="neo-icon-pixel neo-icon-arrow-right" style="margin-right: 10px;"></span>
+            <span>With pixel icon</span>
+        </div>
+    </div>
+    
+    <div class="integration-test">
+        <h2>Form with Geometric Accents</h2>
+        <form style="max-width: 400px;">
+            <div class="neo-accent-triangle" style="margin: 15px 0;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Name:</label>
+                <input type="text" style="width: 100%; padding: 10px; border: var(--neo-border-thick); background: var(--neo-white);" placeholder="Enter your name">
+            </div>
+            <div class="neo-accent-diamond" style="margin: 15px 0;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Email:</label>
+                <input type="email" style="width: 100%; padding: 10px; border: var(--neo-border-thick); background: var(--neo-white);" placeholder="Enter your email">
+            </div>
+            <button type="submit" class="neo-accent-square" style="padding: 12px 24px; background: var(--neo-green); color: var(--neo-black); border: var(--neo-border-thick); font-weight: bold; margin-top: 10px;">
+                Submit
+            </button>
+        </form>
+    </div>
+    
+    <script>
+        // Simple integration test
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Accent Integration Test Loaded');
+            
+            // Test that all accent classes are applied
+            const accentElements = document.querySelectorAll('[class*="neo-accent"]');
+            console.log(`Found ${accentElements.length} elements with accent classes`);
+            
+            // Test CSS custom properties are available
+            const rootStyle = getComputedStyle(document.documentElement);
+            const pixelSize = rootStyle.getPropertyValue('--pixel-size');
+            const cornerSize = rootStyle.getPropertyValue('--accent-corner-size');
+            
+            console.log('CSS Variables:', {
+                pixelSize,
+                cornerSize
+            });
+            
+            // Test that pseudo-elements are created
+            accentElements.forEach((element, index) => {
+                const beforeStyle = getComputedStyle(element, '::before');
+                const afterStyle = getComputedStyle(element, '::after');
+                
+                if (beforeStyle.content === '""' || afterStyle.content === '""') {
+                    console.log(`Element ${index + 1} has pseudo-elements created`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

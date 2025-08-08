@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Card Component Test</title>
+    
+    <!-- Core CSS Variables -->
+    <link rel="stylesheet" href="../static/css/core/variables.css">
+    <link rel="stylesheet" href="../static/css/core/reset.css">
+    
+    <!-- Card Component CSS -->
+    <link rel="stylesheet" href="../static/css/components/cards.css">
+    
+    <style>
+        body {
+            background: #f0f0f0;
+            padding: 20px;
+            font-family: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+        }
+        
+        .test-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #000;
+            border-bottom: 4px solid #000;
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 36px; font-weight: 900; margin-bottom: 30px; color: #000;">Neo-Brutalism Card Component Tests</h1>
+    
+    <!-- Basic Card Test -->
+    <div class="test-section">
+        <h2 class="test-title">Basic Card with Thick Borders and Solid Shadows</h2>
+        <div class="neo-card">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Basic Neo-Brutalism Card</h3>
+                <div class="neo-card__meta">NEW</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">This card demonstrates the basic Neo-Brutalism styling with thick black borders, solid drop shadows, and bold typography. Notice the decorative corner elements.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Asymmetrical Cards Test -->
+    <div class="test-section">
+        <h2 class="test-title">Asymmetrical Card Layouts</h2>
+        <div class="neo-card neo-card--asymmetrical">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Asymmetrical Card #1</h3>
+                <div class="neo-card__meta">TILTED</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">This card is intentionally rotated and positioned asymmetrically to break conventional design patterns.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+        
+        <div class="neo-card neo-card--asymmetrical neo-card--accent-green">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Asymmetrical Card #2</h3>
+                <div class="neo-card__meta">OFFSET</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">Even-numbered asymmetrical cards rotate in the opposite direction for visual variety.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlapping Grid Test -->
+    <div class="test-section">
+        <h2 class="test-title">Overlapping Card Grid with Z-Index Layering</h2>
+        <div class="neo-card-grid">
+            <div class="neo-card">
+                <div class="neo-card__header">
+                    <h3 class="neo-card__title">Grid Card 1</h3>
+                    <div class="neo-card__meta">BASE</div>
+                </div>
+                <div class="neo-card__content">
+                    <p class="neo-card__text">First card in the overlapping grid system.</p>
+                    <div class="neo-card__accent-block"></div>
+                </div>
+            </div>
+            
+            <div class="neo-card neo-card--accent-blue">
+                <div class="neo-card__header">
+                    <h3 class="neo-card__title">Grid Card 2</h3>
+                    <div class="neo-card__meta">UP</div>
+                </div>
+                <div class="neo-card__content">
+                    <p class="neo-card__text">Second card with upward translation and higher z-index.</p>
+                    <div class="neo-card__accent-block"></div>
+                </div>
+            </div>
+            
+            <div class="neo-card">
+                <div class="neo-card__header">
+                    <h3 class="neo-card__title">Grid Card 3</h3>
+                    <div class="neo-card__meta">RIGHT</div>
+                </div>
+                <div class="neo-card__content">
+                    <p class="neo-card__text">Third card with rightward translation and highest z-index.</p>
+                    <div class="neo-card__accent-block"></div>
+                </div>
+            </div>
+            
+            <div class="neo-card neo-card--accent-green">
+                <div class="neo-card__header">
+                    <h3 class="neo-card__title">Grid Card 4</h3>
+                    <div class="neo-card__meta">DIAG</div>
+                </div>
+                <div class="neo-card__content">
+                    <p class="neo-card__text">Fourth card with diagonal translation and lowest z-index.</p>
+                    <div class="neo-card__accent-block"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Card Variants Test -->
+    <div class="test-section">
+        <h2 class="test-title">Card Variants with Different Layouts</h2>
+        
+        <div class="neo-card neo-card--stacked">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Stacked Card</h3>
+                <div class="neo-card__meta">STACK</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">This card has a stacked appearance with a background layer.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+        
+        <div class="neo-card neo-card--offset neo-card--accent-blue">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Offset Card</h3>
+                <div class="neo-card__meta">SIDE</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">This card has a side accent bar for additional visual interest.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Interactive Card Test -->
+    <div class="test-section">
+        <h2 class="test-title">Interactive Card with Hover Effects</h2>
+        <div class="neo-card neo-card--interactive">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Interactive Card</h3>
+                <div class="neo-card__meta">HOVER</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">Hover over this card to see the aggressive Neo-Brutalism hover effects with shadow displacement.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Responsive Test Instructions -->
+    <div class="test-section">
+        <h2 class="test-title">Responsive Behavior Test</h2>
+        <div class="neo-card">
+            <div class="neo-card__header">
+                <h3 class="neo-card__title">Responsive Test Card</h3>
+                <div class="neo-card__meta">RESIZE</div>
+            </div>
+            <div class="neo-card__content">
+                <p class="neo-card__text">Resize your browser window to test responsive behavior. Asymmetrical layouts should simplify on mobile, overlapping should be removed, and content should stack vertically.</p>
+                <div class="neo-card__accent-block"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

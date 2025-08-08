@@ -1,0 +1,327 @@
+/* Neo-Brutalism Form Components */
+
+/* Base form styling */
+.input-group {
+  margin-bottom: var(--neo-space-lg);
+  position: relative;
+}
+
+/* Label styling */
+.input-group label,
+label {
+  display: block;
+  font-family: var(--neo-font-primary);
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--neo-black);
+  margin-bottom: var(--neo-space-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+/* Base input styling */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea,
+.text-input,
+.range-input {
+  width: 100%;
+  padding: var(--neo-space-md);
+  background: var(--neo-white);
+  border: var(--neo-border-thick);
+  border-radius: 0;
+  font-family: var(--neo-font-primary);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--neo-black);
+  box-shadow: var(--neo-shadow-sm);
+  transition: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+  color: var(--neo-black);
+  opacity: 0.6;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Focus states with aggressive animations */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+select:focus,
+textarea:focus,
+.text-input:focus,
+.range-input:focus {
+  border: var(--neo-border-heavy);
+  box-shadow: var(--neo-shadow-md);
+  background: var(--neo-white);
+  animation: neo-focus-flash 0.1s steps(2, end);
+  transform: translate(-2px, -2px);
+}
+
+/* Focus flash animation */
+@keyframes neo-focus-flash {
+  0% { background: var(--neo-white); }
+  50% { background: var(--neo-yellow); }
+  100% { background: var(--neo-white); }
+}
+
+/* Label animation on focus */
+.input-group:focus-within label {
+  animation: neo-label-jump 0.2s var(--neo-timing-clunky);
+  transform: translateX(4px);
+}
+
+@keyframes neo-label-jump {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(8px) scale(1.05); }
+  100% { transform: translateX(4px); }
+}
+
+/* Select dropdown styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='4' stroke-linecap='square' stroke-linejoin='miter'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--neo-space-md) center;
+  background-size: 16px;
+  padding-right: calc(var(--neo-space-md) * 2 + 16px);
+  cursor: pointer;
+}
+
+select:focus {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='6' stroke-linecap='square' stroke-linejoin='miter'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+/* Range inputs for filters */
+.range-inputs {
+  display: flex;
+  align-items: center;
+  gap: var(--neo-space-sm);
+}
+
+.range-inputs span {
+  font-weight: 900;
+  color: var(--neo-black);
+  font-size: 18px;
+}
+
+.range-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Checkbox styling */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--neo-space-sm);
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: none;
+  margin-bottom: 0;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: var(--neo-space-sm);
+  appearance: none;
+  background: var(--neo-white);
+  border: var(--neo-border-thick);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox-item input[type="checkbox"]:checked {
+  background: var(--neo-black);
+  animation: neo-checkbox-check 0.1s steps(1, end);
+}
+
+.checkbox-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--neo-white);
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1;
+}
+
+@keyframes neo-checkbox-check {
+  0% { background: var(--neo-white); }
+  50% { background: var(--neo-red); }
+  100% { background: var(--neo-black); }
+}
+
+.checkbox-item input[type="checkbox"]:focus {
+  border: var(--neo-border-heavy);
+  box-shadow: var(--neo-shadow-sm);
+  outline: none;
+}
+
+/* Form validation states */
+.input-group.error input,
+.input-group.error select,
+.input-group.error textarea {
+  border-color: var(--neo-red);
+  background: #ffeeee;
+  animation: neo-error-shake 0.3s var(--neo-timing-clunky);
+}
+
+@keyframes neo-error-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.input-group.error label {
+  color: var(--neo-red);
+  animation: neo-error-flash 0.2s steps(2, end);
+}
+
+@keyframes neo-error-flash {
+  0%, 100% { color: var(--neo-red); }
+  50% { color: var(--neo-black); }
+}
+
+.error-message {
+  display: block;
+  margin-top: var(--neo-space-xs);
+  font-family: var(--neo-font-primary);
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--neo-red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--neo-white);
+  border: 2px solid var(--neo-red);
+  padding: var(--neo-space-xs) var(--neo-space-sm);
+  box-shadow: 2px 2px 0px var(--neo-red);
+}
+
+.input-group.success input,
+.input-group.success select,
+.input-group.success textarea {
+  border-color: var(--neo-green);
+  background: #eeffee;
+}
+
+.input-group.success label {
+  color: var(--neo-green);
+}
+
+/* Textarea specific styling */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: var(--neo-font-mono);
+}
+
+/* Disabled state */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background: #f0f0f0;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Pivot select styling */
+.pivot-select {
+  min-width: 150px;
+  margin: 0 var(--neo-space-xs);
+}
+
+/* Filter panel specific styling */
+.filter-item {
+  margin-bottom: var(--neo-space-md);
+}
+
+.filter-item label {
+  font-size: 14px;
+  margin-bottom: var(--neo-space-xs);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .range-inputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .range-inputs span {
+    text-align: center;
+    padding: var(--neo-space-xs) 0;
+  }
+  
+  .checkbox-group {
+    max-height: 200px;
+    overflow-y: auto;
+    border: var(--neo-border-thin);
+    padding: var(--neo-space-sm);
+    background: var(--neo-white);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  input, select, textarea {
+    border-width: 6px;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    border-width: 8px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  input:focus,
+  select:focus,
+  textarea:focus {
+    animation: none;
+    transition: none;
+  }
+  
+  .input-group:focus-within label {
+    animation: none;
+    transform: none;
+  }
+  
+  .input-group.error input,
+  .input-group.error select,
+  .input-group.error textarea {
+    animation: none;
+  }
+  
+  .input-group.error label {
+    animation: none;
+  }
+  
+  .checkbox-item input[type="checkbox"]:checked {
+    animation: none;
+  }
+}

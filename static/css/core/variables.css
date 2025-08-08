@@ -1,0 +1,119 @@
+/* Neo-Brutalism Design System - Core Variables */
+
+:root {
+  /* Base Colors - Pure, high contrast */
+  --neo-white: #FFFFFF;
+  --neo-black: #000000;
+  
+  /* Accent Colors - Bold primaries */
+  --neo-red: #FF0000;
+  --neo-green: #00FF00;
+  --neo-yellow: #FFFF00;
+  --neo-blue: #0000FF;
+  
+  /* Semantic Color Assignments */
+  --neo-bg-primary: var(--neo-white);
+  --neo-bg-secondary: var(--neo-black);
+  --neo-text-primary: var(--neo-black);
+  --neo-text-inverse: var(--neo-white);
+  --neo-accent-primary: var(--neo-red);
+  --neo-accent-secondary: var(--neo-green);
+  --neo-accent-warning: var(--neo-yellow);
+  --neo-accent-info: var(--neo-blue);
+  
+  /* Typography System */
+  --neo-font-primary: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+  --neo-font-mono: 'Courier New', 'Monaco', 'Consolas', monospace;
+  
+  /* Font Sizes - Large, impactful sizing */
+  --neo-text-h1: 48px;
+  --neo-text-h2: 36px;
+  --neo-text-h3: 24px;
+  --neo-text-body-lg: 18px;
+  --neo-text-body: 16px;
+  --neo-text-small: 14px;
+  
+  /* Font Weights - Bold emphasis */
+  --neo-weight-heavy: 900;
+  --neo-weight-bold: 700;
+  --neo-weight-normal: 400;
+  
+  /* Letter Spacing - Tight spacing for impact */
+  --neo-spacing-tight: -2px;
+  --neo-spacing-normal: -1px;
+  --neo-spacing-loose: 0px;
+  
+  /* Line Heights - Compact for bold aesthetic */
+  --neo-line-tight: 1.2;
+  --neo-line-normal: 1.3;
+  --neo-line-loose: 1.4;
+  
+  /* Spacing Scale - Consistent rhythm */
+  --neo-space-xs: 4px;
+  --neo-space-sm: 8px;
+  --neo-space-md: 16px;
+  --neo-space-lg: 24px;
+  --neo-space-xl: 32px;
+  --neo-space-xxl: 48px;
+  
+  /* Border System - Thick, stark outlines */
+  --neo-border-width-thin: 2px;
+  --neo-border-width-thick: 4px;
+  --neo-border-width-heavy: 6px;
+  --neo-border-style: solid;
+  --neo-border-color: var(--neo-black);
+  
+  /* Border Combinations */
+  --neo-border-thin: var(--neo-border-width-thin) var(--neo-border-style) var(--neo-border-color);
+  --neo-border-thick: var(--neo-border-width-thick) var(--neo-border-style) var(--neo-border-color);
+  --neo-border-heavy: var(--neo-border-width-heavy) var(--neo-border-style) var(--neo-border-color);
+  
+  /* Shadow System - Solid, geometric shadows */
+  --neo-shadow-sm: 2px 2px 0px var(--neo-black);
+  --neo-shadow-md: 4px 4px 0px var(--neo-black);
+  --neo-shadow-lg: 8px 8px 0px var(--neo-black);
+  --neo-shadow-xl: 12px 12px 0px var(--neo-black);
+  
+  /* Animation Timing - Harsh, immediate transitions */
+  --neo-timing-instant: steps(1, end);
+  --neo-timing-harsh: cubic-bezier(1, 0, 1, 0);
+  --neo-timing-clunky: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Animation Durations */
+  --neo-duration-instant: 0ms;
+  --neo-duration-fast: 100ms;
+  --neo-duration-normal: 200ms;
+  
+  /* Responsive Breakpoints */
+  --neo-breakpoint-sm: 480px;
+  --neo-breakpoint-md: 768px;
+  --neo-breakpoint-lg: 1024px;
+  --neo-breakpoint-xl: 1200px;
+  
+  /* Z-Index Scale */
+  --neo-z-base: 1;
+  --neo-z-elevated: 10;
+  --neo-z-overlay: 100;
+  --neo-z-modal: 1000;
+  --neo-z-tooltip: 10000;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --neo-border-thick: var(--neo-border-width-heavy) var(--neo-border-style) var(--neo-border-color);
+    --neo-shadow-md: var(--neo-shadow-lg);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --neo-timing-instant: none;
+    --neo-timing-harsh: none;
+    --neo-timing-clunky: none;
+    --neo-duration-instant: 0ms;
+    --neo-duration-fast: 0ms;
+    --neo-duration-normal: 0ms;
+  }
+}

@@ -1,0 +1,244 @@
+/* Neo-Brutalism Page Transitions - Hard Edge Effects */
+
+/* Core transition variables */
+:root {
+  --neo-transition-instant: steps(1, end);
+  --neo-transition-harsh: cubic-bezier(1, 0, 1, 0);
+  --neo-transition-clunky: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --neo-flash-duration: 0.1s;
+  --neo-wipe-duration: 0.3s;
+  --neo-jump-duration: 0.05s;
+}
+
+/* Page transition container */
+.neo-page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Jump cut transition - sudden appearance/disappearance */
+.neo-jump-cut {
+  opacity: 0;
+  transform: scale(1);
+  animation: none;
+}
+
+.neo-jump-cut.active {
+  opacity: 1;
+  animation: jumpCutIn var(--neo-jump-duration) var(--neo-transition-instant);
+}
+
+.neo-jump-cut.exit {
+  animation: jumpCutOut var(--neo-jump-duration) var(--neo-transition-instant);
+}
+
+@keyframes jumpCutIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes jumpCutOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Stark flash effect for page loading */
+.neo-flash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--neo-white);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.neo-flash-overlay.flash-white {
+  animation: flashWhite var(--neo-flash-duration) var(--neo-transition-instant);
+}
+
+.neo-flash-overlay.flash-black {
+  background: var(--neo-black);
+  animation: flashBlack var(--neo-flash-duration) var(--neo-transition-instant);
+}
+
+@keyframes flashWhite {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes flashBlack {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Hard edge wipe animations */
+.neo-wipe-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--neo-black);
+  transform: translateX(-100%);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.neo-wipe-overlay.wipe-left {
+  animation: wipeFromLeft var(--neo-wipe-duration) var(--neo-transition-harsh);
+}
+
+.neo-wipe-overlay.wipe-right {
+  animation: wipeFromRight var(--neo-wipe-duration) var(--neo-transition-harsh);
+}
+
+.neo-wipe-overlay.wipe-up {
+  transform: translateY(100%);
+  animation: wipeFromBottom var(--neo-wipe-duration) var(--neo-transition-harsh);
+}
+
+.neo-wipe-overlay.wipe-down {
+  transform: translateY(-100%);
+  animation: wipeFromTop var(--neo-wipe-duration) var(--neo-transition-harsh);
+}
+
+@keyframes wipeFromLeft {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes wipeFromRight {
+  0% { transform: translateX(100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes wipeFromBottom {
+  0% { transform: translateY(100%); }
+  50% { transform: translateY(0%); }
+  100% { transform: translateY(-100%); }
+}
+
+@keyframes wipeFromTop {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(0%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Component state change transitions */
+.neo-component-transition {
+  transition: none;
+}
+
+.neo-component-transition.changing {
+  animation: componentFlash 0.05s var(--neo-transition-instant);
+}
+
+@keyframes componentFlash {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Page content transitions */
+.neo-page-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.neo-page-content.entering {
+  animation: pageEnter var(--neo-wipe-duration) var(--neo-transition-harsh);
+}
+
+.neo-page-content.exiting {
+  animation: pageExit var(--neo-wipe-duration) var(--neo-transition-harsh);
+}
+
+@keyframes pageEnter {
+  0% { 
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  1% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pageExit {
+  0% { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+  99% {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .neo-page-transition,
+  .neo-jump-cut,
+  .neo-flash-overlay,
+  .neo-wipe-overlay,
+  .neo-component-transition,
+  .neo-page-content {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Provide instant transitions for reduced motion */
+  .neo-jump-cut.active {
+    opacity: 1;
+  }
+  
+  .neo-jump-cut.exit {
+    opacity: 0;
+  }
+  
+  .neo-page-content.entering {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .neo-page-content.exiting {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .neo-flash-overlay.flash-white {
+    background: #FFFFFF;
+  }
+  
+  .neo-flash-overlay.flash-black {
+    background: #000000;
+  }
+  
+  .neo-wipe-overlay {
+    background: #000000;
+    border: 2px solid #FFFFFF;
+  }
+}

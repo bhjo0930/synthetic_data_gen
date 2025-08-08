@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Form Components Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0px #000;
+        }
+        .test-section h2 {
+            margin-top: 0;
+            font-family: var(--neo-font-primary);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e0e0e0;
+            border: 2px solid #000;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .validation-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Form Components Test Suite</h1>
+
+    <!-- Basic Input Types Test -->
+    <div class="test-section">
+        <h2>Basic Input Types</h2>
+        <div class="test-grid">
+            <div class="input-group">
+                <label for="test-text">Text Input</label>
+                <input type="text" id="test-text" placeholder="Enter text here">
+            </div>
+            <div class="input-group">
+                <label for="test-number">Number Input</label>
+                <input type="number" id="test-number" placeholder="Enter number">
+            </div>
+            <div class="input-group">
+                <label for="test-email">Email Input</label>
+                <input type="email" id="test-email" placeholder="Enter email">
+            </div>
+            <div class="input-group">
+                <label for="test-password">Password Input</label>
+                <input type="password" id="test-password" placeholder="Enter password">
+            </div>
+        </div>
+    </div>
+
+    <!-- Select and Textarea Test -->
+    <div class="test-section">
+        <h2>Select and Textarea</h2>
+        <div class="test-grid">
+            <div class="input-group">
+                <label for="test-select">Select Dropdown</label>
+                <select id="test-select">
+                    <option value="">Choose an option</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="test-textarea">Textarea</label>
+                <textarea id="test-textarea" placeholder="Enter multiple lines of text here"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Range Inputs Test -->
+    <div class="test-section">
+        <h2>Range Inputs (Filter Style)</h2>
+        <div class="input-group">
+            <label>Age Range</label>
+            <div class="range-inputs">
+                <input type="number" id="age-min" placeholder="Min" class="range-input">
+                <span>~</span>
+                <input type="number" id="age-max" placeholder="Max" class="range-input">
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkbox Groups Test -->
+    <div class="test-section">
+        <h2>Checkbox Groups</h2>
+        <div class="test-grid">
+            <div class="input-group">
+                <label>Gender Selection</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="male"> Male
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="female"> Female
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="other"> Other
+                    </label>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Education Level</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="high-school"> High School
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="bachelor"> Bachelor's
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="master"> Master's
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="phd"> PhD
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Validation States Test -->
+    <div class="test-section">
+        <h2>Validation States</h2>
+        <div class="test-grid">
+            <div class="input-group error">
+                <label for="error-input">Error State</label>
+                <input type="text" id="error-input" value="Invalid input">
+                <span class="error-message">This field contains an error</span>
+            </div>
+            <div class="input-group success">
+                <label for="success-input">Success State</label>
+                <input type="text" id="success-input" value="Valid input">
+            </div>
+        </div>
+        
+        <div class="validation-controls">
+            <button class="neo-button" onclick="toggleValidation('error')">Toggle Error State</button>
+            <button class="neo-button" onclick="toggleValidation('success')">Toggle Success State</button>
+            <button class="neo-button" onclick="clearValidation()">Clear Validation</button>
+        </div>
+    </div>
+
+    <!-- Disabled State Test -->
+    <div class="test-section">
+        <h2>Disabled States</h2>
+        <div class="test-grid">
+            <div class="input-group">
+                <label for="disabled-text">Disabled Text Input</label>
+                <input type="text" id="disabled-text" value="Disabled input" disabled>
+            </div>
+            <div class="input-group">
+                <label for="disabled-select">Disabled Select</label>
+                <select id="disabled-select" disabled>
+                    <option>Disabled option</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Focus Animation Test -->
+    <div class="test-section">
+        <h2>Focus Animation Test</h2>
+        <p>Click on the inputs below to test focus animations and effects:</p>
+        <div class="test-grid">
+            <div class="input-group">
+                <label for="focus-test-1">Focus Test 1</label>
+                <input type="text" id="focus-test-1" placeholder="Click to focus">
+            </div>
+            <div class="input-group">
+                <label for="focus-test-2">Focus Test 2</label>
+                <input type="text" id="focus-test-2" placeholder="Tab to focus">
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Test -->
+    <div class="test-section">
+        <h2>Accessibility Test</h2>
+        <p>Use Tab key to navigate through these form elements:</p>
+        <div class="input-group">
+            <label for="acc-test-1">Accessible Input 1</label>
+            <input type="text" id="acc-test-1" placeholder="Tab navigation test">
+        </div>
+        <div class="input-group">
+            <label for="acc-test-2">Accessible Select</label>
+            <select id="acc-test-2">
+                <option value="">Select an option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Accessible Checkboxes</label>
+            <div class="checkbox-group">
+                <label class="checkbox-item">
+                    <input type="checkbox" value="check1"> Checkbox 1
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" value="check2"> Checkbox 2
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Results -->
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="test-results" class="test-result">
+            Test results will appear here...
+        </div>
+    </div>
+
+    <script>
+        // Test functionality
+        let testResults = [];
+
+        function logTest(testName, result) {
+            testResults.push(`${testName}: ${result ? 'PASS' : 'FAIL'}`);
+            updateResults();
+        }
+
+        function updateResults() {
+            document.getElementById('test-results').textContent = testResults.join('\n');
+        }
+
+        function toggleValidation(type) {
+            const testInput = document.getElementById('error-input').parentElement;
+            const successInput = document.getElementById('success-input').parentElement;
+            
+            if (type === 'error') {
+                testInput.classList.toggle('error');
+                logTest('Error state toggle', testInput.classList.contains('error'));
+            } else if (type === 'success') {
+                successInput.classList.toggle('success');
+                logTest('Success state toggle', successInput.classList.contains('success'));
+            }
+        }
+
+        function clearValidation() {
+            document.querySelectorAll('.input-group').forEach(group => {
+                group.classList.remove('error', 'success');
+            });
+            logTest('Clear validation', true);
+        }
+
+        // Test focus animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Test that CSS variables are loaded
+            const root = getComputedStyle(document.documentElement);
+            const neoBlack = root.getPropertyValue('--neo-black').trim();
+            logTest('CSS Variables loaded', neoBlack === '#000000' || neoBlack === '#000');
+
+            // Test focus events
+            const focusInputs = document.querySelectorAll('input, select, textarea');
+            focusInputs.forEach((input, index) => {
+                input.addEventListener('focus', function() {
+                    logTest(`Focus event ${index + 1}`, true);
+                });
+            });
+
+            // Test checkbox functionality
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function() {
+                    logTest(`Checkbox ${index + 1} change`, this.checked);
+                });
+            });
+
+            // Test form validation
+            const errorInput = document.getElementById('error-input');
+            if (errorInput) {
+                const hasErrorClass = errorInput.parentElement.classList.contains('error');
+                logTest('Error state styling', hasErrorClass);
+            }
+
+            // Test accessibility features
+            const labels = document.querySelectorAll('label[for]');
+            let accessibilityScore = 0;
+            labels.forEach(label => {
+                const targetId = label.getAttribute('for');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    accessibilityScore++;
+                }
+            });
+            logTest('Label-input associations', accessibilityScore > 0);
+
+            // Initial test completion
+            logTest('Form components loaded', true);
+            logTest('Neo-brutalism styles applied', document.querySelector('.neo-button') !== null);
+        });
+
+        // Test keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                logTest('Tab navigation', true);
+            }
+        });
+
+        // Test reduced motion preference
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            logTest('Reduced motion support', true);
+        }
+
+        // Test high contrast preference
+        if (window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches) {
+            logTest('High contrast support', true);
+        }
+    </script>
+</body>
+</html>

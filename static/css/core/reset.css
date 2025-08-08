@@ -1,0 +1,292 @@
+/* Neo-Brutalism Design System - Browser Reset and Base Styles */
+
+/* Modern CSS Reset with Neo-Brutalism principles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default styling and apply Neo-Brutalism base */
+html {
+  font-size: 16px;
+  line-height: var(--neo-line-normal);
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--neo-font-primary);
+  font-weight: var(--neo-weight-bold);
+  color: var(--neo-text-primary);
+  background-color: var(--neo-bg-primary);
+  line-height: var(--neo-line-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Disable smooth scrolling for harsh aesthetic */
+  scroll-behavior: auto;
+}
+
+/* Remove default margins and apply Neo-Brutalism spacing */
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+dl, dd, ol, ul,
+figure, hr,
+fieldset, legend {
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings with bold, impactful styling */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--neo-font-primary);
+  font-weight: var(--neo-weight-heavy);
+  line-height: var(--neo-line-tight);
+  color: var(--neo-text-primary);
+}
+
+h1 {
+  font-size: var(--neo-text-h1);
+  letter-spacing: var(--neo-spacing-tight);
+}
+
+h2 {
+  font-size: var(--neo-text-h2);
+  letter-spacing: var(--neo-spacing-normal);
+}
+
+h3 {
+  font-size: var(--neo-text-h3);
+  letter-spacing: var(--neo-spacing-loose);
+}
+
+/* Remove list styling */
+ol, ul {
+  list-style: none;
+}
+
+/* Remove default link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+/* Button reset with Neo-Brutalism base */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  /* Remove default button styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Input field reset */
+input,
+textarea,
+select {
+  background: var(--neo-bg-primary);
+  border: var(--neo-border-thick);
+  color: var(--neo-text-primary);
+  font-weight: var(--neo-weight-bold);
+  /* Remove default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: var(--neo-border-heavy);
+  outline-offset: 2px;
+}
+
+/* Remove default fieldset styling */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  font-weight: var(--neo-weight-heavy);
+  color: var(--neo-text-primary);
+}
+
+/* Table reset */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0;
+  border: var(--neo-border-thick);
+}
+
+th {
+  font-weight: var(--neo-weight-heavy);
+  background-color: var(--neo-bg-secondary);
+  color: var(--neo-text-inverse);
+}
+
+/* Media elements */
+img,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: var(--neo-border-thick);
+}
+
+/* Remove default styling from SVG */
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+
+/* Code elements with monospace font */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--neo-font-mono);
+  font-weight: var(--neo-weight-bold);
+  background-color: var(--neo-bg-secondary);
+  color: var(--neo-text-inverse);
+  border: var(--neo-border-thin);
+  padding: var(--neo-space-xs);
+}
+
+pre {
+  padding: var(--neo-space-md);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Horizontal rule with Neo-Brutalism styling */
+hr {
+  border: none;
+  height: var(--neo-border-width-thick);
+  background-color: var(--neo-black);
+  margin: var(--neo-space-lg) 0;
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--neo-accent-primary);
+  color: var(--neo-text-inverse);
+}
+
+::-moz-selection {
+  background-color: var(--neo-accent-primary);
+  color: var(--neo-text-inverse);
+}
+
+/* Focus styling for accessibility */
+:focus-visible {
+  outline: var(--neo-border-heavy);
+  outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  input:focus,
+  textarea:focus,
+  select:focus,
+  :focus-visible {
+    outline-width: var(--neo-border-width-heavy);
+    outline-offset: 4px;
+  }
+}
+
+/* Print styles */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+}
