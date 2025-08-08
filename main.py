@@ -7,8 +7,8 @@ if __name__ == '__main__':
     # db.delete_all_personas()
     
     print("페르소나 생성 API 서버를 시작합니다...")
-    print("http://127.0.0.1:5050/api/personas/generate 로 POST 요청하여 페르소나를 생성하세요.")
-    print("http://127.0.0.1:5050/api/personas/search 로 GET 요청하여 페르소나를 검색하세요.")
+    print("http://127.0.0.1:5050/ 로 접속하여 페르소나 생성 Playground를 이용하세요.")
+    print("http://127.0.0.1:5050/search.html 로 접속하여 페르소나 검색 Playground를 이용하세요.")
     print("\n주의: 5천만 페르소나 생성은 현재 SQLite 및 단일 프로세스 환경에서는 매우 오랜 시간이 소요되며, 시스템 리소스 제약으로 인해 실제 실행이 어렵습니다.")
     print("이를 위해서는 다음과 같은 확장성 전략이 필요합니다:")
     print("1. 분산 데이터베이스 시스템 (예: PostgreSQL, Cassandra) 사용")

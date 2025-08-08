@@ -73,10 +73,14 @@ class PersonaGenerator:
         return random.choices(items, weights=weights, k=1)[0]
 
     def _generate_demographics(self, constraints):
-        # 연령 생성 (가중치 기반)
-        age_group = self._weighted_choice(self.config["age_distribution"])
-        age_min, age_max = map(int, age_group.split('-')) if '-' in age_group else (int(age_group.replace('+', '')), 100)
-        age = random.randint(age_min, age_max)
+        # 연령 생성 (constraints의 age_range를 우선 적용)
+        if "age_range" in constraints:
+            age_min, age_max = constraints["age_range"]
+            age = random.randint(age_min, age_max)
+        else:
+            age_group = self._weighted_choice(self.config["age_distribution"])
+            age_min, age_max = map(int, age_group.split('-')) if '-' in age_group else (int(age_group.replace('+', '')), 100)
+            age = random.randint(age_min, age_max)
         
         gender = constraints.get("gender", self._weighted_choice(self.config["gender_ratio"]))
         location = constraints.get("location", self._weighted_choice(self.config["regional_distribution"]))
@@ -97,7 +101,7 @@ class PersonaGenerator:
         else:
             occupation_category = random.choices(["직장인", "자영업자", "무직", "주부", "농림어업"], weights=[0.6, 0.15, 0.1, 0.1, 0.05], k=1)[0]
         
-        occupation = random.choice(self.config["occupations"][occupation_category])
+        occupation = random.choice(self.config["occupations"].get(occupation_category, ["기타 직업"]))
         
         # 소득 분위 (직업 및 교육 수준에 따라 조정)
         income_bracket = constraints.get("income_bracket", self._weighted_choice(self.config["income_brackets"]))
@@ -129,8 +133,8 @@ class PersonaGenerator:
 
     def _generate_behavioral_patterns(self):
         interests = random.sample(self.config["interests"], k=random.randint(3, 6))
-        media_consumption = random.choice(self.config["korean_cultural_nuances"]["미디어_소비"])
-        shopping_habit = random.choice(self.config["korean_cultural_nuances"]["소비_행태"])
+        media_consumption = random.choice(self.config["korean_cultural_nuances"].get("미디어_소비", ["기타 미디어"]))
+        shopping_habit = random.choice(self.config["korean_cultural_nuances"].get("소비_행태", ["기타 소비"]))
         
         return {
             "interests": interests,
@@ -140,27 +144,28 @@ class PersonaGenerator:
 
     def _apply_cultural_nuances(self, persona):
         # 세대별 가치관 적용
-        age = persona["demographics"]["age"]
-        if 10 <= age <= 24: # Z세대
-            persona["psychological_attributes"]["values"].extend(self.config["korean_cultural_nuances"]["세대별 가치관"]["Z세대"])
-        elif 25 <= age <= 44: # 밀레니얼
-            persona["psychological_attributes"]["values"].extend(self.config["korean_cultural_nuances"]["세대별 가치관"]["밀레니얼"])
-        elif 45 <= age <= 59: # X세대
-            persona["psychological_attributes"]["values"].extend(self.config["korean_cultural_nuances"]["세대별 가치관"]["X세대"])
-        elif age >= 60: # 베이비부머
-            persona["psychological_attributes"]["values"].extend(self.config["korean_cultural_nuances"]["세대별 가치관"]["베이비부머"])
+        age = persona["demographics"].get("age")
+        if age is not None:
+            if 10 <= age <= 24: # Z세대
+                persona["psychological_attributes"].setdefault("values", []).extend(self.config["korean_cultural_nuances"].get("세대별 가치관", {}).get("Z세대", []))
+            elif 25 <= age <= 44: # 밀레니얼
+                persona["psychological_attributes"].setdefault("values", []).extend(self.config["korean_cultural_nuances"].get("세대별 가치관", {}).get("밀레니얼", []))
+            elif 45 <= age <= 59: # X세대
+                persona["psychological_attributes"].setdefault("values", []).extend(self.config["korean_cultural_nuances"].get("세대별 가치관", {}).get("X세대", []))
+            elif age >= 60: # 베이비부머
+                persona["psychological_attributes"].setdefault("values", []).extend(self.config["korean_cultural_nuances"].get("세대별 가치관", {}).get("베이비부머", []))
         
         # 지역별 특색 적용
-        location = persona["demographics"]["location"]
-        if location in self.config["korean_cultural_nuances"]["지역별 특색"]:
-            persona["psychological_attributes"]["lifestyle_attributes"].extend(self.config["korean_cultural_nuances"]["지역별 특색"].get(location, []))
+        location = persona["demographics"].get("location")
+        if location:
+            persona["psychological_attributes"].setdefault("lifestyle_attributes", []).extend(self.config["korean_cultural_nuances"].get("지역별 특색", {}).get(location, []))
         
         # 한국 특유의 사회적 관계 반영
-        persona["social_relations"] = random.sample(self.config["korean_cultural_nuances"]["사회적 관계"], k=random.randint(1, 3))
+        persona["social_relations"] = random.sample(self.config["korean_cultural_nuances"].get("사회적 관계", []), k=random.randint(1, 3))
         
         # 중복 제거
-        persona["psychological_attributes"]["values"] = list(set(persona["psychological_attributes"]["values"]))
-        persona["psychological_attributes"]["lifestyle_attributes"] = list(set(persona["psychological_attributes"]["lifestyle_attributes"]))
+        persona["psychological_attributes"]["values"] = list(set(persona["psychological_attributes"].get("values", [])))
+        persona["psychological_attributes"]["lifestyle_attributes"] = list(set(persona["psychological_attributes"].get("lifestyle_attributes", [])))
         return persona
 
     def generate_persona(self, constraints={}):
@@ -195,7 +200,7 @@ if __name__ == "__main__":
     print(json.dumps(single_persona, indent=2, ensure_ascii=False))
 
     print("\n--- 특정 조건의 페르소나 생성 (30대 서울 거주 남성 직장인) ---")
-    constrained_persona = generator.generate_persona(constraints={
+    constrained_persona = generator.generate_persona({
         "age_range": [30, 39],
         "gender": "남성",
         "location": "서울",

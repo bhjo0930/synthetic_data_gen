@@ -27,6 +27,22 @@ h1 {
     font-size: 2.2em;
 }
 
+nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #2980b9;
+}
+
 section {
     margin-bottom: 40px;
     padding: 25px;
@@ -95,19 +111,40 @@ button:hover {
     overflow-y: auto;
 }
 
-.result-box pre {
-    margin: 0;
-    padding: 0;
+/* Persona Grid Styles */
+.persona-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
 }
 
-.result-box .persona-item {
-    border-bottom: 1px dashed #a0a0a0;
-    padding-bottom: 10px;
+.persona-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.persona-card:hover {
+    transform: translateY(-5px);
+}
+
+.persona-card h3 {
+    color: #34495e;
+    margin-top: 0;
     margin-bottom: 10px;
+    font-size: 1.4em;
 }
 
-.result-box .persona-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+.persona-card p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.persona-card strong {
+    color: #555;
 }

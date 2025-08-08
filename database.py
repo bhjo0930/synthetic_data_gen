@@ -60,7 +60,7 @@ class PersonaDatabase:
         persona_values_json = json.dumps(persona_data["psychological_attributes"]["values"], ensure_ascii=False) # 컬럼명 변경
         interests_json = json.dumps(persona_data["behavioral_patterns"]["interests"], ensure_ascii=False)
         lifestyle_attributes_json = json.dumps(persona_data["psychological_attributes"]["lifestyle_attributes"], ensure_ascii=False)
-        social_relations_json = json.dumps(persona_data["social_relations"], ensure_ascii=False)
+        social_relations_json = json.dumps(persona_data["social_relations"], ensure_ascii=False) # 위치 변경
 
         cursor.execute("""
             INSERT INTO personas (
@@ -117,27 +117,52 @@ class PersonaDatabase:
         params = []
         
         if filters:
-            for key, value in filters.items():
-                if key == "age_min":
-                    query += " AND age >= ?"
-                    params.append(value)
-                elif key == "age_max":
-                    query += " AND age <= ?"
-                    params.append(value)
-                elif key == "location":
-                    query += " AND location = ?"
-                    params.append(value)
-                elif key == "gender":
-                    query += " AND gender = ?"
-                    params.append(value)
-                elif key == "occupation":
-                    query += " AND occupation = ?"
-                    params.append(value)
-                elif key == "interests": # JSON 필드 검색 (LIKE 사용)
-                    query += " AND interests LIKE ?"
-                    params.append(f"%\"{value}\"%" ) # JSON 배열 내 값 검색
-                # TODO: 다른 필터 조건 추가
-        
+            if "age_min" in filters:
+                query += " AND age >= ?"
+                params.append(filters["age_min"])
+            if "age_max" in filters:
+                query += " AND age <= ?"
+                params.append(filters["age_max"])
+            if "location" in filters:
+                query += " AND location = ?"
+                params.append(filters["location"])
+            if "gender" in filters:
+                query += " AND gender = ?"
+                params.append(filters["gender"])
+            if "occupation" in filters:
+                query += " AND occupation = ?"
+                params.append(filters["occupation"])
+            if "education" in filters:
+                query += " AND education = ?"
+                params.append(filters["education"])
+            if "income_bracket" in filters:
+                query += " AND income_bracket = ?"
+                params.append(filters["income_bracket"])
+            if "marital_status" in filters:
+                query += " AND marital_status = ?"
+                params.append(filters["marital_status"])
+            if "interests" in filters: # JSON 필드 검색 (LIKE 사용)
+                query += " AND interests LIKE ?"
+                params.append(f'%\"{filters["interests"]}\%"')
+            if "personality_trait" in filters: # JSON 필드 검색 (LIKE 사용)
+                query += " AND personality_traits LIKE ?"
+                params.append(f'%\"{filters["personality_trait"]}\%"')
+            if "value" in filters: # JSON 필드 검색 (LIKE 사용)
+                query += " AND persona_values LIKE ?"
+                params.append(f'%\"{filters["value"]}\%"')
+            if "lifestyle_attribute" in filters: # JSON 필드 검색 (LIKE 사용)
+                query += " AND lifestyle_attributes LIKE ?"
+                params.append(f'%\"{filters["lifestyle_attribute"]}\%"')
+            if "media_consumption" in filters: # 일반 텍스트 필드 검색 (LIKE 사용)
+                query += " AND media_consumption LIKE ?"
+                params.append(f'%{filters["media_consumption"]}% ')
+            if "shopping_habit" in filters: # 일반 텍스트 필드 검색 (LIKE 사용)
+                query += " AND shopping_habit LIKE ?"
+                params.append(f'%{filters["shopping_habit"]}% ')
+            if "social_relations" in filters: # JSON 필드 검색 (LIKE 사용)
+                query += " AND social_relations LIKE ?"
+                params.append(f'%\"{filters["social_relations"]}\%"')
+
         cursor.execute(query, params)
         rows = cursor.fetchall()
         conn.close()
@@ -148,7 +173,7 @@ class PersonaDatabase:
             persona = dict(zip(columns, row))
             # JSON 필드 파싱
             persona["personality_traits"] = json.loads(persona["personality_traits"])
-            persona["values"] = json.loads(persona["persona_values"]) # 컬럼명 변경
+            persona["values"] = json.loads(persona["persona_values"])
             persona["interests"] = json.loads(persona["interests"])
             persona["lifestyle_attributes"] = json.loads(persona["lifestyle_attributes"])
             persona["social_relations"] = json.loads(persona["social_relations"])

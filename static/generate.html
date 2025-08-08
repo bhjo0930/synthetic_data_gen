@@ -10,6 +10,11 @@
     <div class="container">
         <h1>페르소나 생성 Playground</h1>
 
+        <nav>
+            <a href="/generate.html">페르소나 생성</a> |
+            <a href="/search.html">페르소나 검색</a>
+        </nav>
+
         <section class="generate-section">
             <h2>페르소나 생성</h2>
             <div class="input-group">
@@ -40,28 +45,6 @@
             <div id="generateResult" class="result-box"></div>
         </section>
 
-        <section class="search-section">
-            <h2>페르소나 검색</h2>
-            <div class="input-group">
-                <label for="search_age_min">나이 (최소):</label>
-                <input type="number" id="search_age_min" placeholder="예: 25">
-            </div>
-            <div class="input-group">
-                <label for="search_age_max">나이 (최대):</label>
-                <input type="number" id="search_age_max" placeholder="예: 35">
-            </div>
-            <div class="input-group">
-                <label for="search_location">지역:</label>
-                <input type="text" id="search_location" placeholder="예: 서울">
-            </div>
-            <div class="input-group">
-                <label for="search_interests">관심사:</label>
-                <input type="text" id="search_interests" placeholder="예: 여행">
-            </div>
-            <button id="searchBtn">페르소나 검색</button>
-            <div id="searchResult" class="result-box"></div>
-        </section>
-
         <section class="management-section">
             <h2>데이터 관리</h2>
             <button id="deleteAllBtn">모든 페르소나 삭제</button>
@@ -69,6 +52,6 @@
         </section>
     </div>
 
-    <script src="/static/script.js"></script>
+    <script src="/static/generate_script.js"></script>
 </body>
 </html>

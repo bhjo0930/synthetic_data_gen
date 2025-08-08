@@ -1,13 +1,13 @@
 
 from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS # CORS 임포트
+from flask_cors import CORS
 from persona_generator import PersonaGenerator
 from database import PersonaDatabase
 import json
 import os
 
 app = Flask(__name__)
-CORS(app) # CORS 활성화
+CORS(app)
 
 generator = PersonaGenerator()
 db = PersonaDatabase()
@@ -17,10 +17,16 @@ db = PersonaDatabase()
 def static_files(filename):
     return send_from_directory('static', filename)
 
-# Playground 페이지 서빙
+# Playground 페이지 서빙 (생성 페이지)
 @app.route('/')
-def index():
-    return send_from_directory('static', 'index.html')
+@app.route('/generate.html')
+def generate_page():
+    return send_from_directory('static', 'generate.html')
+
+# 검색 페이지 서빙
+@app.route('/search.html')
+def search_page():
+    return send_from_directory('static', 'search.html')
 
 @app.route('/api/personas/generate', methods=['POST'])
 def generate_personas_api():
@@ -48,7 +54,16 @@ def search_personas_api():
         "location": request.args.get('location'),
         "gender": request.args.get('gender'),
         "occupation": request.args.get('occupation'),
-        "interests": request.args.get('interests')
+        "education": request.args.get('education'),
+        "income_bracket": request.args.get('income_bracket'),
+        "marital_status": request.args.get('marital_status'),
+        "interests": request.args.get('interests'),
+        "personality_trait": request.args.get('personality_trait'),
+        "value": request.args.get('value'),
+        "lifestyle_attribute": request.args.get('lifestyle_attribute'),
+        "media_consumption": request.args.get('media_consumption'),
+        "shopping_habit": request.args.get('shopping_habit'),
+        "social_relations": request.args.get('social_relations')
     }
     # None 값 필터링
     filters = {k: v for k, v in filters.items() if v is not None}
