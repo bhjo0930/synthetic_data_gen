@@ -1,12 +1,26 @@
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS # CORS 임포트
 from persona_generator import PersonaGenerator
 from database import PersonaDatabase
 import json
+import os
 
 app = Flask(__name__)
+CORS(app) # CORS 활성화
+
 generator = PersonaGenerator()
 db = PersonaDatabase()
+
+# 정적 파일 서빙 설정
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
+
+# Playground 페이지 서빙
+@app.route('/')
+def index():
+    return send_from_directory('static', 'index.html')
 
 @app.route('/api/personas/generate', methods=['POST'])
 def generate_personas_api():
@@ -57,4 +71,4 @@ def delete_all_personas_api():
 if __name__ == '__main__':
     # DB 초기화 (테스트용)
     db.delete_all_personas()
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5050)
