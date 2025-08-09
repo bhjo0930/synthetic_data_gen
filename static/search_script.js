@@ -13,6 +13,90 @@ document.addEventListener('DOMContentLoaded', () => {
     // OLAP UI 초기화
     initializeOLAP();
 
+    // Neo-Brutalism 색상 팔레트
+    const NEO_COLORS = {
+        primary: ['#FF0000', '#0000FF', '#FFFF00', '#00FF00', '#FF00FF'],
+        background: '#FFFFFF',
+        border: '#000000',
+        text: '#000000'
+    };
+
+    // Neo-Brutalism Chart 기본 설정
+    const NEO_CHART_OPTIONS = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: { display: false },
+            legend: { 
+                display: true,
+                position: 'bottom',
+                labels: {
+                    color: NEO_COLORS.text,
+                    font: {
+                        family: 'Arial Black, Impact, sans-serif',
+                        weight: 900,
+                        size: 12
+                    },
+                    boxWidth: 20,
+                    boxHeight: 20,
+                    borderWidth: 2,
+                    borderColor: NEO_COLORS.border
+                }
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: true,
+                    color: NEO_COLORS.border,
+                    lineWidth: 2
+                },
+                ticks: {
+                    color: NEO_COLORS.text,
+                    font: {
+                        family: 'Arial Black, Impact, sans-serif',
+                        weight: 900,
+                        size: 11
+                    }
+                },
+                border: {
+                    color: NEO_COLORS.border,
+                    width: 3
+                }
+            },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: true,
+                    color: NEO_COLORS.border,
+                    lineWidth: 2
+                },
+                ticks: {
+                    color: NEO_COLORS.text,
+                    font: {
+                        family: 'Arial Black, Impact, sans-serif',
+                        weight: 900,
+                        size: 11
+                    }
+                },
+                border: {
+                    color: NEO_COLORS.border,
+                    width: 3
+                }
+            }
+        },
+        elements: {
+            bar: {
+                borderWidth: 3,
+                borderColor: NEO_COLORS.border
+            },
+            arc: {
+                borderWidth: 3,
+                borderColor: NEO_COLORS.border
+            }
+        }
+    };
+
     // --- 차트 그리기 함수 --- //
     function drawCharts(personas) {
         // 데이터 집계
@@ -42,14 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(ageData).sort(),
                 datasets: [{
-                    label: '연령 분포',
+                    label: 'AGE DISTRIBUTION',
                     data: Object.values(ageData),
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    backgroundColor: NEO_COLORS.primary[0], // 빨간색
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { title: { display: true, text: '연령 분포' } }
+                ...NEO_CHART_OPTIONS,
+                plugins: {
+                    ...NEO_CHART_OPTIONS.plugins,
+                    legend: { display: false }
+                }
             }
         });
 
@@ -60,14 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(genderData),
                 datasets: [{
-                    label: '성별 분포',
+                    label: 'GENDER DISTRIBUTION',
                     data: Object.values(genderData),
-                    backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                    backgroundColor: [NEO_COLORS.primary[1], NEO_COLORS.primary[0]], // 파란색, 빨간색
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { title: { display: true, text: '성별 분포' } }
+                ...NEO_CHART_OPTIONS,
+                scales: {} // 파이 차트에는 스케일이 필요 없음
             }
         });
 
@@ -78,14 +169,19 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(locationData).sort(),
                 datasets: [{
-                    label: '지역 분포',
+                    label: 'LOCATION DISTRIBUTION',
                     data: Object.values(locationData),
-                    backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                    backgroundColor: NEO_COLORS.primary[3], // 초록색
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { title: { display: true, text: '지역 분포' } }
+                ...NEO_CHART_OPTIONS,
+                plugins: {
+                    ...NEO_CHART_OPTIONS.plugins,
+                    legend: { display: false }
+                }
             }
         });
 
@@ -96,14 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(occupationData).sort(),
                 datasets: [{
-                    label: '직업 분포',
+                    label: 'OCCUPATION DISTRIBUTION',
                     data: Object.values(occupationData),
-                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    backgroundColor: NEO_COLORS.primary[2], // 노란색
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { title: { display: true, text: '직업 분포' } }
+                ...NEO_CHART_OPTIONS,
+                plugins: {
+                    ...NEO_CHART_OPTIONS.plugins,
+                    legend: { display: false }
+                }
             }
         });
     }
@@ -480,19 +581,18 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(educationData),
                 datasets: [{
-                    label: '교육 수준',
+                    label: 'EDUCATION LEVEL',
                     data: Object.values(educationData),
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    backgroundColor: NEO_COLORS.primary[1], // 파란색
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { 
-                    title: { display: false },
+                ...NEO_CHART_OPTIONS,
+                plugins: {
+                    ...NEO_CHART_OPTIONS.plugins,
                     legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true }
                 }
             }
         });
@@ -511,15 +611,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 labels: Object.keys(incomeData),
                 datasets: [{
                     data: Object.values(incomeData),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    backgroundColor: NEO_COLORS.primary,
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { 
-                    title: { display: false },
-                    legend: { position: 'bottom' }
-                }
+                ...NEO_CHART_OPTIONS,
+                scales: {} // 파이 차트에는 스케일이 필요 없음
             }
         });
 
@@ -537,15 +636,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 labels: Object.keys(maritalData),
                 datasets: [{
                     data: Object.values(maritalData),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                    backgroundColor: NEO_COLORS.primary.slice(0, 4),
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { 
-                    title: { display: false },
-                    legend: { position: 'bottom' }
-                }
+                ...NEO_CHART_OPTIONS,
+                scales: {} // 도넛 차트에는 스케일이 필요 없음
             }
         });
 
@@ -563,19 +661,18 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(mediaData),
                 datasets: [{
-                    label: '미디어 소비',
+                    label: 'MEDIA CONSUMPTION',
                     data: Object.values(mediaData),
-                    backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                    backgroundColor: NEO_COLORS.primary[4], // 마젠타색
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { 
-                    title: { display: false },
+                ...NEO_CHART_OPTIONS,
+                plugins: {
+                    ...NEO_CHART_OPTIONS.plugins,
                     legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true }
                 }
             }
         });
@@ -595,15 +692,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 labels: Object.keys(shoppingData),
                 datasets: [{
                     data: Object.values(shoppingData),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    backgroundColor: NEO_COLORS.primary,
+                    borderColor: NEO_COLORS.border,
+                    borderWidth: 3
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { 
-                    title: { display: false },
-                    legend: { position: 'bottom' }
-                }
+                ...NEO_CHART_OPTIONS,
+                scales: {} // 파이 차트에는 스케일이 필요 없음
             }
         });
     }

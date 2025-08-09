@@ -65,19 +65,143 @@
         color:#FFFF00 !important;
       }
       
-      /* Chart height override - 차트 높이 2배로 증가 */
+      /* Neo-Brutalism Chart Styling */
       .chart-card {
-        min-height: 700px !important; /* 350px -> 700px */
-        max-height: 700px !important; /* 고정 높이로 설정 */
-        height: 700px !important; /* 고정 높이 설정 */
+        min-height: 700px !important;
+        max-height: 700px !important;
+        height: 700px !important;
+        background: var(--neo-white) !important;
+        border: var(--neo-border-thick) !important;
+        box-shadow: var(--neo-shadow-lg) !important;
+        border-radius: 0 !important;
+        position: relative !important;
+        transform: rotate(-0.3deg) !important;
+        contain: layout style paint !important;
+      }
+      
+      .chart-card:nth-child(2n) {
+        transform: rotate(0.3deg) !important;
+        box-shadow: 6px 6px 0px var(--neo-black) !important;
+      }
+      
+      .chart-card:nth-child(3n) {
+        transform: rotate(-0.5deg) !important;
+        border-color: var(--neo-red) !important;
+      }
+      
+      .chart-card::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -6px !important;
+        left: -6px !important;
+        width: 20px !important;
+        height: 20px !important;
+        background: var(--neo-red) !important;
+        border: 2px solid var(--neo-black) !important;
+        z-index: 4 !important;
+      }
+      
+      .chart-card:nth-child(2n)::before {
+        background: var(--neo-blue) !important;
+      }
+      
+      .chart-card:nth-child(3n)::before {
+        background: #FFFF00 !important;
+      }
+      
+      .chart-card h4 {
+        font-family: var(--neo-font-primary) !important;
+        font-weight: 900 !important;
+        font-size: 18px !important;
+        color: var(--neo-black) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        text-align: center !important;
+        margin: 0 0 1rem 0 !important;
+        background: var(--neo-black) !important;
+        color: var(--neo-white) !important;
+        padding: 8px 16px !important;
+        border: 2px solid var(--neo-black) !important;
+        position: relative !important;
+        transform: translateX(-4px) !important;
       }
       
       .chart-card canvas {
-        flex: 1 !important; /* 남은 공간을 모두 차지 */
+        flex: 1 !important;
         width: 100% !important;
-        height: auto !important; /* 자동 높이 조정 */
-        min-height: 600px !important; /* 최소 높이 보장 */
-        max-height: 650px !important; /* 제목 공간 고려한 최대 높이 */
+        height: auto !important;
+        min-height: 600px !important;
+        max-height: 650px !important;
+        border: 2px solid var(--neo-black) !important;
+        background: var(--neo-white) !important;
+      }
+      
+      /* KPI Cards Neo-Brutalism Styling */
+      .kpi-card {
+        background: var(--neo-white) !important;
+        border: var(--neo-border-thick) !important;
+        box-shadow: var(--neo-shadow-md) !important;
+        border-radius: 0 !important;
+        position: relative !important;
+        transform: rotate(-1deg) !important;
+        contain: layout style paint !important;
+      }
+      
+      .kpi-card:nth-child(2n) {
+        transform: rotate(0.8deg) !important;
+        background: #F0F0F0 !important;
+      }
+      
+      .kpi-card:nth-child(3n) {
+        transform: rotate(-0.5deg) !important;
+        border-color: var(--neo-blue) !important;
+      }
+      
+      .kpi-card::before {
+        display: none !important;
+      }
+      
+      .kpi-card::after {
+        content: '' !important;
+        position: absolute !important;
+        top: -4px !important;
+        right: -4px !important;
+        width: 12px !important;
+        height: 12px !important;
+        background: var(--neo-red) !important;
+        border: 2px solid var(--neo-black) !important;
+        z-index: 4 !important;
+      }
+      
+      .kpi-card:nth-child(2n)::after {
+        background: var(--neo-blue) !important;
+      }
+      
+      .kpi-card:nth-child(3n)::after {
+        background: #FFFF00 !important;
+      }
+      
+      .kpi-value {
+        font-family: var(--neo-font-primary) !important;
+        font-weight: 900 !important;
+        font-size: 2.5rem !important;
+        color: var(--neo-black) !important;
+        text-transform: uppercase !important;
+        letter-spacing: -1px !important;
+      }
+      
+      .kpi-label {
+        font-family: var(--neo-font-primary) !important;
+        font-weight: 700 !important;
+        font-size: 12px !important;
+        color: var(--neo-black) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+      }
+      
+      .kpi-icon {
+        color: var(--neo-black) !important;
+        font-size: 1.8rem !important;
       }
       
       body{font-family:var(--neo-font-primary);font-weight:900;line-height:1.2;background:var(--neo-white);color:var(--neo-black)}.neo-container{max-width:1200px;margin:0 auto;padding:var(--neo-space-lg);contain:layout}.neo-header{margin-bottom:var(--neo-space-xl)}.neo-title{font-size:clamp(24px,4vw,48px);font-weight:900;text-align:center;background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-lg);padding:var(--neo-space-lg);position:relative;transform:rotate(-1deg);contain:layout style paint}.neo-nav{display:flex;justify-content:center;gap:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);contain:layout}.neo-nav a{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);padding:12px var(--neo-space-lg);text-decoration:none;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}.neo-button{background:var(--neo-red);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:0.5px;padding:12px var(--neo-space-lg);cursor:pointer;contain:layout style paint}.neo-card{background:var(--neo-white);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);padding:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);position:relative;contain:layout style paint}@media (max-width:768px){.neo-nav{flex-direction:column;gap:8px}.neo-title{font-size:24px;transform:none}}

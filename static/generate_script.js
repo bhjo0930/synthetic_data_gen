@@ -16,8 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return '<p class="error">No personas generated</p>';
         }
 
+        // 최대 10개로 제한
+        const displayPersonas = personas.slice(0, 10);
+        const totalGenerated = personas.length;
+
         let html = '<div class="persona-grid">';
-        personas.forEach((persona, index) => {
+        displayPersonas.forEach((persona, index) => {
             // Extract data from correct nested structure
             const demographics = persona.demographics || {};
             const psychological = persona.psychological_attributes || {};
@@ -41,28 +45,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const lifestyleText = psychological.lifestyle_attributes ? 
                 psychological.lifestyle_attributes.join(', ') : 'N/A';
 
-            html += `
-                <div class="persona-card">
-                    <h3>Person ${index + 1}</h3>
-                    <p><strong>Name:</strong> ${persona.name || 'N/A'}</p>
-                    <p><strong>Age:</strong> ${demographics.age || 'N/A'}</p>
-                    <p><strong>Gender:</strong> ${demographics.gender || 'N/A'}</p>
-                    <p><strong>Location:</strong> ${demographics.location || 'N/A'}</p>
-                    <p><strong>Occupation:</strong> ${demographics.occupation || 'N/A'}</p>
-                    <p><strong>Education:</strong> ${demographics.education || 'N/A'}</p>
-                    <p><strong>Income:</strong> ${demographics.income_bracket || 'N/A'}</p>
-                    <p><strong>Marital Status:</strong> ${demographics.marital_status || 'N/A'}</p>
-                    <p><strong>Interests:</strong> ${interestsText}</p>
-                    <p><strong>Values:</strong> ${valuesText}</p>
-                    <p><strong>Personality:</strong> ${personalityText}</p>
-                    <p><strong>Lifestyle:</strong> ${lifestyleText}</p>
-                    <p><strong>Media Habits:</strong> ${behavioral.media_consumption || 'N/A'}</p>
-                    <p><strong>Shopping Habits:</strong> ${behavioral.shopping_habit || 'N/A'}</p>
-                    <p><strong>Social Relations:</strong> ${persona.social_relations ? persona.social_relations.join(', ') : 'N/A'}</p>
-                </div>
-            `;
+            html += `<div class="persona-card"><h3>Person ${index + 1}</h3><div><strong>Name:</strong> ${persona.name || 'N/A'}</div><div><strong>Age:</strong> ${demographics.age || 'N/A'}</div><div><strong>Gender:</strong> ${demographics.gender || 'N/A'}</div><div><strong>Location:</strong> ${demographics.location || 'N/A'}</div><div><strong>Occupation:</strong> ${demographics.occupation || 'N/A'}</div><div><strong>Education:</strong> ${demographics.education || 'N/A'}</div><div><strong>Income:</strong> ${demographics.income_bracket || 'N/A'}</div><div><strong>Marital Status:</strong> ${demographics.marital_status || 'N/A'}</div><div><strong>Interests:</strong> ${interestsText}</div><div><strong>Values:</strong> ${valuesText}</div><div><strong>Personality:</strong> ${personalityText}</div><div><strong>Lifestyle:</strong> ${lifestyleText}</div><div><strong>Media Habits:</strong> ${behavioral.media_consumption || 'N/A'}</div><div><strong>Shopping Habits:</strong> ${behavioral.shopping_habit || 'N/A'}</div><div><strong>Social Relations:</strong> ${persona.social_relations ? persona.social_relations.join(', ') : 'N/A'}</div></div>`;
         });
         html += '</div>';
+        
+        // 생성된 총 개수가 10개를 초과하는 경우 안내 메시지 추가
+        if (totalGenerated > 10) {
+            html += `<div class="generation-info">
+                <p class="info-message">
+                    <strong>총 ${totalGenerated}명이 생성되었습니다.</strong><br>
+                    화면에는 처음 10명만 표시됩니다. 
+                    전체 데이터는 Analytics Dashboard에서 확인할 수 있습니다.
+                </p>
+            </div>`;
+        } else {
+            html += `<div class="generation-info">
+                <p class="success-message">
+                    <strong>총 ${totalGenerated}명이 생성되었습니다.</strong>
+                </p>
+            </div>`;
+        }
+        
         return html;
     }
 

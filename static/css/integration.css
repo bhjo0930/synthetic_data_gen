@@ -201,67 +201,6 @@
   text-transform: uppercase;
 }
 
-/* Persona grid styling for generated results */
-.persona-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--neo-space-lg);
-  margin-top: var(--neo-space-lg);
-}
-
-.persona-card {
-  background: var(--neo-white);
-  border: var(--neo-border-thick);
-  box-shadow: var(--neo-shadow-md);
-  padding: var(--neo-space-lg);
-  position: relative;
-  transform: rotate(0deg);
-}
-
-.persona-card:nth-child(2n) {
-  transform: rotate(1deg);
-}
-
-.persona-card:nth-child(3n) {
-  transform: rotate(-1deg);
-}
-
-.persona-card::before {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  width: 16px;
-  height: 16px;
-  background: var(--neo-blue);
-  border: var(--neo-border-thin);
-  z-index: 2;
-}
-
-.persona-card h3 {
-  font-family: var(--neo-font-primary);
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--neo-black);
-  margin: 0 0 var(--neo-space-md) 0;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
-}
-
-.persona-card p {
-  font-family: var(--neo-font-primary);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.3;
-  margin: var(--neo-space-xs) 0;
-  color: var(--neo-black);
-}
-
-.persona-card strong {
-  color: var(--neo-black);
-  font-weight: 900;
-  text-transform: uppercase;
-}
 
 /* Loading states */
 .neo-loading {
@@ -305,16 +244,6 @@
     align-items: stretch;
   }
   
-  .persona-grid {
-    grid-template-columns: 1fr;
-    gap: var(--neo-space-md);
-  }
-  
-  .persona-card,
-  .persona-card:nth-child(2n),
-  .persona-card:nth-child(3n) {
-    transform: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -333,26 +262,12 @@
     padding: var(--neo-space-md);
   }
   
-  .persona-card {
-    padding: var(--neo-space-md);
-  }
-  
-  .persona-card h3 {
-    font-size: 16px;
-  }
-  
-  .persona-card p {
-    font-size: 12px;
-  }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .neo-title,
   .neo-result-box,
-  .persona-card {
-    border-width: 6px;
-  }
 }
 
 /* Reduced motion support */
@@ -360,11 +275,6 @@
   .neo-title,
   .neo-card--generate,
   .neo-card--management,
-  .persona-card,
-  .persona-card:nth-child(2n),
-  .persona-card:nth-child(3n) {
-    transform: none;
-  }
   
   .neo-loading {
     animation: none;

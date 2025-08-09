@@ -25,16 +25,6 @@
     flex: 1 1 100%;
   }
   
-  .persona-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px; /* Fallback for var(--neo-space-lg) */
-  }
-  
-  .persona-card {
-    flex: 1 1 calc(33.333% - 16px);
-    min-width: 280px;
-  }
 }
 
 /* Custom Properties Fallbacks for older browsers */
@@ -100,11 +90,6 @@
     transform: none;
   }
   
-  .persona-card,
-  .persona-card:nth-child(2n),
-  .persona-card:nth-child(3n) {
-    transform: none;
-  }
 }
 
 /* Box Shadow Fallbacks */
@@ -294,7 +279,6 @@
   .neo-title::before,
   .neo-title::after,
   .neo-card::before,
-  .persona-card::before {
     display: none;
   }
   
@@ -325,7 +309,6 @@
   .neo-title::before,
   .neo-title::after,
   .neo-card::before,
-  .persona-card::before {
     border-width: 3px;
   }
 }
@@ -335,11 +318,6 @@
   .neo-title,
   .neo-card--generate,
   .neo-card--management,
-  .persona-card,
-  .persona-card:nth-child(2n),
-  .persona-card:nth-child(3n) {
-    transform: none;
-  }
   
   .neo-loading {
     animation: none;

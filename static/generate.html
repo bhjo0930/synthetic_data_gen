@@ -8,7 +8,59 @@
     <!-- Critical CSS inline for performance -->
     <style>
       /* Critical CSS for above-the-fold content */
-      :root{--neo-white:#FFFFFF;--neo-black:#000000;--neo-red:#FF0000;--neo-blue:#0000FF;--neo-font-primary:'Arial Black','Helvetica Bold','Impact',sans-serif;--neo-border-thick:4px solid var(--neo-black);--neo-shadow-md:4px 4px 0px var(--neo-black);--neo-shadow-lg:8px 8px 0px var(--neo-black);--neo-space-lg:24px;--neo-space-xl:32px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--neo-font-primary);font-weight:900;line-height:1.2;background:var(--neo-white);color:var(--neo-black)}.neo-container{max-width:1200px;margin:0 auto;padding:var(--neo-space-lg);contain:layout}.neo-header{margin-bottom:var(--neo-space-xl)}.neo-title{font-size:clamp(24px,4vw,48px);font-weight:900;text-align:center;background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-lg);padding:var(--neo-space-lg);position:relative;transform:rotate(-1deg);contain:layout style paint}.neo-nav{display:flex;justify-content:center;gap:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);contain:layout}.neo-nav a{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);padding:12px var(--neo-space-lg);text-decoration:none;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}.neo-button{background:var(--neo-red);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:0.5px;padding:12px var(--neo-space-lg);cursor:pointer;contain:layout style paint}.neo-card{background:var(--neo-white);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);padding:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);position:relative;contain:layout style paint}.neo-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--neo-space-lg);margin-bottom:var(--neo-space-lg);contain:layout}.neo-input,.neo-select{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);font-family:var(--neo-font-primary);font-weight:700;font-size:16px;padding:12px 16px;width:100%}@media (max-width:768px){.neo-form-grid{grid-template-columns:1fr;gap:16px}.neo-nav{flex-direction:column;gap:8px}.neo-title{font-size:24px;transform:none}}
+      :root{--neo-white:#FFFFFF;--neo-black:#000000;--neo-red:#FF0000;--neo-blue:#0000FF;--neo-font-primary:'Arial Black','Helvetica Bold','Impact',sans-serif;--neo-border-thick:4px solid var(--neo-black);--neo-shadow-md:4px 4px 0px var(--neo-black);--neo-shadow-lg:8px 8px 0px var(--neo-black);--neo-space-lg:24px;--neo-space-xl:32px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--neo-font-primary);font-weight:900;line-height:1.2;background:var(--neo-white);color:var(--neo-black)}.neo-container{max-width:1200px;margin:0 auto;padding:var(--neo-space-lg);contain:layout}.neo-header{margin-bottom:var(--neo-space-xl)}.neo-title{font-size:clamp(24px,4vw,48px);font-weight:900;text-align:center;background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-lg);padding:var(--neo-space-lg);position:relative;transform:rotate(-1deg);contain:layout style paint}.neo-nav{display:flex;justify-content:center;gap:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);contain:layout}.neo-nav a{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);padding:12px var(--neo-space-lg);text-decoration:none;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}.neo-button{background:var(--neo-red);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:0.5px;padding:12px var(--neo-space-lg);cursor:pointer;contain:layout style paint}.neo-card{background:var(--neo-white);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);padding:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);position:relative;contain:layout style paint}.neo-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--neo-space-lg);margin-bottom:var(--neo-space-lg);contain:layout}.neo-input,.neo-select{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);font-family:var(--neo-font-primary);font-weight:700;font-size:16px;padding:12px 16px;width:100%}.generation-info{margin-top:var(--neo-space-lg);text-align:center}.info-message{background:var(--neo-blue);color:var(--neo-white);padding:16px;border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;margin:0}.success-message{background:#00FF00;color:var(--neo-black);padding:16px;border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;margin:0}@media (max-width:768px){.neo-form-grid{grid-template-columns:1fr;gap:16px}.neo-nav{flex-direction:column;gap:8px}.neo-title{font-size:24px;transform:none}}
+      
+      /* Generate Page Layout Styles */
+      .neo-container{max-width:1800px !important}
+      .generate-layout{display:flex;gap:var(--neo-space-xl);min-height:80vh;contain:layout}
+      .generate-left-panel{flex:0 0 380px;display:flex;flex-direction:column;gap:var(--neo-space-lg)}
+      .generate-right-panel{flex:1;min-height:100%}
+      .neo-card--results{min-height:80vh}
+      .neo-card--results .neo-result-box{max-height:calc(80vh - 120px);overflow-y:auto}
+      .neo-form-grid{grid-template-columns:1fr !important;gap:var(--neo-space-md)}
+      .empty-state{text-align:center;padding:var(--neo-space-xl);color:#666;font-family:var(--neo-font-primary);font-weight:700}
+      .empty-state p{margin-bottom:var(--neo-space-md)}
+      .empty-state strong{color:var(--neo-black);font-size:18px;text-transform:uppercase;letter-spacing:1px}
+      
+      /* Basic persona grid layout */
+      .persona-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+        gap:16px;
+        margin-top:20px;
+      }
+      
+      .persona-card{
+        border:1px solid #ccc;
+        padding:15px;
+        background:#f9f9f9;
+        border-radius:4px;
+      }
+      
+      .persona-card h3{
+        margin:0 0 10px 0;
+        font-size:16px;
+        font-weight:bold;
+        color:#333;
+      }
+      
+      .persona-card div{
+        margin:3px 0;
+        font-size:13px;
+        line-height:1.3;
+      }
+      
+      .persona-card strong{
+        font-weight:bold;
+        color:#555;
+      }
+      
+      @media (max-width:1200px){
+        .generate-layout{flex-direction:column;gap:var(--neo-space-lg)}
+        .generate-left-panel{flex:none;width:100%}
+        .generate-right-panel{flex:none}
+        .neo-card--results{min-height:60vh}
+      }
     </style>
     
     <!-- Preload critical fonts -->
@@ -34,58 +86,79 @@
         </nav>
 
         <main class="neo-main">
-            <section class="neo-card neo-card--generate">
-                <div class="neo-card__header">
-                    <h2 class="neo-card__title">Generate Virtual People</h2>
-                    <div class="neo-card__meta">Generator</div>
-                </div>
-                
-                <div class="neo-form-grid">
-                    <div class="input-group">
-                        <label for="count">Number of People:</label>
-                        <input type="number" id="count" value="1" min="1">
-                    </div>
-                    <div class="input-group">
-                        <label for="age_range_min">Age Range (Min):</label>
-                        <input type="number" id="age_range_min" placeholder="e.g., 20">
-                    </div>
-                    <div class="input-group">
-                        <label for="age_range_max">Age Range (Max):</label>
-                        <input type="number" id="age_range_max" placeholder="e.g., 30">
-                    </div>
-                    <div class="input-group">
-                        <label for="gender">Gender:</label>
-                        <select id="gender">
-                            <option value="">Any</option>
-                            <option value="남성">Male</option>
-                            <option value="여성">Female</option>
-                        </select>
-                    </div>
-                    <div class="input-group neo-input-full">
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" placeholder="e.g., Seoul">
-                    </div>
-                </div>
-                
-                <div class="neo-button-group">
-                    <button id="generateBtn" class="neo-button neo-button--large">Generate People</button>
-                </div>
-                
-                <div id="generateResult" class="neo-result-box"></div>
-            </section>
+            <div class="generate-layout">
+                <!-- Left Panel: Settings and Controls -->
+                <div class="generate-left-panel">
+                    <section class="neo-card neo-card--generate">
+                        <div class="neo-card__header">
+                            <h2 class="neo-card__title">Generate Virtual People</h2>
+                            <div class="neo-card__meta">Generator</div>
+                        </div>
+                        
+                        <div class="neo-form-grid">
+                            <div class="input-group">
+                                <label for="count">Number of People:</label>
+                                <input type="number" id="count" value="1" min="1">
+                            </div>
+                            <div class="input-group">
+                                <label for="age_range_min">Age Range (Min):</label>
+                                <input type="number" id="age_range_min" placeholder="e.g., 20">
+                            </div>
+                            <div class="input-group">
+                                <label for="age_range_max">Age Range (Max):</label>
+                                <input type="number" id="age_range_max" placeholder="e.g., 30">
+                            </div>
+                            <div class="input-group">
+                                <label for="gender">Gender:</label>
+                                <select id="gender">
+                                    <option value="">Any</option>
+                                    <option value="남성">Male</option>
+                                    <option value="여성">Female</option>
+                                </select>
+                            </div>
+                            <div class="input-group neo-input-full">
+                                <label for="location">Location:</label>
+                                <input type="text" id="location" placeholder="e.g., Seoul">
+                            </div>
+                        </div>
+                        
+                        <div class="neo-button-group">
+                            <button id="generateBtn" class="neo-button neo-button--large">Generate People</button>
+                        </div>
+                    </section>
 
-            <section class="neo-card neo-card--management neo-card--accent-blue">
-                <div class="neo-card__header">
-                    <h2 class="neo-card__title">Data Management</h2>
-                    <div class="neo-card__meta">Admin</div>
+                    <!-- Data Management at bottom left -->
+                    <section class="neo-card neo-card--management neo-card--accent-blue">
+                        <div class="neo-card__header">
+                            <h2 class="neo-card__title">Data Management</h2>
+                            <div class="neo-card__meta">Admin</div>
+                        </div>
+                        
+                        <div class="neo-button-group">
+                            <button id="deleteAllBtn" class="neo-button neo-button--warning neo-button--large">Delete All Virtual People</button>
+                        </div>
+                        
+                        <div id="deleteResult" class="neo-result-box"></div>
+                    </section>
                 </div>
-                
-                <div class="neo-button-group">
-                    <button id="deleteAllBtn" class="neo-button neo-button--warning neo-button--large">Delete All Virtual People</button>
+
+                <!-- Right Panel: Results -->
+                <div class="generate-right-panel">
+                    <section class="neo-card neo-card--results">
+                        <div class="neo-card__header">
+                            <h2 class="neo-card__title">Generated People</h2>
+                            <div class="neo-card__meta">Results</div>
+                        </div>
+                        
+                        <div id="generateResult" class="neo-result-box">
+                            <div class="empty-state">
+                                <p><strong>READY TO GENERATE</strong></p>
+                                <p>Configure your settings on the left and click "Generate People" to create virtual personas.</p>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                
-                <div id="deleteResult" class="neo-result-box"></div>
-            </section>
+            </div>
         </main>
     </div>
 
