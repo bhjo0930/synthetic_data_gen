@@ -1,0 +1,207 @@
+/* Neo-Brutalism Asymmetrical Grid System */
+
+/* Base Grid Container */
+.neo-grid {
+  display: grid;
+  gap: var(--neo-space-md);
+  position: relative;
+}
+
+/* Intentionally Unbalanced Grid Templates */
+
+/* 2-Column Asymmetrical */
+.neo-grid--asymmetric-2col {
+  grid-template-columns: 1fr 2fr;
+}
+
+.neo-grid--asymmetric-2col-reverse {
+  grid-template-columns: 2fr 1fr;
+}
+
+/* 3-Column Unbalanced */
+.neo-grid--asymmetric-3col {
+  grid-template-columns: 1fr 3fr 2fr;
+}
+
+.neo-grid--asymmetric-3col-heavy-left {
+  grid-template-columns: 3fr 1fr 1fr;
+}
+
+.neo-grid--asymmetric-3col-heavy-right {
+  grid-template-columns: 1fr 1fr 3fr;
+}
+
+/* 4-Column Chaotic */
+.neo-grid--asymmetric-4col {
+  grid-template-columns: 1fr 2fr 1fr 3fr;
+}
+
+/* Vertical Asymmetry */
+.neo-grid--asymmetric-rows {
+  grid-template-rows: 1fr 3fr 2fr;
+}
+
+.neo-grid--asymmetric-rows-heavy-top {
+  grid-template-rows: 3fr 1fr 1fr;
+}
+
+/* Complex Asymmetrical Layouts */
+.neo-grid--chaos {
+  grid-template-columns: 1fr 3fr 2fr 1fr;
+  grid-template-rows: 2fr 1fr 3fr;
+}
+
+.neo-grid--offset {
+  grid-template-columns: 0.5fr 2fr 1fr 0.5fr;
+  grid-template-rows: 1fr 2fr 1fr;
+}
+
+/* Overlapping Element Positioning Utilities */
+
+/* Base overlapping container */
+.neo-overlap-container {
+  position: relative;
+  display: grid;
+  grid-template-areas: "overlap";
+}
+
+.neo-overlap-container > * {
+  grid-area: overlap;
+}
+
+/* Overlap positioning utilities */
+.neo-overlap--top-left {
+  justify-self: start;
+  align-self: start;
+  z-index: 2;
+}
+
+.neo-overlap--top-right {
+  justify-self: end;
+  align-self: start;
+  z-index: 2;
+}
+
+.neo-overlap--bottom-left {
+  justify-self: start;
+  align-self: end;
+  z-index: 2;
+}
+
+.neo-overlap--bottom-right {
+  justify-self: end;
+  align-self: end;
+  z-index: 2;
+}
+
+.neo-overlap--center {
+  justify-self: center;
+  align-self: center;
+  z-index: 3;
+}
+
+/* Offset overlapping elements */
+.neo-overlap--offset-sm {
+  transform: translate(var(--neo-space-sm), var(--neo-space-sm));
+}
+
+.neo-overlap--offset-md {
+  transform: translate(var(--neo-space-md), var(--neo-space-md));
+}
+
+.neo-overlap--offset-lg {
+  transform: translate(var(--neo-space-lg), var(--neo-space-lg));
+}
+
+.neo-overlap--offset-negative {
+  transform: translate(calc(-1 * var(--neo-space-md)), calc(-1 * var(--neo-space-md)));
+}
+
+/* Z-index utilities for layering */
+.neo-layer--background {
+  z-index: 1;
+}
+
+.neo-layer--content {
+  z-index: 2;
+}
+
+.neo-layer--accent {
+  z-index: 3;
+}
+
+.neo-layer--overlay {
+  z-index: 4;
+}
+
+.neo-layer--top {
+  z-index: 5;
+}
+
+/* Grid Item Positioning Utilities */
+
+/* Span utilities for asymmetrical placement */
+.neo-span--2 {
+  grid-column: span 2;
+}
+
+.neo-span--3 {
+  grid-column: span 3;
+}
+
+.neo-span--row-2 {
+  grid-row: span 2;
+}
+
+.neo-span--row-3 {
+  grid-row: span 3;
+}
+
+/* Specific positioning for intentional misalignment */
+.neo-place--start-2 {
+  grid-column-start: 2;
+}
+
+.neo-place--start-3 {
+  grid-column-start: 3;
+}
+
+.neo-place--end-2 {
+  grid-column-end: -2;
+}
+
+.neo-place--end-3 {
+  grid-column-end: -3;
+}
+
+/* Asymmetrical gap utilities */
+.neo-gap--none {
+  gap: 0;
+}
+
+.neo-gap--xs {
+  gap: var(--neo-space-xs);
+}
+
+.neo-gap--sm {
+  gap: var(--neo-space-sm);
+}
+
+.neo-gap--lg {
+  gap: var(--neo-space-lg);
+}
+
+.neo-gap--xl {
+  gap: var(--neo-space-xl);
+}
+
+/* Uneven gaps */
+.neo-gap--uneven {
+  column-gap: var(--neo-space-lg);
+  row-gap: var(--neo-space-sm);
+}
+
+.neo-gap--chaotic {
+  column-gap: var(--neo-space-xl);
+  row-gap: var(--neo-space-xs);
+}

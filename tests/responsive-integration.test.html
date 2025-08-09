@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Integration Tests</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        .test-frame {
+            border: var(--neo-border-thick);
+            margin: var(--neo-space-md);
+            background: var(--neo-white);
+        }
+        
+        .test-header {
+            background: var(--neo-black);
+            color: var(--neo-white);
+            padding: var(--neo-space-sm);
+            font-family: var(--neo-font-primary);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        
+        .viewport-simulator {
+            border: 2px solid var(--neo-red);
+            margin: var(--neo-space-md);
+            overflow: hidden;
+            resize: horizontal;
+            min-width: 320px;
+            max-width: 100%;
+        }
+        
+        .viewport-label {
+            background: var(--neo-red);
+            color: var(--neo-white);
+            padding: var(--neo-space-xs);
+            font-family: var(--neo-font-mono);
+            font-weight: 700;
+            font-size: 12px;
+        }
+        
+        .test-controls {
+            background: var(--neo-yellow);
+            padding: var(--neo-space-md);
+            border: var(--neo-border-thick);
+            margin: var(--neo-space-md);
+        }
+        
+        .test-button {
+            background: var(--neo-green);
+            color: var(--neo-black);
+            border: var(--neo-border-thick);
+            padding: var(--neo-space-sm) var(--neo-space-md);
+            margin: var(--neo-space-xs);
+            font-family: var(--neo-font-primary);
+            font-weight: 900;
+            cursor: pointer;
+        }
+        
+        .test-button:hover {
+            background: var(--neo-black);
+            color: var(--neo-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        Neo-Brutalism Responsive Integration Tests
+    </div>
+    
+    <div class="test-controls">
+        <h3>Viewport Simulation Controls</h3>
+        <button class="test-button" onclick="setViewportWidth(320)">Mobile (320px)</button>
+        <button class="test-button" onclick="setViewportWidth(480)">Small (480px)</button>
+        <button class="test-button" onclick="setViewportWidth(768)">Tablet (768px)</button>
+        <button class="test-button" onclick="setViewportWidth(1024)">Desktop (1024px)</button>
+        <button class="test-button" onclick="setViewportWidth(1200)">Large (1200px)</button>
+        <button class="test-button" onclick="runResponsiveTests()">Run All Tests</button>
+    </div>
+
+    <!-- Generate Page Simulation -->
+    <div class="test-frame">
+        <div class="test-header">Generate Page Responsive Test</div>
+        <div class="viewport-simulator" id="generateSimulator">
+            <div class="viewport-label">Generate Page - <span id="generateWidth">100%</span></div>
+            <div style="padding: var(--neo-space-md);">
+                <!-- Simulated generate page content -->
+                <h1 class="neo-heading--responsive">Virtual Peoples Generator</h1>
+                
+                <form class="neo-form--responsive">
+                    <div class="input-group">
+                        <label for="testName">Name</label>
+                        <input type="text" id="testName" class="neo-input--responsive" placeholder="Enter name">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="testAge">Age Range</label>
+                        <div class="range-inputs">
+                            <input type="number" class="neo-input--responsive" placeholder="Min" min="18" max="100">
+                            <span>to</span>
+                            <input type="number" class="neo-input--responsive" placeholder="Max" min="18" max="100">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group neo-input--full">
+                        <label for="testDescription">Description</label>
+                        <textarea id="testDescription" class="neo-input--responsive" placeholder="Describe the persona" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="neo-button-group--responsive">
+                        <button type="submit" class="neo-button neo-button--responsive">Generate Persona</button>
+                        <button type="button" class="neo-button neo-button--secondary neo-button--responsive">Clear Form</button>
+                    </div>
+                </form>
+                
+                <!-- Results area -->
+                <div class="neo-card--responsive neo-responsive-overlap" style="margin-top: var(--neo-space-lg); padding: var(--neo-space-md); border: var(--neo-border-thick); background: var(--neo-white);">
+                    <h3>Generated Persona</h3>
+                    <p class="neo-text--responsive">This area would show the generated persona with responsive text sizing and layout adaptation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Page Simulation -->
+    <div class="test-frame">
+        <div class="test-header">Search Page Responsive Test</div>
+        <div class="viewport-simulator" id="searchSimulator">
+            <div class="viewport-label">Search Page - <span id="searchWidth">100%</span></div>
+            <div style="padding: var(--neo-space-md);">
+                <!-- Simulated search page content -->
+                <h1 class="neo-heading--responsive">Analytics Dashboard</h1>
+                
+                <nav class="neo-nav--responsive">
+                    <a href="#" class="neo-nav-item neo-button">Dashboard</a>
+                    <a href="#" class="neo-nav-item neo-button neo-button--secondary">Reports</a>
+                    <a href="#" class="neo-nav-item neo-button neo-button--warning">Settings</a>
+                </nav>
+                
+                <!-- Filter panel -->
+                <div class="neo-grid--responsive-asymmetric" style="margin-top: var(--neo-space-lg);">
+                    <div style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-md);">
+                        <h3>Filters</h3>
+                        <div class="filter-item">
+                            <label>Age Range</label>
+                            <div class="range-inputs">
+                                <input type="number" class="neo-input--responsive" placeholder="Min">
+                                <span>to</span>
+                                <input type="number" class="neo-input--responsive" placeholder="Max">
+                            </div>
+                        </div>
+                        
+                        <div class="filter-item">
+                            <label>Categories</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="neo-touch-friendly"> Professional
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="neo-touch-friendly"> Creative
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="neo-touch-friendly"> Technical
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-md);">
+                        <h3>Results</h3>
+                        <div class="neo-table--responsive">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: var(--neo-border-thin); padding: var(--neo-space-sm); background: var(--neo-black); color: var(--neo-white);">Name</th>
+                                        <th style="border: var(--neo-border-thin); padding: var(--neo-space-sm); background: var(--neo-black); color: var(--neo-white);">Age</th>
+                                        <th style="border: var(--neo-border-thin); padding: var(--neo-space-sm); background: var(--neo-black); color: var(--neo-white);">Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: var(--neo-border-thin); padding: var(--neo-space-sm);">John Doe</td>
+                                        <td style="border: var(--neo-border-thin); padding: var(--neo-space-sm);">32</td>
+                                        <td style="border: var(--neo-border-thin); padding: var(--neo-space-sm);">Professional</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: var(--neo-border-thin); padding: var(--neo-space-sm);">Jane Smith</td>
+                                        <td style="border: var(--neo-border-thin); padding: var(--neo-space-sm);">28</td>
+                                        <td style="border: var(--neo-border-thin); padding: var(--neo-space-sm);">Creative</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complex Layout Test -->
+    <div class="test-frame">
+        <div class="test-header">Complex Asymmetrical Layout Test</div>
+        <div class="viewport-simulator" id="complexSimulator">
+            <div class="viewport-label">Complex Layout - <span id="complexWidth">100%</span></div>
+            <div style="padding: var(--neo-space-md);">
+                <div class="neo-grid--responsive-chaos neo-spacing--responsive">
+                    <div class="neo-complex-overlap" style="background: var(--neo-red); color: var(--neo-white); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                        <h4>Complex Element 1</h4>
+                        <p class="neo-text--responsive">This element should show increasing complexity as screen size grows.</p>
+                    </div>
+                    
+                    <div class="neo-responsive-overlap" style="background: var(--neo-green); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                        <h4>Responsive Element 2</h4>
+                        <p class="neo-text--responsive">Basic overlapping effects appear on small screens.</p>
+                    </div>
+                    
+                    <div class="neo-extreme-overlap" style="background: var(--neo-blue); color: var(--neo-white); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                        <h4>Extreme Element 3</h4>
+                        <p class="neo-text--responsive">Extreme effects only on very large screens (1200px+).</p>
+                    </div>
+                    
+                    <div style="background: var(--neo-yellow); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                        <h4>Standard Element 4</h4>
+                        <p class="neo-text--responsive">Regular element without special effects.</p>
+                    </div>
+                </div>
+                
+                <!-- Visibility test elements -->
+                <div style="margin-top: var(--neo-space-lg);">
+                    <div class="neo-show-mobile-only" style="background: var(--neo-red); color: var(--neo-white); padding: var(--neo-space-sm); border: var(--neo-border-thick); margin: var(--neo-space-xs) 0;">
+                        📱 Mobile Only Content
+                    </div>
+                    
+                    <div class="neo-show-tablet-only" style="background: var(--neo-green); padding: var(--neo-space-sm); border: var(--neo-border-thick); margin: var(--neo-space-xs) 0;">
+                        📟 Tablet Only Content
+                    </div>
+                    
+                    <div class="neo-show-desktop" style="background: var(--neo-blue); color: var(--neo-white); padding: var(--neo-space-sm); border: var(--neo-border-thick); margin: var(--neo-space-xs) 0;">
+                        🖥️ Desktop Content
+                    </div>
+                    
+                    <div class="neo-hide-mobile" style="background: var(--neo-yellow); padding: var(--neo-space-sm); border: var(--neo-border-thick); margin: var(--neo-space-xs) 0;">
+                        🚫 Hidden on Mobile
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setViewportWidth(width) {
+            const simulators = document.querySelectorAll('.viewport-simulator');
+            simulators.forEach(simulator => {
+                simulator.style.width = width + 'px';
+            });
+            
+            // Update width labels
+            document.getElementById('generateWidth').textContent = width + 'px';
+            document.getElementById('searchWidth').textContent = width + 'px';
+            document.getElementById('complexWidth').textContent = width + 'px';
+            
+            console.log(`🔧 Viewport set to: ${width}px`);
+            
+            // Trigger resize event for responsive tests
+            window.dispatchEvent(new Event('resize'));
+        }
+
+        function runResponsiveTests() {
+            console.log('🧪 Running responsive integration tests...');
+            
+            const testWidths = [320, 480, 768, 1024, 1200];
+            let testIndex = 0;
+            
+            function runNextTest() {
+                if (testIndex < testWidths.length) {
+                    const width = testWidths[testIndex];
+                    console.log(`\n📐 Testing at ${width}px...`);
+                    setViewportWidth(width);
+                    
+                    // Wait for layout to settle, then run tests
+                    setTimeout(() => {
+                        testLayoutAtWidth(width);
+                        testIndex++;
+                        setTimeout(runNextTest, 1000); // Wait 1 second between tests
+                    }, 500);
+                } else {
+                    console.log('\n✅ All responsive integration tests completed!');
+                }
+            }
+            
+            runNextTest();
+        }
+
+        function testLayoutAtWidth(width) {
+            console.log(`Testing layout at ${width}px:`);
+            
+            // Test grid behavior
+            const asymmetricGrid = document.querySelector('.neo-grid--responsive-asymmetric');
+            if (asymmetricGrid) {
+                const computedStyle = window.getComputedStyle(asymmetricGrid);
+                const gridColumns = computedStyle.gridTemplateColumns;
+                console.log(`  Grid columns: ${gridColumns}`);
+            }
+            
+            // Test button responsiveness
+            const responsiveButtons = document.querySelectorAll('.neo-button--responsive');
+            if (responsiveButtons.length > 0) {
+                const button = responsiveButtons[0];
+                const rect = button.getBoundingClientRect();
+                console.log(`  Button size: ${rect.width.toFixed(1)}x${rect.height.toFixed(1)}px`);
+            }
+            
+            // Test visibility
+            const mobileOnly = document.querySelector('.neo-show-mobile-only');
+            const desktop = document.querySelector('.neo-show-desktop');
+            
+            if (mobileOnly && desktop) {
+                const mobileVisible = window.getComputedStyle(mobileOnly).display !== 'none';
+                const desktopVisible = window.getComputedStyle(desktop).display !== 'none';
+                console.log(`  Mobile content visible: ${mobileVisible}`);
+                console.log(`  Desktop content visible: ${desktopVisible}`);
+            }
+            
+            // Test typography scaling
+            const responsiveHeading = document.querySelector('.neo-heading--responsive');
+            if (responsiveHeading) {
+                const fontSize = window.getComputedStyle(responsiveHeading).fontSize;
+                console.log(`  Heading font size: ${fontSize}`);
+            }
+            
+            // Test complex overlaps
+            const complexOverlap = document.querySelector('.neo-complex-overlap');
+            if (complexOverlap) {
+                const beforeStyle = window.getComputedStyle(complexOverlap, '::before');
+                const hasComplexOverlay = beforeStyle.content !== 'none' && beforeStyle.display !== 'none';
+                console.log(`  Complex overlay active: ${hasComplexOverlay}`);
+            }
+        }
+
+        // Initialize with desktop width
+        document.addEventListener('DOMContentLoaded', () => {
+            setViewportWidth(1024);
+            
+            // Add touch event listeners for mobile testing
+            const touchElements = document.querySelectorAll('.neo-button, .neo-touch-friendly');
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', (e) => {
+                    console.log('👆 Touch interaction detected');
+                });
+            });
+        });
+
+        // Monitor actual viewport changes
+        window.addEventListener('resize', () => {
+            const actualWidth = window.innerWidth;
+            console.log(`📱 Actual viewport: ${actualWidth}px`);
+        });
+    </script>
+</body>
+</html>

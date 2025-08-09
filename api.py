@@ -17,6 +17,15 @@ db = PersonaDatabase()
 def static_files(filename):
     return send_from_directory('static', filename)
 
+# Direct static file routes for HTML references
+@app.route('/css/<path:filename>')
+def css_files(filename):
+    return send_from_directory('static/css', filename)
+
+@app.route('/<filename>.js')
+def js_files(filename):
+    return send_from_directory('static', filename + '.js')
+
 # Playground 페이지 서빙 (생성 페이지)
 @app.route('/')
 @app.route('/generate.html')

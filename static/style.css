@@ -477,8 +477,8 @@ button:hover {
     padding: 1.5rem;
     border-radius: 8px;
     border: 1px solid #e0e6ed;
-    min-height: 350px; /* 모든 차트 카드에 동일한 최소 높이 설정 */
-    max-height: 500px; /* 최대 높이 제한 */
+    min-height: 700px; /* 세로 길이 2배 증가 (350px -> 700px) */
+    max-height: 1000px; /* 최대 높이도 2배 증가 (500px -> 1000px) */
     display: flex;
     flex-direction: column;
 }
@@ -497,8 +497,8 @@ button:hover {
 
 .chart-card canvas {
     flex: 1; /* 차트가 남은 공간을 모두 차지하도록 */
-    min-height: 250px; /* 차트 최소 높이 보장 */
-    max-height: 400px; /* 차트 최대 높이 제한 */
+    min-height: 500px; /* 차트 최소 높이 2배 증가 (250px -> 500px) */
+    max-height: 800px; /* 차트 최대 높이 2배 증가 (400px -> 800px) */
 }
 
 .wordcloud-container {

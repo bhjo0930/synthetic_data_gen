@@ -10,7 +10,91 @@ document.addEventListener('DOMContentLoaded', () => {
     const locationInput = document.getElementById('location');
     const generateResultDiv = document.getElementById('generateResult');
 
-    generateBtn.addEventListener('click', async () => {
+    // Helper function to format personas for Neo-Brutalism display
+    function formatPersonasDisplay(personas) {
+        if (!personas || personas.length === 0) {
+            return '<p class="error">No personas generated</p>';
+        }
+
+        let html = '<div class="persona-grid">';
+        personas.forEach((persona, index) => {
+            // Extract data from correct nested structure
+            const demographics = persona.demographics || {};
+            const psychological = persona.psychological_attributes || {};
+            const behavioral = persona.behavioral_patterns || {};
+            
+            // Format personality traits as readable text
+            const personalityText = psychological.personality_traits ? 
+                Object.entries(psychological.personality_traits)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join(', ') : 'N/A';
+                    
+            // Format values as readable text
+            const valuesText = psychological.values ? 
+                psychological.values.join(', ') : 'N/A';
+                
+            // Format interests as readable text
+            const interestsText = behavioral.interests ? 
+                behavioral.interests.join(', ') : 'N/A';
+                
+            // Format lifestyle attributes
+            const lifestyleText = psychological.lifestyle_attributes ? 
+                psychological.lifestyle_attributes.join(', ') : 'N/A';
+
+            html += `
+                <div class="persona-card">
+                    <h3>Person ${index + 1}</h3>
+                    <p><strong>Name:</strong> ${persona.name || 'N/A'}</p>
+                    <p><strong>Age:</strong> ${demographics.age || 'N/A'}</p>
+                    <p><strong>Gender:</strong> ${demographics.gender || 'N/A'}</p>
+                    <p><strong>Location:</strong> ${demographics.location || 'N/A'}</p>
+                    <p><strong>Occupation:</strong> ${demographics.occupation || 'N/A'}</p>
+                    <p><strong>Education:</strong> ${demographics.education || 'N/A'}</p>
+                    <p><strong>Income:</strong> ${demographics.income_bracket || 'N/A'}</p>
+                    <p><strong>Marital Status:</strong> ${demographics.marital_status || 'N/A'}</p>
+                    <p><strong>Interests:</strong> ${interestsText}</p>
+                    <p><strong>Values:</strong> ${valuesText}</p>
+                    <p><strong>Personality:</strong> ${personalityText}</p>
+                    <p><strong>Lifestyle:</strong> ${lifestyleText}</p>
+                    <p><strong>Media Habits:</strong> ${behavioral.media_consumption || 'N/A'}</p>
+                    <p><strong>Shopping Habits:</strong> ${behavioral.shopping_habit || 'N/A'}</p>
+                    <p><strong>Social Relations:</strong> ${persona.social_relations ? persona.social_relations.join(', ') : 'N/A'}</p>
+                </div>
+            `;
+        });
+        html += '</div>';
+        return html;
+    }
+
+    // Helper function to show loading state
+    function showLoading(element, message = 'Loading') {
+        element.innerHTML = `<div class="neo-loading">${message}...</div>`;
+        element.style.display = 'block';
+    }
+
+    // Helper function to show error
+    function showError(element, message) {
+        element.innerHTML = `<p class="error">Error: ${message}</p>`;
+        element.style.display = 'block';
+    }
+
+    // Helper function to show success
+    function showSuccess(element, message, data = null) {
+        let html = `<p class="success">${message}</p>`;
+        if (data && data.personas) {
+            html += formatPersonasDisplay(data.personas);
+        }
+        element.innerHTML = html;
+        element.style.display = 'block';
+    }
+
+    generateBtn.addEventListener('click', async (e) => {
+        // Validate form first
+        if (!validateForm()) {
+            showError(generateResultDiv, 'Please check your input values');
+            return;
+        }
+
         const count = parseInt(countInput.value);
         const age_range_min = ageRangeMinInput.value ? parseInt(ageRangeMinInput.value) : undefined;
         const age_range_max = ageRangeMaxInput.value ? parseInt(ageRangeMaxInput.value) : undefined;
@@ -29,7 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            generateResultDiv.innerHTML = '생성 중...';
+            // Disable button and show loading
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'GENERATING...';
+            showLoading(generateResultDiv, 'Generating Virtual People');
+
             const response = await fetch(`${API_BASE_URL}/generate`, {
                 method: 'POST',
                 headers: {
@@ -38,14 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ count, demographics }),
             });
             const data = await response.json();
+            
             if (response.ok) {
-                generateResultDiv.innerHTML = `<h3>${data.message}</h3><pre>${JSON.stringify(data.personas, null, 2)}</pre>`;
+                showSuccess(generateResultDiv, data.message || 'Virtual people generated successfully!', data);
             } else {
-                generateResultDiv.innerHTML = `<p style="color: red;">오류: ${data.message || response.statusText}</p>`;
+                showError(generateResultDiv, data.message || response.statusText);
             }
         } catch (error) {
-            generateResultDiv.innerHTML = `<p style="color: red;">네트워크 오류: ${error.message}</p>`;
+            showError(generateResultDiv, `Network error: ${error.message}`);
             console.error('Error generating personas:', error);
+        } finally {
+            // Re-enable button
+            generateBtn.disabled = false;
+            generateBtn.textContent = 'GENERATE PEOPLE';
         }
     });
 
@@ -55,27 +148,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (deleteAllBtn) { // deleteAllBtn이 현재 페이지에 있을 경우에만 이벤트 리스너 추가
         deleteAllBtn.addEventListener('click', async () => {
-            if (!confirm('정말로 모든 페르소나 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+            if (!confirm('REALLY DELETE ALL PERSONA DATA? THIS ACTION CANNOT BE UNDONE!')) {
                 return;
             }
 
             try {
-                deleteResultDiv.innerHTML = '삭제 중...';
+                // Disable button and show loading
+                deleteAllBtn.disabled = true;
+                deleteAllBtn.textContent = 'DELETING...';
+                showLoading(deleteResultDiv, 'Deleting All Data');
+
                 const response = await fetch(`${API_BASE_URL}/delete_all`, {
                     method: 'POST',
                 });
                 const data = await response.json();
+                
                 if (response.ok) {
-                    deleteResultDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
-                    // 삭제 후 생성 결과 초기화
+                    showSuccess(deleteResultDiv, data.message || 'All virtual people deleted successfully!');
+                    // Clear generation results after successful deletion
                     generateResultDiv.innerHTML = '';
+                    generateResultDiv.style.display = 'none';
                 } else {
-                    deleteResultDiv.innerHTML = `<p style="color: red;">오류: ${data.message || response.statusText}</p>`;
+                    showError(deleteResultDiv, data.message || response.statusText);
                 }
             } catch (error) {
-                deleteResultDiv.innerHTML = `<p style="color: red;">네트워크 오류: ${error.message}</p>`;
+                showError(deleteResultDiv, `Network error: ${error.message}`);
                 console.error('Error deleting personas:', error);
+            } finally {
+                // Re-enable button
+                deleteAllBtn.disabled = false;
+                deleteAllBtn.textContent = 'DELETE ALL VIRTUAL PEOPLE';
             }
         });
     }
+
+    // Add keyboard navigation support
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+            if (e.target.closest('.neo-card--generate')) {
+                generateBtn.click();
+            }
+        }
+    });
+
+    // Add form validation
+    function validateForm() {
+        const count = parseInt(countInput.value);
+        const ageMin = ageRangeMinInput.value ? parseInt(ageRangeMinInput.value) : null;
+        const ageMax = ageRangeMaxInput.value ? parseInt(ageRangeMaxInput.value) : null;
+
+        // Reset validation states
+        document.querySelectorAll('.input-group').forEach(group => {
+            group.classList.remove('error');
+        });
+
+        let isValid = true;
+
+        // Validate count
+        if (isNaN(count) || count < 1 || count > 100) {
+            countInput.closest('.input-group').classList.add('error');
+            isValid = false;
+        }
+
+        // Validate age range
+        if (ageMin !== null && ageMax !== null && ageMin > ageMax) {
+            ageRangeMinInput.closest('.input-group').classList.add('error');
+            ageRangeMaxInput.closest('.input-group').classList.add('error');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Removed duplicate validation event listener - validation is now handled in the main click handler
+
+    // Add real-time validation
+    [countInput, ageRangeMinInput, ageRangeMaxInput].forEach(input => {
+        input.addEventListener('blur', validateForm);
+        input.addEventListener('input', () => {
+            // Remove error state on input
+            input.closest('.input-group').classList.remove('error');
+        });
+    });
 });

@@ -1,0 +1,372 @@
+/* Neo-Brutalism Integration Styles for Generate.html */
+
+/* Body and container layout */
+.neo-body {
+  font-family: var(--neo-font-primary);
+  margin: 0;
+  padding: var(--neo-space-lg);
+  background: var(--neo-white);
+  color: var(--neo-black);
+  min-height: 100vh;
+  line-height: 1.2;
+}
+
+.neo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Header styling */
+.neo-header {
+  text-align: center;
+  margin-bottom: var(--neo-space-xl);
+  position: relative;
+}
+
+.neo-title {
+  font-family: var(--neo-font-primary);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--neo-black);
+  margin: 0;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  background: var(--neo-white);
+  border: var(--neo-border-thick);
+  padding: var(--neo-space-lg);
+  box-shadow: var(--neo-shadow-lg);
+  position: relative;
+  transform: rotate(-1deg);
+}
+
+.neo-title::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--neo-red);
+  border: var(--neo-border-thin);
+  z-index: 2;
+}
+
+.neo-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: var(--neo-yellow);
+  border: var(--neo-border-thin);
+  z-index: 2;
+}
+
+.neo-title i {
+  margin-right: var(--neo-space-md);
+  font-size: 40px;
+}
+
+/* Navigation override for generate page */
+.neo-nav {
+  justify-content: center;
+  margin-bottom: var(--neo-space-xl);
+}
+
+/* Main content area */
+.neo-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--neo-space-xl);
+  position: relative;
+}
+
+/* Card modifications for generate page */
+.neo-card--generate {
+  background: var(--neo-white);
+  position: relative;
+  transform: rotate(0.5deg);
+}
+
+.neo-card--management {
+  background: var(--neo-white);
+  position: relative;
+  transform: rotate(-0.5deg);
+  margin-left: var(--neo-space-lg);
+}
+
+/* Form grid layout */
+.neo-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--neo-space-lg);
+  margin-bottom: var(--neo-space-xl);
+}
+
+.neo-input-full {
+  grid-column: 1 / -1;
+}
+
+/* Button group styling */
+.neo-button-group {
+  display: flex;
+  justify-content: center;
+  gap: var(--neo-space-md);
+  margin-bottom: var(--neo-space-lg);
+}
+
+/* Result box styling with Neo-Brutalism design */
+.neo-result-box {
+  background: var(--neo-white);
+  border: var(--neo-border-thick);
+  box-shadow: var(--neo-shadow-md);
+  padding: var(--neo-space-lg);
+  margin-top: var(--neo-space-lg);
+  font-family: var(--neo-font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  max-height: 400px;
+  overflow-y: auto;
+  position: relative;
+  min-height: 60px;
+  display: none; /* Hidden by default */
+}
+
+.neo-result-box:not(:empty) {
+  display: block;
+}
+
+.neo-result-box::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 12px;
+  height: 12px;
+  background: var(--neo-green);
+  border: var(--neo-border-thin);
+  z-index: 2;
+}
+
+/* Result box content styling */
+.neo-result-box h3 {
+  font-family: var(--neo-font-primary);
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--neo-black);
+  margin: 0 0 var(--neo-space-md) 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.neo-result-box pre {
+  background: #f8f8f8;
+  border: var(--neo-border-thin);
+  padding: var(--neo-space-md);
+  margin: var(--neo-space-sm) 0;
+  font-family: var(--neo-font-mono);
+  font-size: 12px;
+  overflow-x: auto;
+}
+
+.neo-result-box p {
+  margin: var(--neo-space-sm) 0;
+  font-weight: 700;
+}
+
+/* Error and success states */
+.neo-result-box .error {
+  color: var(--neo-red);
+  background: #ffeeee;
+  border: var(--neo-border-thin);
+  border-color: var(--neo-red);
+  padding: var(--neo-space-sm);
+  margin: var(--neo-space-sm) 0;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.neo-result-box .success {
+  color: var(--neo-green);
+  background: #eeffee;
+  border: var(--neo-border-thin);
+  border-color: var(--neo-green);
+  padding: var(--neo-space-sm);
+  margin: var(--neo-space-sm) 0;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* Persona grid styling for generated results */
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--neo-space-lg);
+  margin-top: var(--neo-space-lg);
+}
+
+.persona-card {
+  background: var(--neo-white);
+  border: var(--neo-border-thick);
+  box-shadow: var(--neo-shadow-md);
+  padding: var(--neo-space-lg);
+  position: relative;
+  transform: rotate(0deg);
+}
+
+.persona-card:nth-child(2n) {
+  transform: rotate(1deg);
+}
+
+.persona-card:nth-child(3n) {
+  transform: rotate(-1deg);
+}
+
+.persona-card::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 16px;
+  height: 16px;
+  background: var(--neo-blue);
+  border: var(--neo-border-thin);
+  z-index: 2;
+}
+
+.persona-card h3 {
+  font-family: var(--neo-font-primary);
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--neo-black);
+  margin: 0 0 var(--neo-space-md) 0;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.persona-card p {
+  font-family: var(--neo-font-primary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: var(--neo-space-xs) 0;
+  color: var(--neo-black);
+}
+
+.persona-card strong {
+  color: var(--neo-black);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* Loading states */
+.neo-loading {
+  display: inline-block;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: neo-loading-flash 1s steps(2, end) infinite;
+}
+
+@keyframes neo-loading-flash {
+  0%, 50% { color: var(--neo-black); }
+  51%, 100% { color: var(--neo-red); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .neo-body {
+    padding: var(--neo-space-md);
+  }
+  
+  .neo-title {
+    font-size: 32px;
+    padding: var(--neo-space-md);
+    transform: none;
+  }
+  
+  .neo-form-grid {
+    grid-template-columns: 1fr;
+    gap: var(--neo-space-md);
+  }
+  
+  .neo-card--generate,
+  .neo-card--management {
+    transform: none;
+    margin-left: 0;
+  }
+  
+  .neo-button-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .persona-grid {
+    grid-template-columns: 1fr;
+    gap: var(--neo-space-md);
+  }
+  
+  .persona-card,
+  .persona-card:nth-child(2n),
+  .persona-card:nth-child(3n) {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .neo-title {
+    font-size: 24px;
+    letter-spacing: -1px;
+  }
+  
+  .neo-title i {
+    font-size: 20px;
+    margin-right: var(--neo-space-sm);
+  }
+  
+  .neo-result-box {
+    font-size: 12px;
+    padding: var(--neo-space-md);
+  }
+  
+  .persona-card {
+    padding: var(--neo-space-md);
+  }
+  
+  .persona-card h3 {
+    font-size: 16px;
+  }
+  
+  .persona-card p {
+    font-size: 12px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .neo-title,
+  .neo-result-box,
+  .persona-card {
+    border-width: 6px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .neo-title,
+  .neo-card--generate,
+  .neo-card--management,
+  .persona-card,
+  .persona-card:nth-child(2n),
+  .persona-card:nth-child(3n) {
+    transform: none;
+  }
+  
+  .neo-loading {
+    animation: none;
+  }
+}

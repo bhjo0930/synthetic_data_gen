@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Grid System Tests</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        /* Test-specific styles */
+        .test-container {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ccc;
+        }
+        
+        .test-item {
+            background: var(--neo-red);
+            border: 2px solid var(--neo-black);
+            padding: var(--neo-space-sm);
+            color: var(--neo-black);
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-item:nth-child(2n) {
+            background: var(--neo-yellow);
+        }
+        
+        .test-item:nth-child(3n) {
+            background: var(--neo-green);
+        }
+        
+        .test-item:nth-child(4n) {
+            background: var(--neo-blue);
+            color: var(--neo-white);
+        }
+        
+        .viewport-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: var(--neo-black);
+            color: var(--neo-white);
+            padding: 8px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="viewport-indicator" id="viewportIndicator">
+        Viewport: <span id="viewportSize"></span>
+    </div>
+    
+    <h1>Neo-Brutalism Grid System Tests</h1>
+    
+    <!-- Test 1: Basic Asymmetrical 2-Column -->
+    <div class="test-container">
+        <h2>Test 1: Asymmetrical 2-Column Grid</h2>
+        <div class="neo-grid neo-grid--asymmetric-2col">
+            <div class="test-item">Item 1 (1fr)</div>
+            <div class="test-item">Item 2 (2fr)</div>
+            <div class="test-item">Item 3 (1fr)</div>
+            <div class="test-item">Item 4 (2fr)</div>
+        </div>
+    </div>
+    
+    <!-- Test 2: 3-Column Unbalanced -->
+    <div class="test-container">
+        <h2>Test 2: 3-Column Unbalanced Grid</h2>
+        <div class="neo-grid neo-grid--asymmetric-3col">
+            <div class="test-item">1fr</div>
+            <div class="test-item">3fr</div>
+            <div class="test-item">2fr</div>
+            <div class="test-item">1fr</div>
+            <div class="test-item">3fr</div>
+            <div class="test-item">2fr</div>
+        </div>
+    </div>
+    
+    <!-- Test 3: Chaotic 4-Column -->
+    <div class="test-container">
+        <h2>Test 3: Chaotic 4-Column Grid</h2>
+        <div class="neo-grid neo-grid--asymmetric-4col">
+            <div class="test-item">1fr</div>
+            <div class="test-item">2fr</div>
+            <div class="test-item">1fr</div>
+            <div class="test-item">3fr</div>
+            <div class="test-item">1fr</div>
+            <div class="test-item">2fr</div>
+            <div class="test-item">1fr</div>
+            <div class="test-item">3fr</div>
+        </div>
+    </div>
+    
+    <!-- Test 4: Overlapping Elements -->
+    <div class="test-container">
+        <h2>Test 4: Overlapping Elements</h2>
+        <div class="neo-overlap-container" style="height: 200px;">
+            <div class="test-item neo-overlap--bottom-left neo-layer--background">Background Layer</div>
+            <div class="test-item neo-overlap--center neo-layer--content">Content Layer</div>
+            <div class="test-item neo-overlap--top-right neo-layer--accent" style="width: 100px; height: 60px;">Accent</div>
+        </div>
+    </div>
+    
+    <!-- Test 5: Responsive Asymmetrical Grid -->
+    <div class="test-container">
+        <h2>Test 5: Responsive Asymmetrical Grid</h2>
+        <div class="neo-grid neo-grid--responsive-asymmetric">
+            <div class="test-item">Responsive 1</div>
+            <div class="test-item">Responsive 2</div>
+            <div class="test-item">Responsive 3</div>
+            <div class="test-item">Responsive 4</div>
+        </div>
+    </div>
+    
+    <!-- Test 6: Complex Overlays -->
+    <div class="test-container">
+        <h2>Test 6: Complex Overlays</h2>
+        <div class="neo-overlay-container" style="height: 150px;">
+            <div class="test-item">Base Content</div>
+            <div class="neo-overlay neo-overlay--corner-tl"></div>
+            <div class="neo-overlay neo-overlay--corner-br"></div>
+            <div class="neo-overlay neo-overlay--edge-top"></div>
+        </div>
+    </div>
+    
+    <!-- Test 7: Stacked Overlays -->
+    <div class="test-container">
+        <h2>Test 7: Stacked Overlays</h2>
+        <div class="neo-stack-overlay" style="height: 120px;">
+            <div class="neo-stack-layer-1"></div>
+            <div class="neo-stack-layer-2"></div>
+            <div class="neo-stack-content">Stacked Content</div>
+        </div>
+    </div>
+    
+    <!-- Test 8: Grid with Spans and Positioning -->
+    <div class="test-container">
+        <h2>Test 8: Grid with Spans and Positioning</h2>
+        <div class="neo-grid neo-grid--asymmetric-3col">
+            <div class="test-item">Normal</div>
+            <div class="test-item neo-span--2">Span 2 Columns</div>
+            <div class="test-item neo-place--start-2">Start at Column 2</div>
+            <div class="test-item">Normal</div>
+            <div class="test-item neo-span--row-2">Span 2 Rows</div>
+            <div class="test-item">Normal</div>
+            <div class="test-item">Normal</div>
+        </div>
+    </div>
+    
+    <!-- Test 9: Chaos Grid with Overlapping -->
+    <div class="test-container">
+        <h2>Test 9: Chaos Grid with Overlapping</h2>
+        <div class="neo-grid neo-grid--chaos neo-chaos-overlay">
+            <div class="test-item">Chaos 1</div>
+            <div class="test-item">Chaos 2</div>
+            <div class="test-item">Chaos 3</div>
+            <div class="test-item">Chaos 4</div>
+            <div class="test-item">Chaos 5</div>
+            <div class="test-item">Chaos 6</div>
+        </div>
+    </div>
+    
+    <!-- Test 10: Responsive Breakpoint Indicators -->
+    <div class="test-container">
+        <h2>Test 10: Responsive Breakpoint Indicators</h2>
+        <div class="neo-hide-mobile" style="background: var(--neo-red); padding: 10px; margin: 5px 0;">
+            Hidden on Mobile (< 480px)
+        </div>
+        <div class="neo-hide-tablet" style="background: var(--neo-yellow); padding: 10px; margin: 5px 0;">
+            Hidden on Tablet (480px - 767px)
+        </div>
+        <div class="neo-hide-desktop" style="background: var(--neo-green); padding: 10px; margin: 5px 0;">
+            Hidden on Desktop (>= 768px)
+        </div>
+        <div class="neo-show-tablet-only" style="background: var(--neo-blue); color: white; padding: 10px; margin: 5px 0; display: none;">
+            Show on Tablet Only (480px - 767px)
+        </div>
+    </div>
+
+    <script>
+        // Update viewport size indicator
+        function updateViewportIndicator() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            let breakpoint = '';
+            
+            if (width < 480) {
+                breakpoint = 'Mobile';
+            } else if (width < 768) {
+                breakpoint = 'Tablet';
+            } else if (width < 1024) {
+                breakpoint = 'Desktop';
+            } else if (width < 1200) {
+                breakpoint = 'Large';
+            } else {
+                breakpoint = 'XL';
+            }
+            
+            document.getElementById('viewportSize').textContent = `${width}x${height} (${breakpoint})`;
+        }
+        
+        // Update on load and resize
+        updateViewportIndicator();
+        window.addEventListener('resize', updateViewportIndicator);
+        
+        // Test grid behavior programmatically
+        function runGridTests() {
+            const tests = [];
+            
+            // Test 1: Check if grid containers exist
+            const gridContainers = document.querySelectorAll('.neo-grid');
+            tests.push({
+                name: 'Grid containers exist',
+                passed: gridContainers.length > 0,
+                details: `Found ${gridContainers.length} grid containers`
+            });
+            
+            // Test 2: Check if CSS Grid is supported and applied
+            const firstGrid = gridContainers[0];
+            if (firstGrid) {
+                const computedStyle = window.getComputedStyle(firstGrid);
+                tests.push({
+                    name: 'CSS Grid is applied',
+                    passed: computedStyle.display === 'grid',
+                    details: `Display property: ${computedStyle.display}`
+                });
+            }
+            
+            // Test 3: Check responsive classes exist
+            const responsiveGrid = document.querySelector('.neo-grid--responsive-asymmetric');
+            tests.push({
+                name: 'Responsive grid classes exist',
+                passed: responsiveGrid !== null,
+                details: responsiveGrid ? 'Found responsive grid' : 'No responsive grid found'
+            });
+            
+            // Test 4: Check overlay containers
+            const overlayContainers = document.querySelectorAll('.neo-overlap-container, .neo-overlay-container');
+            tests.push({
+                name: 'Overlay containers exist',
+                passed: overlayContainers.length > 0,
+                details: `Found ${overlayContainers.length} overlay containers`
+            });
+            
+            // Test 5: Check z-index layering
+            const layeredElements = document.querySelectorAll('[class*="neo-layer--"], [class*="neo-overlap--"]');
+            tests.push({
+                name: 'Layered elements exist',
+                passed: layeredElements.length > 0,
+                details: `Found ${layeredElements.length} layered elements`
+            });
+            
+            // Log test results
+            console.log('Grid System Test Results:');
+            tests.forEach(test => {
+                console.log(`${test.passed ? '✅' : '❌'} ${test.name}: ${test.details}`);
+            });
+            
+            return tests;
+        }
+        
+        // Run tests after page load
+        window.addEventListener('load', () => {
+            setTimeout(runGridTests, 100);
+        });
+    </script>
+</body>
+</html>

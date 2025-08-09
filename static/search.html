@@ -4,18 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Peoples - Analysis Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/neo-brutalism.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Critical CSS inline for performance -->
+    <style>
+      /* Critical CSS for above-the-fold content */
+      :root{--neo-white:#FFFFFF;--neo-black:#000000;--neo-red:#FF0000;--neo-blue:#0000FF;--neo-font-primary:'Arial Black','Helvetica Bold','Impact',sans-serif;--neo-border-thick:4px solid var(--neo-black);--neo-shadow-md:4px 4px 0px var(--neo-black);--neo-shadow-lg:8px 8px 0px var(--neo-black);--neo-space-lg:24px;--neo-space-xl:32px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      
+      /* Override for search page header styling */
+      .olap-header h1{
+        color:white !important;
+        background:transparent !important;
+        border:none !important;
+        box-shadow:none !important;
+        transform:none !important;
+        font-family:var(--neo-font-primary);
+        font-weight:900;
+      }
+      
+      /* Override button styles to ensure Neo-Brutalism appearance */
+      .neo-button{
+        background:var(--neo-red) !important;
+        color:var(--neo-black) !important;
+        border:var(--neo-border-thick) !important;
+        box-shadow:var(--neo-shadow-md) !important;
+        font-family:var(--neo-font-primary) !important;
+        font-weight:900 !important;
+        font-size:16px !important;
+        text-transform:uppercase !important;
+        letter-spacing:1px !important;
+        padding:12px var(--neo-space-lg) !important;
+        cursor:pointer !important;
+        border-radius:0 !important;
+        transition:none !important;
+      }
+      
+      .neo-button--secondary{
+        background:var(--neo-blue) !important;
+        color:var(--neo-white) !important;
+      }
+      
+      .neo-button--warning{
+        background:#FFFF00 !important;
+        color:var(--neo-black) !important;
+      }
+      
+      .neo-button:hover{
+        background:var(--neo-black) !important;
+        color:var(--neo-red) !important;
+        transform:translate(2px,2px) !important;
+        box-shadow:2px 2px 0px var(--neo-black) !important;
+      }
+      
+      .neo-button--secondary:hover{
+        background:var(--neo-black) !important;
+        color:var(--neo-blue) !important;
+      }
+      
+      .neo-button--warning:hover{
+        background:var(--neo-black) !important;
+        color:#FFFF00 !important;
+      }
+      
+      /* Chart height override - 차트 높이 2배로 증가 */
+      .chart-card {
+        min-height: 700px !important; /* 350px -> 700px */
+        max-height: 700px !important; /* 고정 높이로 설정 */
+        height: 700px !important; /* 고정 높이 설정 */
+      }
+      
+      .chart-card canvas {
+        flex: 1 !important; /* 남은 공간을 모두 차지 */
+        width: 100% !important;
+        height: auto !important; /* 자동 높이 조정 */
+        min-height: 600px !important; /* 최소 높이 보장 */
+        max-height: 650px !important; /* 제목 공간 고려한 최대 높이 */
+      }
+      
+      body{font-family:var(--neo-font-primary);font-weight:900;line-height:1.2;background:var(--neo-white);color:var(--neo-black)}.neo-container{max-width:1200px;margin:0 auto;padding:var(--neo-space-lg);contain:layout}.neo-header{margin-bottom:var(--neo-space-xl)}.neo-title{font-size:clamp(24px,4vw,48px);font-weight:900;text-align:center;background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-lg);padding:var(--neo-space-lg);position:relative;transform:rotate(-1deg);contain:layout style paint}.neo-nav{display:flex;justify-content:center;gap:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);contain:layout}.neo-nav a{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);padding:12px var(--neo-space-lg);text-decoration:none;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}.neo-button{background:var(--neo-red);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:0.5px;padding:12px var(--neo-space-lg);cursor:pointer;contain:layout style paint}.neo-card{background:var(--neo-white);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);padding:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);position:relative;contain:layout style paint}@media (max-width:768px){.neo-nav{flex-direction:column;gap:8px}.neo-title{font-size:24px;transform:none}}
+    </style>
+    
+    <!-- Preload critical scripts -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/chart.js" as="script">
+    
+    <!-- Load non-critical CSS asynchronously -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    
+    <link rel="preload" href="css/neo-brutalism.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/neo-brutalism.css"></noscript>
+    
+    <!-- Chart.js loaded with defer for better performance -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    
+    <!-- Icons loaded with lower priority -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body>
     <div class="olap-container">
         <header class="olap-header">
             <h1><i class="fas fa-users"></i> Virtual Peoples - Analysis Dashboard</h1>
             <nav>
-                <a href="/generate.html"><i class="fas fa-plus-circle"></i> Generate People</a>
-                <a href="/search.html" class="active"><i class="fas fa-chart-line"></i> Analytics</a>
+                <a href="generate.html"><i class="fas fa-plus-circle"></i> Generate People</a>
+                <a href="search.html" class="active"><i class="fas fa-chart-line"></i> Analytics</a>
             </nav>
         </header>
 
@@ -218,10 +309,10 @@
                 <!-- 다차원 분석 차트 -->
                 <section class="chart-section">
                     <div class="chart-tabs">
-                        <button class="neo-button neo-button--small tab-button active" data-tab="overview">Overview</button>
-                        <button class="neo-button neo-button--small tab-button" data-tab="demographics">Demographics</button>
-                        <button class="neo-button neo-button--small tab-button" data-tab="psychographics">Psychographics</button>
-                        <button class="neo-button neo-button--small tab-button" data-tab="behavior">Behavior</button>
+                        <button class="tab-button active" data-tab="overview">Overview</button>
+                        <button class="tab-button" data-tab="demographics">Demographics</button>
+                        <button class="tab-button" data-tab="psychographics">Psychographics</button>
+                        <button class="tab-button" data-tab="behavior">Behavior</button>
                     </div>
 
                     <div class="tab-content active" id="overview">
@@ -321,7 +412,7 @@
                                 <option value="marital_status">Marital Status</option>
                             </select>
                             <button id="generatePivot" class="neo-button">
-                                <i class="fas fa-sync-alt"></i> Generate
+                                <i class="fas fa-sync-alt"></i> GENERATE
                             </button>
                         </div>
                     </div>
@@ -335,7 +426,7 @@
                         <div class="grid-controls">
                             <span class="result-count">Total <span id="resultCount">0</span> people</span>
                             <button id="exportBtn" class="neo-button neo-button--secondary">
-                                <i class="fas fa-download"></i> Export Excel
+                                <i class="fas fa-download"></i> EXPORT EXCEL
                             </button>
                         </div>
                     </div>
@@ -348,7 +439,7 @@
         <section class="management-section">
             <h3><i class="fas fa-database"></i> Data Management</h3>
             <button id="deleteAllBtn" class="neo-button neo-button--warning">
-                <i class="fas fa-trash"></i> Delete All Virtual People
+                <i class="fas fa-trash"></i> DELETE ALL VIRTUAL PEOPLE
             </button>
             <div id="deleteResult" class="result-box"></div>
         </section>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Page Integration Tests</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .test-pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .mock-generate-page {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border: 4px solid #000;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generate Page Integration Tests</h1>
+    <div id="testResults"></div>
+
+    <!-- Mock Generate Page Structure -->
+    <div class="mock-generate-page">
+        <h2>Mock Generate Page (for testing)</h2>
+        <div class="neo-container">
+            <header class="neo-header">
+                <h1 class="neo-title">Virtual Peoples - Generator</h1>
+            </header>
+
+            <nav class="neo-nav">
+                <a href="/generate.html" class="active">Generate People</a>
+                <a href="/search.html">Analytics Dashboard</a>
+            </nav>
+
+            <main class="neo-main">
+                <section class="neo-card neo-card--generate">
+                    <div class="neo-card__header">
+                        <h2 class="neo-card__title">Generate Virtual People</h2>
+                        <div class="neo-card__meta">Generator</div>
+                    </div>
+                    
+                    <div class="neo-form-grid">
+                        <div class="input-group">
+                            <label for="count">Number of People:</label>
+                            <input type="number" id="count" value="1" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="age_range_min">Age Range (Min):</label>
+                            <input type="number" id="age_range_min" placeholder="e.g., 20">
+                        </div>
+                        <div class="input-group">
+                            <label for="age_range_max">Age Range (Max):</label>
+                            <input type="number" id="age_range_max" placeholder="e.g., 30">
+                        </div>
+                        <div class="input-group">
+                            <label for="gender">Gender:</label>
+                            <select id="gender">
+                                <option value="">Any</option>
+                                <option value="남성">Male</option>
+                                <option value="여성">Female</option>
+                            </select>
+                        </div>
+                        <div class="input-group neo-input-full">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" placeholder="e.g., Seoul">
+                        </div>
+                    </div>
+                    
+                    <div class="neo-button-group">
+                        <button id="generateBtn" class="neo-button neo-button--large">Generate People</button>
+                    </div>
+                    
+                    <div id="generateResult" class="neo-result-box"></div>
+                </section>
+
+                <section class="neo-card neo-card--management neo-card--accent-blue">
+                    <div class="neo-card__header">
+                        <h2 class="neo-card__title">Data Management</h2>
+                        <div class="neo-card__meta">Admin</div>
+                    </div>
+                    
+                    <div class="neo-button-group">
+                        <button id="deleteAllBtn" class="neo-button neo-button--warning neo-button--large">Delete All Virtual People</button>
+                    </div>
+                    
+                    <div id="deleteResult" class="neo-result-box"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        class IntegrationTester {
+            constructor() {
+                this.results = [];
+                this.testContainer = document.getElementById('testResults');
+            }
+
+            test(name, testFunction) {
+                try {
+                    const result = testFunction();
+                    if (result === true) {
+                        this.results.push({ name, status: 'pass', message: 'Test passed' });
+                    } else if (typeof result === 'string') {
+                        this.results.push({ name, status: 'fail', message: result });
+                    } else {
+                        this.results.push({ name, status: 'fail', message: 'Test returned false' });
+                    }
+                } catch (error) {
+                    this.results.push({ name, status: 'fail', message: error.message });
+                }
+            }
+
+            async asyncTest(name, testFunction) {
+                try {
+                    const result = await testFunction();
+                    if (result === true) {
+                        this.results.push({ name, status: 'pass', message: 'Test passed' });
+                    } else if (typeof result === 'string') {
+                        this.results.push({ name, status: 'fail', message: result });
+                    } else {
+                        this.results.push({ name, status: 'fail', message: 'Test returned false' });
+                    }
+                } catch (error) {
+                    this.results.push({ name, status: 'fail', message: error.message });
+                }
+            }
+
+            displayResults() {
+                this.testContainer.innerHTML = '';
+                this.results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.className = `test-container`;
+                    div.innerHTML = `
+                        <h3>${result.name}</h3>
+                        <div class="test-result test-${result.status}">
+                            ${result.status.toUpperCase()}: ${result.message}
+                        </div>
+                    `;
+                    this.testContainer.appendChild(div);
+                });
+
+                // Summary
+                const passed = this.results.filter(r => r.status === 'pass').length;
+                const failed = this.results.filter(r => r.status === 'fail').length;
+                const summary = document.createElement('div');
+                summary.className = 'test-container';
+                summary.innerHTML = `
+                    <h2>Test Summary</h2>
+                    <div class="test-result test-info">
+                        Total: ${this.results.length} | Passed: ${passed} | Failed: ${failed}
+                    </div>
+                `;
+                this.testContainer.insertBefore(summary, this.testContainer.firstChild);
+            }
+        }
+
+        // Initialize tester
+        const tester = new IntegrationTester();
+
+        // Test 1: HTML Structure Preservation
+        tester.test('HTML Structure Elements Exist', () => {
+            const requiredElements = [
+                '#count',
+                '#age_range_min', 
+                '#age_range_max',
+                '#gender',
+                '#location',
+                '#generateBtn',
+                '#deleteAllBtn',
+                '#generateResult',
+                '#deleteResult'
+            ];
+
+            for (const selector of requiredElements) {
+                const element = document.querySelector(selector);
+                if (!element) {
+                    return `Missing required element: ${selector}`;
+                }
+            }
+            return true;
+        });
+
+        // Test 2: Neo-Brutalism CSS Classes Applied
+        tester.test('Neo-Brutalism Classes Applied', () => {
+            const expectedClasses = [
+                '.neo-container',
+                '.neo-header',
+                '.neo-title',
+                '.neo-nav',
+                '.neo-card',
+                '.neo-button',
+                '.neo-result-box'
+            ];
+
+            for (const className of expectedClasses) {
+                const elements = document.querySelectorAll(className);
+                if (elements.length === 0) {
+                    return `Missing Neo-Brutalism class: ${className}`;
+                }
+            }
+            return true;
+        });
+
+        // Test 3: Form Input Functionality
+        tester.test('Form Input Functionality', () => {
+            const countInput = document.getElementById('count');
+            const ageMinInput = document.getElementById('age_range_min');
+            const ageMaxInput = document.getElementById('age_range_max');
+            const genderSelect = document.getElementById('gender');
+            const locationInput = document.getElementById('location');
+
+            // Test input values can be set
+            countInput.value = '5';
+            ageMinInput.value = '25';
+            ageMaxInput.value = '35';
+            genderSelect.value = '남성';
+            locationInput.value = 'Seoul';
+
+            if (countInput.value !== '5') return 'Count input not working';
+            if (ageMinInput.value !== '25') return 'Age min input not working';
+            if (ageMaxInput.value !== '35') return 'Age max input not working';
+            if (genderSelect.value !== '남성') return 'Gender select not working';
+            if (locationInput.value !== 'Seoul') return 'Location input not working';
+
+            return true;
+        });
+
+        // Test 4: Button Styling and States
+        tester.test('Button Neo-Brutalism Styling', () => {
+            const generateBtn = document.getElementById('generateBtn');
+            const deleteBtn = document.getElementById('deleteAllBtn');
+
+            if (!generateBtn.classList.contains('neo-button')) {
+                return 'Generate button missing neo-button class';
+            }
+            if (!deleteBtn.classList.contains('neo-button')) {
+                return 'Delete button missing neo-button class';
+            }
+            if (!deleteBtn.classList.contains('neo-button--warning')) {
+                return 'Delete button missing warning variant class';
+            }
+
+            return true;
+        });
+
+        // Test 5: Navigation Styling
+        tester.test('Navigation Neo-Brutalism Styling', () => {
+            const nav = document.querySelector('nav');
+            const navLinks = document.querySelectorAll('nav a');
+
+            if (!nav.classList.contains('neo-nav')) {
+                return 'Navigation missing neo-nav class';
+            }
+
+            if (navLinks.length < 2) {
+                return 'Navigation links missing';
+            }
+
+            // Check active state
+            const activeLink = document.querySelector('nav a.active');
+            if (!activeLink) {
+                return 'No active navigation link found';
+            }
+
+            return true;
+        });
+
+        // Test 6: Card Layout Structure
+        tester.test('Card Layout Structure', () => {
+            const cards = document.querySelectorAll('.neo-card');
+            if (cards.length < 2) {
+                return 'Not enough neo-card elements found';
+            }
+
+            const generateCard = document.querySelector('.neo-card--generate');
+            const managementCard = document.querySelector('.neo-card--management');
+
+            if (!generateCard) return 'Generate card not found';
+            if (!managementCard) return 'Management card not found';
+
+            // Check card headers
+            const cardHeaders = document.querySelectorAll('.neo-card__header');
+            if (cardHeaders.length < 2) {
+                return 'Card headers missing';
+            }
+
+            return true;
+        });
+
+        // Test 7: Form Grid Layout
+        tester.test('Form Grid Layout', () => {
+            const formGrid = document.querySelector('.neo-form-grid');
+            if (!formGrid) {
+                return 'Form grid container missing';
+            }
+
+            const inputGroups = formGrid.querySelectorAll('.input-group');
+            if (inputGroups.length < 5) {
+                return 'Not enough input groups in form grid';
+            }
+
+            // Check full-width input
+            const fullWidthInput = document.querySelector('.neo-input-full');
+            if (!fullWidthInput) {
+                return 'Full-width input class missing';
+            }
+
+            return true;
+        });
+
+        // Test 8: Result Box Functionality
+        tester.test('Result Box Structure', () => {
+            const generateResult = document.getElementById('generateResult');
+            const deleteResult = document.getElementById('deleteResult');
+
+            if (!generateResult.classList.contains('neo-result-box')) {
+                return 'Generate result box missing neo-result-box class';
+            }
+            if (!deleteResult.classList.contains('neo-result-box')) {
+                return 'Delete result box missing neo-result-box class';
+            }
+
+            return true;
+        });
+
+        // Test 9: Accessibility Features
+        tester.test('Accessibility Features', () => {
+            // Check labels are associated with inputs
+            const inputs = document.querySelectorAll('input, select');
+            for (const input of inputs) {
+                const label = document.querySelector(`label[for="${input.id}"]`);
+                if (!label && input.id) {
+                    return `Missing label for input: ${input.id}`;
+                }
+            }
+
+            // Check navigation has proper active state
+            const activeNav = document.querySelector('nav a[aria-current="page"], nav a.active');
+            if (!activeNav) {
+                return 'Navigation missing active state indicators';
+            }
+
+            return true;
+        });
+
+        // Test 10: Responsive Design Classes
+        tester.test('Responsive Design Support', () => {
+            // Check if responsive classes exist in CSS
+            const testElement = document.createElement('div');
+            testElement.className = 'neo-container';
+            document.body.appendChild(testElement);
+
+            const computedStyle = window.getComputedStyle(testElement);
+            const hasMaxWidth = computedStyle.maxWidth !== 'none';
+
+            document.body.removeChild(testElement);
+
+            if (!hasMaxWidth) {
+                return 'Container missing responsive max-width';
+            }
+
+            return true;
+        });
+
+        // Test 11: CSS Variables Integration
+        tester.test('CSS Variables Integration', () => {
+            const testElement = document.createElement('div');
+            testElement.className = 'neo-button';
+            document.body.appendChild(testElement);
+
+            const computedStyle = window.getComputedStyle(testElement);
+            const backgroundColor = computedStyle.backgroundColor;
+            const borderColor = computedStyle.borderColor;
+
+            document.body.removeChild(testElement);
+
+            if (backgroundColor === 'rgba(0, 0, 0, 0)' || backgroundColor === 'transparent') {
+                return 'Neo-button missing background color from CSS variables';
+            }
+
+            return true;
+        });
+
+        // Test 12: Mock JavaScript Functionality
+        tester.test('Button Click Handlers', () => {
+            const generateBtn = document.getElementById('generateBtn');
+            const deleteBtn = document.getElementById('deleteAllBtn');
+
+            // Test that buttons are clickable (not disabled by default)
+            if (generateBtn.disabled) {
+                return 'Generate button is disabled by default';
+            }
+            if (deleteBtn.disabled) {
+                return 'Delete button is disabled by default';
+            }
+
+            // Test button text content
+            if (!generateBtn.textContent.includes('Generate')) {
+                return 'Generate button missing proper text content';
+            }
+            if (!deleteBtn.textContent.includes('Delete')) {
+                return 'Delete button missing proper text content';
+            }
+
+            return true;
+        });
+
+        // Run all tests
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                tester.displayResults();
+            }, 100);
+        });
+
+        // Add manual test buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const manualTestContainer = document.createElement('div');
+            manualTestContainer.className = 'test-container';
+            manualTestContainer.innerHTML = `
+                <h3>Manual Tests</h3>
+                <button onclick="testButtonHover()">Test Button Hover Effects</button>
+                <button onclick="testFormValidation()">Test Form Validation</button>
+                <button onclick="testResultDisplay()">Test Result Display</button>
+                <button onclick="testResponsive()">Test Responsive Layout</button>
+            `;
+            document.body.appendChild(manualTestContainer);
+        });
+
+        // Manual test functions
+        function testButtonHover() {
+            alert('Hover over the Generate and Delete buttons to test Neo-Brutalism hover effects (color inversion, shadow changes)');
+        }
+
+        function testFormValidation() {
+            const countInput = document.getElementById('count');
+            countInput.value = '-1';
+            countInput.dispatchEvent(new Event('blur'));
+            alert('Set count to -1 and check if validation styling appears');
+        }
+
+        function testResultDisplay() {
+            const resultBox = document.getElementById('generateResult');
+            resultBox.innerHTML = '<div class="persona-grid"><div class="persona-card"><h3>Test Person</h3><p><strong>Name:</strong> John Doe</p></div></div>';
+            resultBox.style.display = 'block';
+            alert('Check if the result box displays with proper Neo-Brutalism styling');
+        }
+
+        function testResponsive() {
+            alert('Resize the browser window to test responsive behavior of the form grid and card layouts');
+        }
+    </script>
+</body>
+</html>

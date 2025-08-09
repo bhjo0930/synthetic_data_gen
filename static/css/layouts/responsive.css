@@ -1,0 +1,751 @@
+/* Neo-Brutalism Responsive Design System */
+/* Mobile-first approach maintaining asymmetrical characteristics across all screen sizes */
+
+/* ===== MOBILE FIRST BASE STYLES (320px+) ===== */
+/* Default styles for mobile devices */
+
+/* Touch target minimum sizes for mobile accessibility */
+.neo-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--neo-space-sm);
+}
+
+/* Mobile-first asymmetrical grid layouts */
+.neo-grid--responsive-asymmetric {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--neo-space-sm);
+  width: 100%;
+}
+
+.neo-grid--responsive-chaos {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: auto;
+  gap: var(--neo-space-xs);
+}
+
+/* Mobile typography scaling */
+.neo-text--responsive {
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: var(--neo-line-normal);
+}
+
+.neo-heading--responsive {
+  font-size: clamp(24px, 8vw, 32px);
+  line-height: var(--neo-line-tight);
+}
+
+/* Mobile spacing adjustments */
+.neo-spacing--mobile {
+  padding: var(--neo-space-sm);
+  margin: var(--neo-space-xs) 0;
+}
+
+/* Mobile-friendly button sizing */
+.neo-button--responsive {
+  min-height: 44px;
+  padding: var(--neo-space-sm) var(--neo-space-md);
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: var(--neo-space-sm);
+}
+
+/* Mobile form elements with proper touch targets */
+.neo-input--responsive {
+  min-height: 44px;
+  padding: var(--neo-space-sm);
+  font-size: 16px; /* Prevents zoom on iOS */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== SMALL SCREENS (480px+) ===== */
+@media (min-width: 480px) {
+  /* Enhanced asymmetrical layouts for small screens */
+  .neo-grid--responsive-asymmetric {
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: var(--neo-space-md);
+  }
+  
+  .neo-grid--responsive-chaos {
+    grid-template-columns: 1fr 2fr 1.5fr;
+    gap: var(--neo-space-sm);
+  }
+  
+  /* Introduce subtle overlapping elements */
+  .neo-responsive-overlap {
+    position: relative;
+  }
+  
+  .neo-responsive-overlap::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    background: var(--neo-red);
+    border: 2px solid var(--neo-black);
+    z-index: 2;
+  }
+  
+  /* Button groups can be inline on small screens */
+  .neo-button--responsive {
+    width: auto;
+    display: inline-block;
+    margin-right: var(--neo-space-sm);
+  }
+  
+  /* Typography adjustments */
+  .neo-text--responsive {
+    font-size: clamp(16px, 3vw, 18px);
+  }
+  
+  .neo-heading--responsive {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+  
+  /* Form layouts can be more complex */
+  .neo-form--responsive {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--neo-space-md);
+  }
+  
+  .neo-form--responsive .neo-input--full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== MEDIUM SCREENS (768px+) ===== */
+@media (min-width: 768px) {
+  /* Full asymmetrical complexity for tablets */
+  .neo-grid--responsive-asymmetric {
+    grid-template-columns: 1fr 3fr 2fr;
+    gap: var(--neo-space-lg);
+  }
+  
+  .neo-grid--responsive-chaos {
+    grid-template-columns: 1fr 2fr 1fr 2.5fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    gap: var(--neo-space-md);
+  }
+  
+  /* Enhanced overlapping for medium screens */
+  .neo-responsive-overlap::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: -12px;
+    width: 24px;
+    height: 24px;
+    background: var(--neo-yellow);
+    border: 3px solid var(--neo-black);
+    z-index: 1;
+  }
+  
+  /* Asymmetrical content positioning */
+  .neo-content--offset-md {
+    transform: translate(var(--neo-space-md), calc(-1 * var(--neo-space-sm)));
+  }
+  
+  /* Typography scaling for medium screens */
+  .neo-text--responsive {
+    font-size: clamp(16px, 2vw, 18px);
+  }
+  
+  .neo-heading--responsive {
+    font-size: clamp(32px, 4vw, 42px);
+  }
+  
+  /* Button layouts become more complex */
+  .neo-button-group--responsive {
+    display: flex;
+    gap: var(--neo-space-sm);
+    flex-wrap: wrap;
+  }
+  
+  .neo-button--responsive {
+    flex: 0 1 auto;
+    min-width: 120px;
+  }
+  
+  /* Form layouts with asymmetrical columns */
+  .neo-form--responsive {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+  
+  /* Navigation can be horizontal */
+  .neo-nav--responsive {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .neo-nav--responsive .neo-nav-item {
+    margin: 0 var(--neo-space-sm);
+  }
+}
+
+/* ===== LARGE SCREENS (1024px+) ===== */
+@media (min-width: 1024px) {
+  /* Maximum asymmetrical chaos for desktop */
+  .neo-grid--responsive-asymmetric {
+    grid-template-columns: 1fr 3fr 2fr 1fr;
+    gap: var(--neo-space-xl);
+  }
+  
+  .neo-grid--responsive-chaos {
+    grid-template-columns: 0.5fr 2fr 1fr 3fr 1.5fr;
+    grid-template-rows: 2fr 1fr 3fr;
+    gap: var(--neo-space-lg);
+  }
+  
+  /* Complex overlapping patterns */
+  .neo-complex-overlap {
+    position: relative;
+  }
+  
+  .neo-complex-overlap::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 32px;
+    height: 32px;
+    background: var(--neo-green);
+    border: 4px solid var(--neo-black);
+    z-index: 3;
+  }
+  
+  .neo-complex-overlap::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    background: var(--neo-blue);
+    border: 4px solid var(--neo-black);
+    z-index: 1;
+  }
+  
+  /* Desktop typography scaling */
+  .neo-text--responsive {
+    font-size: 18px;
+  }
+  
+  .neo-heading--responsive {
+    font-size: 48px;
+  }
+  
+  /* Desktop button layouts */
+  .neo-button--responsive {
+    min-width: 140px;
+    padding: var(--neo-space-md) var(--neo-space-lg);
+  }
+  
+  /* Complex form layouts */
+  .neo-form--responsive {
+    grid-template-columns: 1fr 2fr 1fr 1.5fr;
+  }
+  
+  /* Desktop navigation with full complexity */
+  .neo-nav--responsive {
+    justify-content: flex-start;
+  }
+  
+  .neo-nav--responsive .neo-nav-item:nth-child(odd) {
+    transform: translateY(-4px);
+  }
+  
+  .neo-nav--responsive .neo-nav-item:nth-child(even) {
+    transform: translateY(4px);
+  }
+}
+
+/* ===== EXTRA LARGE SCREENS (1200px+) ===== */
+@media (min-width: 1200px) {
+  /* Extreme asymmetry for large desktop displays */
+  .neo-grid--responsive-chaos {
+    grid-template-columns: 1fr 4fr 1fr 2fr 3fr 1fr;
+    grid-template-rows: 1fr 3fr 2fr 1fr;
+    gap: var(--neo-space-xxl);
+  }
+  
+  /* Extreme overlapping for large screens */
+  .neo-extreme-overlap {
+    position: relative;
+  }
+  
+  .neo-extreme-overlap::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    right: -24px;
+    width: 48px;
+    height: 48px;
+    background: var(--neo-red);
+    border: 6px solid var(--neo-black);
+    z-index: 4;
+    transform: rotate(15deg);
+  }
+  
+  /* Large screen typography */
+  .neo-heading--responsive {
+    font-size: 56px;
+    letter-spacing: var(--neo-spacing-tight);
+  }
+  
+  /* Large screen button layouts */
+  .neo-button--responsive {
+    min-width: 160px;
+    padding: var(--neo-space-lg) var(--neo-space-xl);
+  }
+  
+  /* Complex asymmetrical form layouts */
+  .neo-form--responsive {
+    grid-template-columns: 0.5fr 2fr 1fr 2fr 1.5fr;
+  }
+  
+  /* Extreme navigation asymmetry */
+  .neo-nav--responsive .neo-nav-item:nth-child(3n) {
+    transform: translateY(-8px) translateX(4px);
+  }
+  
+  .neo-nav--responsive .neo-nav-item:nth-child(3n+1) {
+    transform: translateY(8px) translateX(-4px);
+  }
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
+/* Utilities that maintain Neo-Brutalism asymmetry across breakpoints */
+
+/* Touch-friendly enhancements */
+.neo-touch-friendly {
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--neo-space-sm);
+  cursor: pointer;
+}
+
+/* Larger touch targets for mobile */
+@media (max-width: 767px) {
+  .neo-touch-friendly {
+    min-height: 48px;
+    min-width: 48px;
+    padding: var(--neo-space-md);
+  }
+}
+
+/* Hide/show elements asymmetrically across breakpoints */
+@media (max-width: 479px) {
+  .neo-hide-mobile {
+    display: none !important;
+  }
+  
+  .neo-show-mobile-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .neo-hide-tablet {
+    display: none !important;
+  }
+  
+  .neo-show-tablet-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .neo-hide-desktop {
+    display: none !important;
+  }
+  
+  .neo-show-desktop {
+    display: block !important;
+  }
+  
+  .neo-show-mobile-only,
+  .neo-show-tablet-only {
+    display: none !important;
+  }
+}
+
+/* Responsive asymmetrical spacing system */
+.neo-spacing--responsive {
+  padding: var(--neo-space-sm);
+  margin: var(--neo-space-xs) 0;
+}
+
+@media (min-width: 480px) {
+  .neo-spacing--responsive {
+    padding: var(--neo-space-md);
+    margin: var(--neo-space-sm) 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .neo-spacing--responsive {
+    padding: var(--neo-space-lg);
+    margin: var(--neo-space-md) 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .neo-spacing--responsive {
+    padding: var(--neo-space-xl);
+    margin: var(--neo-space-lg) 0;
+  }
+}
+
+/* Mobile-specific compact spacing */
+@media (max-width: 767px) {
+  .neo-spacing--mobile-compact {
+    gap: var(--neo-space-xs);
+    padding: var(--neo-space-sm);
+  }
+  
+  .neo-container--mobile {
+    padding: var(--neo-space-sm);
+    margin: 0;
+  }
+}
+
+/* Desktop expanded spacing */
+@media (min-width: 768px) {
+  .neo-spacing--desktop-expanded {
+    gap: var(--neo-space-xl);
+    padding: var(--neo-space-lg);
+  }
+  
+  .neo-container--desktop {
+    padding: var(--neo-space-lg) var(--neo-space-xl);
+    margin: var(--neo-space-md) auto;
+    max-width: 1200px;
+  }
+}
+
+/* Responsive text alignment that maintains asymmetry */
+.neo-text--responsive-align {
+  text-align: center;
+}
+
+@media (min-width: 480px) {
+  .neo-text--responsive-align {
+    text-align: left;
+  }
+}
+
+@media (min-width: 768px) {
+  .neo-text--responsive-align {
+    text-align: left;
+    padding-left: var(--neo-space-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .neo-text--responsive-align {
+    padding-left: var(--neo-space-lg);
+  }
+}
+
+/* Mobile-specific text alignment */
+@media (max-width: 767px) {
+  .neo-text--mobile-center {
+    text-align: center;
+  }
+  
+  .neo-text--mobile-left {
+    text-align: left;
+  }
+}
+
+/* Desktop asymmetrical text positioning */
+@media (min-width: 768px) {
+  .neo-text--desktop-offset {
+    text-align: left;
+    padding-left: var(--neo-space-lg);
+    transform: translateX(var(--neo-space-sm));
+  }
+  
+  .neo-text--desktop-asymmetric:nth-child(odd) {
+    text-align: left;
+    padding-left: var(--neo-space-xl);
+  }
+  
+  .neo-text--desktop-asymmetric:nth-child(even) {
+    text-align: right;
+    padding-right: var(--neo-space-xl);
+  }
+}
+
+/* Fallback for browsers that don't support CSS Grid */
+@supports not (display: grid) {
+  .neo-grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .neo-grid--asymmetric-2col > * {
+    flex: 1 1 33%;
+  }
+  
+  .neo-grid--asymmetric-2col > *:nth-child(2n) {
+    flex: 2 1 66%;
+  }
+  
+  .neo-grid--asymmetric-3col > * {
+    flex: 1 1 20%;
+  }
+  
+  .neo-grid--asymmetric-3col > *:nth-child(2) {
+    flex: 3 1 50%;
+  }
+  
+  .neo-grid--asymmetric-3col > *:nth-child(3) {
+    flex: 2 1 30%;
+  }
+}
+/
+* ===== TOUCH INTERACTION ENHANCEMENTS ===== */
+/* Enhanced touch targets and mobile-specific interactions */
+
+/* Touch-friendly interactive elements */
+@media (max-width: 767px) {
+  /* Ensure all interactive elements meet minimum touch target size */
+  .neo-button,
+  .neo-touch-target,
+  input[type="checkbox"],
+  input[type="radio"],
+  select,
+  .neo-nav-item {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Larger padding for touch interactions */
+  .neo-button {
+    padding: var(--neo-space-md) var(--neo-space-lg);
+    margin: var(--neo-space-xs) 0;
+  }
+  
+  /* Mobile-specific hover states (touch devices) */
+  .neo-button:active {
+    background: var(--neo-black);
+    color: var(--neo-red);
+    transform: translate(2px, 2px);
+    box-shadow: var(--neo-shadow-sm);
+  }
+  
+  /* Touch-friendly form elements */
+  input, select, textarea {
+    min-height: 44px;
+    padding: var(--neo-space-md);
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Mobile navigation adjustments */
+  .neo-nav--responsive {
+    flex-direction: column;
+    gap: var(--neo-space-sm);
+  }
+  
+  .neo-nav-item {
+    width: 100%;
+    text-align: center;
+    padding: var(--neo-space-md);
+  }
+}
+
+/* Tablet-specific touch enhancements */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .neo-touch-target {
+    min-height: 40px;
+    min-width: 40px;
+  }
+  
+  /* Tablet button sizing */
+  .neo-button {
+    min-height: 40px;
+    padding: var(--neo-space-sm) var(--neo-space-md);
+  }
+}
+
+/* ===== RESPONSIVE COMPONENT ADAPTATIONS ===== */
+
+/* Responsive card layouts */
+.neo-card--responsive {
+  width: 100%;
+  margin-bottom: var(--neo-space-md);
+}
+
+@media (min-width: 480px) {
+  .neo-card--responsive {
+    width: calc(50% - var(--neo-space-sm));
+    display: inline-block;
+    vertical-align: top;
+    margin-right: var(--neo-space-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .neo-card--responsive {
+    width: calc(33.333% - var(--neo-space-md));
+  }
+}
+
+@media (min-width: 1024px) {
+  .neo-card--responsive {
+    width: calc(25% - var(--neo-space-lg));
+  }
+}
+
+/* Responsive table/grid layouts */
+.neo-table--responsive {
+  width: 100%;
+  overflow-x: auto;
+  border: var(--neo-border-thick);
+}
+
+@media (max-width: 767px) {
+  .neo-table--responsive {
+    font-size: 14px;
+  }
+  
+  .neo-table--responsive th,
+  .neo-table--responsive td {
+    padding: var(--neo-space-xs);
+    min-width: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .neo-table--responsive th,
+  .neo-table--responsive td {
+    padding: var(--neo-space-sm);
+  }
+}
+
+/* Responsive modal/overlay behavior */
+.neo-modal--responsive {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: var(--neo-z-modal);
+}
+
+.neo-modal-content--responsive {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--neo-white);
+  border: var(--neo-border-thick);
+  box-shadow: var(--neo-shadow-lg);
+  padding: var(--neo-space-lg);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  .neo-modal-content--responsive {
+    width: 95%;
+    padding: var(--neo-space-md);
+    max-height: 90vh;
+  }
+}
+
+/* ===== RESPONSIVE ACCESSIBILITY ENHANCEMENTS ===== */
+
+/* Enhanced focus indicators for touch devices */
+@media (max-width: 767px) {
+  .neo-button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: var(--neo-border-heavy);
+    outline-offset: 4px;
+    box-shadow: var(--neo-shadow-md);
+  }
+}
+
+/* Responsive reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .neo-content--offset-md,
+  .neo-nav--responsive .neo-nav-item {
+    transform: none !important;
+  }
+  
+  .neo-responsive-overlap::before,
+  .neo-responsive-overlap::after,
+  .neo-complex-overlap::before,
+  .neo-complex-overlap::after,
+  .neo-extreme-overlap::before {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode responsive adjustments */
+@media (prefers-contrast: high) {
+  .neo-responsive-overlap::before,
+  .neo-responsive-overlap::after,
+  .neo-complex-overlap::before,
+  .neo-complex-overlap::after,
+  .neo-extreme-overlap::before {
+    border-width: 4px;
+  }
+  
+  @media (max-width: 767px) {
+    .neo-button,
+    input,
+    select,
+    textarea {
+      border-width: 6px;
+    }
+  }
+}
+
+/* ===== RESPONSIVE PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Reduce complexity on smaller screens for performance */
+@media (max-width: 767px) {
+  .neo-complex-overlap::before,
+  .neo-complex-overlap::after,
+  .neo-extreme-overlap::before {
+    display: none;
+  }
+  
+  /* Simplify animations on mobile for performance */
+  .neo-button:hover {
+    transform: none;
+    box-shadow: var(--neo-shadow-md);
+  }
+  
+  /* Disable complex transforms on mobile for performance */
+  .neo-content--offset-md,
+  .neo-nav--responsive .neo-nav-item {
+    transform: none !important;
+  }
+}
+
+/* Progressive enhancement for larger screens */
+@media (min-width: 1024px) {
+  /* Enable complex animations only on desktop */
+  .neo-enhanced-desktop {
+    transition: transform 0.1s var(--neo-timing-harsh);
+  }
+  
+  .neo-enhanced-desktop:hover {
+    transform: translate(-2px, -2px);
+  }
+}

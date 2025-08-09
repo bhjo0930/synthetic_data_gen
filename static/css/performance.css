@@ -1,0 +1,292 @@
+/* Neo-Brutalism Performance Optimizations */
+
+/* Optimized font loading */
+@font-face {
+  font-family: 'Arial Black Fallback';
+  src: local('Arial Black'), local('ArialBlack'), local('Arial-Black');
+  font-display: swap;
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Preload critical fonts */
+.neo-font-preload {
+  font-family: 'Arial Black Fallback', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+}
+
+/* Optimized animations with will-change */
+.neo-title {
+  will-change: transform;
+}
+
+.neo-button {
+  will-change: transform, box-shadow, background-color, color;
+}
+
+.neo-card--generate,
+.neo-card--management {
+  will-change: transform;
+}
+
+.persona-card {
+  will-change: transform;
+}
+
+/* GPU acceleration for transforms */
+.neo-title,
+.neo-card--generate,
+.neo-card--management,
+.persona-card {
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Optimized hover states with contain */
+.neo-button:hover,
+.neo-nav a:hover {
+  contain: layout style paint;
+}
+
+/* Efficient repaints */
+.neo-loading {
+  contain: layout style paint;
+}
+
+/* Optimized scrolling */
+.neo-result-box {
+  contain: layout style paint;
+  overflow-anchor: none; /* Prevent scroll anchoring issues */
+}
+
+/* Reduce layout thrashing */
+.neo-main {
+  contain: layout;
+}
+
+.neo-form-grid {
+  contain: layout;
+}
+
+.persona-grid {
+  contain: layout;
+}
+
+/* Optimized pseudo-elements */
+.neo-title::before,
+.neo-title::after,
+.neo-card::before,
+.persona-card::before {
+  will-change: auto; /* Don't optimize these small elements */
+  contain: layout style paint;
+}
+
+/* Critical resource hints */
+.neo-preload-hint {
+  /* This class can be used to mark elements that should be prioritized */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Lazy loading for non-critical content */
+.neo-lazy-load {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 200px;
+}
+
+/* Optimize images and icons */
+.neo-icon {
+  contain: layout style paint;
+  will-change: auto;
+}
+
+/* Efficient transitions */
+.neo-transition-optimized {
+  transition-property: transform, box-shadow, background-color, color;
+  transition-duration: 0ms; /* Neo-brutalism uses instant transitions */
+  transition-timing-function: steps(1, end);
+}
+
+/* Memory optimization for large lists */
+.persona-grid {
+  /* Use containment for better memory management */
+  contain: layout style paint;
+}
+
+.persona-card {
+  /* Optimize individual cards */
+  contain: layout style paint;
+}
+
+/* Reduce paint complexity */
+.neo-simple-shadow {
+  /* Simplified shadow for better performance */
+  box-shadow: 4px 4px 0px #000000;
+  /* Avoid complex shadows that cause expensive repaints */
+}
+
+/* Optimize form elements */
+.neo-input,
+.neo-select {
+  contain: layout style;
+}
+
+/* Efficient grid layouts */
+.neo-form-grid {
+  /* Use subgrid when available for better performance */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--neo-space-lg);
+}
+
+@supports (grid-template-rows: subgrid) {
+  .neo-form-grid {
+    grid-template-rows: subgrid;
+  }
+}
+
+/* Optimize responsive images */
+.neo-responsive-img {
+  max-width: 100%;
+  height: auto;
+  contain: layout style paint;
+}
+
+/* Efficient media queries */
+@media (max-width: 768px) {
+  /* Reduce complexity on mobile */
+  .neo-title,
+  .neo-card--generate,
+  .neo-card--management,
+  .persona-card {
+    transform: none;
+    will-change: auto;
+  }
+  
+  /* Simplify shadows on mobile */
+  .neo-title,
+  .neo-button,
+  .neo-card {
+    box-shadow: 2px 2px 0px #000000;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further optimizations for small screens */
+  .neo-title::before,
+  .neo-title::after,
+  .neo-card::before,
+  .persona-card::before {
+    display: none; /* Remove decorative elements on very small screens */
+  }
+}
+
+/* Optimize for high DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .neo-title,
+  .neo-button,
+  .neo-card {
+    /* Use sharper borders on high DPI */
+    border-width: 2px;
+  }
+}
+
+/* Battery optimization */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .neo-loading {
+    animation: none;
+  }
+}
+
+/* Network optimization */
+@media (prefers-reduced-data: reduce) {
+  /* Reduce visual complexity for slow connections */
+  .neo-title::before,
+  .neo-title::after,
+  .neo-card::before,
+  .persona-card::before {
+    display: none;
+  }
+  
+  .neo-title,
+  .neo-button,
+  .neo-card {
+    box-shadow: 2px 2px 0px #000000;
+  }
+}
+
+/* CPU optimization */
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+  /* Combine reduced motion with mobile for maximum efficiency */
+  .neo-title,
+  .neo-button,
+  .neo-card,
+  .neo-input {
+    will-change: auto;
+    contain: none;
+  }
+}
+
+/* Memory-efficient animations */
+@keyframes neo-loading-optimized {
+  0%, 50% { 
+    color: #000000;
+    contain: layout style paint;
+  }
+  51%, 100% { 
+    color: #FF0000;
+    contain: layout style paint;
+  }
+}
+
+.neo-loading-optimized {
+  animation: neo-loading-optimized 1s steps(2, end) infinite;
+  contain: layout style paint;
+}
+
+/* Efficient focus management */
+.neo-focus-optimized:focus {
+  outline: 4px solid #0000FF;
+  outline-offset: 2px;
+  contain: layout style paint;
+}
+
+/* Optimize for touch devices */
+@media (pointer: coarse) {
+  .neo-button,
+  .neo-nav a {
+    /* Larger touch targets */
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 24px;
+  }
+  
+  /* Simplify hover effects on touch */
+  .neo-button:hover,
+  .neo-nav a:hover {
+    transform: none;
+  }
+}
+
+/* Print optimization */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transform: none !important;
+    will-change: auto !important;
+    contain: none !important;
+  }
+  
+  .neo-title,
+  .neo-card {
+    border: 2px solid black !important;
+  }
+}

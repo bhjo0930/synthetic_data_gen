@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Performance Tests</title>
+    
+    <!-- Critical CSS inline for testing -->
+    <style>
+        /* Critical CSS for immediate rendering */
+        :root {
+            --neo-white: #FFFFFF;
+            --neo-black: #000000;
+            --neo-red: #FF0000;
+            --neo-font-primary: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+        }
+        
+        body {
+            font-family: var(--neo-font-primary);
+            background: var(--neo-white);
+            color: var(--neo-black);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--neo-white);
+            border: 4px solid var(--neo-black);
+            box-shadow: 8px 8px 0px var(--neo-black);
+            padding: 24px;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .test-title {
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin: 0;
+            background: var(--neo-white);
+            border: 4px solid var(--neo-black);
+            padding: 16px;
+            box-shadow: 4px 4px 0px var(--neo-black);
+        }
+        
+        .test-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .test-button {
+            background: var(--neo-red);
+            color: var(--neo-black);
+            border: 4px solid var(--neo-black);
+            box-shadow: 4px 4px 0px var(--neo-black);
+            padding: 12px 24px;
+            font-family: var(--neo-font-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: none;
+        }
+        
+        .test-button:hover {
+            background: var(--neo-black);
+            color: var(--neo-red);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--neo-black);
+        }
+        
+        .test-button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--neo-black);
+        }
+        
+        .test-results {
+            background: var(--neo-white);
+            border: 4px solid var(--neo-black);
+            padding: 24px;
+            margin-top: 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .test-status {
+            padding: 16px;
+            margin: 16px 0;
+            border: 4px solid var(--neo-black);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .test-status.running {
+            background: #FFFF00;
+            color: var(--neo-black);
+        }
+        
+        .test-status.passed {
+            background: #00FF00;
+            color: var(--neo-black);
+        }
+        
+        .test-status.failed {
+            background: var(--neo-red);
+            color: var(--neo-white);
+        }
+        
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        
+        .metric-card {
+            background: var(--neo-white);
+            border: 4px solid var(--neo-black);
+            box-shadow: 4px 4px 0px var(--neo-black);
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--neo-red);
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .test-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .test-title {
+                font-size: 24px;
+                padding: 12px;
+            }
+            
+            .performance-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .test-button:hover {
+                transform: none;
+            }
+            
+            .test-button:active {
+                transform: none;
+            }
+        }
+    </style>
+    
+    <!-- Load Neo-Brutalism CSS for testing -->
+    <link rel="preload" href="../static/css/neo-brutalism.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../static/css/neo-brutalism.css"></noscript>
+</head>
+<body>
+    <div class="test-container">
+        <header class="test-header">
+            <h1 class="test-title">Neo-Brutalism Performance Tests</h1>
+            <p>Test the performance and browser compatibility of the Neo-Brutalism design system.</p>
+        </header>
+        
+        <div class="test-controls">
+            <button id="runPerformanceTests" class="test-button">Run Performance Tests</button>
+            <button id="runCompatibilityTests" class="test-button">Run Compatibility Tests</button>
+            <button id="runAllTests" class="test-button">Run All Tests</button>
+            <button id="clearResults" class="test-button">Clear Results</button>
+        </div>
+        
+        <div id="testStatus" class="test-status" style="display: none;">
+            Ready to run tests
+        </div>
+        
+        <div class="performance-metrics">
+            <div class="metric-card">
+                <div id="loadTimeMetric" class="metric-value">-</div>
+                <div class="metric-label">CSS Load Time (ms)</div>
+            </div>
+            <div class="metric-card">
+                <div id="renderTimeMetric" class="metric-value">-</div>
+                <div class="metric-label">Render Time (ms)</div>
+            </div>
+            <div class="metric-card">
+                <div id="memoryMetric" class="metric-value">-</div>
+                <div class="metric-label">Memory Usage (MB)</div>
+            </div>
+            <div class="metric-card">
+                <div id="fpsMetric" class="metric-value">-</div>
+                <div class="metric-label">Animation FPS</div>
+            </div>
+        </div>
+        
+        <div id="testResults" class="test-results" style="display: none;"></div>
+    </div>
+    
+    <!-- Load feature detection and performance tests -->
+    <script src="../static/js/feature-detection.js"></script>
+    <script src="performance-tests.js"></script>
+    
+    <script>
+        // Test runner interface
+        document.addEventListener('DOMContentLoaded', function() {
+            const runPerformanceBtn = document.getElementById('runPerformanceTests');
+            const runCompatibilityBtn = document.getElementById('runCompatibilityTests');
+            const runAllBtn = document.getElementById('runAllTests');
+            const clearBtn = document.getElementById('clearResults');
+            const testStatus = document.getElementById('testStatus');
+            const testResults = document.getElementById('testResults');
+            
+            // Metric elements
+            const loadTimeMetric = document.getElementById('loadTimeMetric');
+            const renderTimeMetric = document.getElementById('renderTimeMetric');
+            const memoryMetric = document.getElementById('memoryMetric');
+            const fpsMetric = document.getElementById('fpsMetric');
+            
+            function showStatus(message, type = 'running') {
+                testStatus.style.display = 'block';
+                testStatus.textContent = message;
+                testStatus.className = `test-status ${type}`;
+            }
+            
+            function showResults(content) {
+                testResults.style.display = 'block';
+                testResults.textContent = content;
+            }
+            
+            function updateMetrics(results) {
+                results.forEach(result => {
+                    if (result.test === 'CSS Loading Performance' && result.loadTime) {
+                        loadTimeMetric.textContent = result.loadTime.toFixed(2);
+                    }
+                    if (result.test === 'Critical CSS Rendering' && result.renderTime) {
+                        renderTimeMetric.textContent = result.renderTime.toFixed(2);
+                    }
+                    if (result.test === 'Memory Usage' && result.memoryUsage) {
+                        memoryMetric.textContent = result.memoryUsage.toFixed(2);
+                    }
+                    if (result.test === 'Animation Performance' && result.fps) {
+                        fpsMetric.textContent = result.fps.toFixed(1);
+                    }
+                });
+            }
+            
+            // Capture console output
+            function captureConsoleOutput(callback) {
+                const originalLog = console.log;
+                let output = '';
+                
+                console.log = function(...args) {
+                    output += args.join(' ') + '\n';
+                    originalLog.apply(console, args);
+                };
+                
+                callback().then(() => {
+                    console.log = originalLog;
+                    showResults(output);
+                });
+            }
+            
+            runPerformanceBtn.addEventListener('click', async function() {
+                showStatus('Running Performance Tests...', 'running');
+                
+                captureConsoleOutput(async () => {
+                    const results = await PerformanceTests.runAllTests();
+                    updateMetrics(results);
+                    
+                    const passedTests = results.filter(r => r.passed).length;
+                    const totalTests = results.length;
+                    
+                    if (passedTests === totalTests) {
+                        showStatus(`All ${totalTests} Performance Tests Passed!`, 'passed');
+                    } else {
+                        showStatus(`${passedTests}/${totalTests} Performance Tests Passed`, 'failed');
+                    }
+                });
+            });
+            
+            runCompatibilityBtn.addEventListener('click', function() {
+                showStatus('Running Compatibility Tests...', 'running');
+                
+                captureConsoleOutput(async () => {
+                    const results = CompatibilityTests.runAllTests();
+                    
+                    const passedTests = results.filter(r => r.passed).length;
+                    const totalTests = results.length;
+                    
+                    if (passedTests === totalTests) {
+                        showStatus(`All ${totalTests} Compatibility Tests Passed!`, 'passed');
+                    } else {
+                        showStatus(`${passedTests}/${totalTests} Compatibility Tests Passed`, 'failed');
+                    }
+                });
+            });
+            
+            runAllBtn.addEventListener('click', async function() {
+                showStatus('Running All Tests...', 'running');
+                
+                captureConsoleOutput(async () => {
+                    const performanceResults = await PerformanceTests.runAllTests();
+                    console.log('\n' + '='.repeat(50) + '\n');
+                    const compatibilityResults = CompatibilityTests.runAllTests();
+                    
+                    updateMetrics(performanceResults);
+                    
+                    const allResults = [...performanceResults, ...compatibilityResults];
+                    const passedTests = allResults.filter(r => r.passed).length;
+                    const totalTests = allResults.length;
+                    
+                    if (passedTests === totalTests) {
+                        showStatus(`All ${totalTests} Tests Passed!`, 'passed');
+                    } else {
+                        showStatus(`${passedTests}/${totalTests} Tests Passed`, 'failed');
+                    }
+                });
+            });
+            
+            clearBtn.addEventListener('click', function() {
+                testStatus.style.display = 'none';
+                testResults.style.display = 'none';
+                
+                // Reset metrics
+                loadTimeMetric.textContent = '-';
+                renderTimeMetric.textContent = '-';
+                memoryMetric.textContent = '-';
+                fpsMetric.textContent = '-';
+            });
+            
+            // Show initial status
+            showStatus('Ready to run tests', 'running');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Effects Integration Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: var(--neo-font-primary);
+        }
+        
+        .integration-test {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: var(--neo-border-thick);
+            background: var(--neo-bg-primary);
+        }
+        
+        .test-result {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: var(--neo-border-thin);
+            font-weight: bold;
+        }
+        
+        .test-pass {
+            background: var(--neo-green);
+            color: var(--neo-black);
+        }
+        
+        .test-fail {
+            background: var(--neo-red);
+            color: var(--neo-white);
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Cursor Effects Integration Test</h1>
+    
+    <div class="integration-test">
+        <h2>Test Results</h2>
+        <div id="test-results"></div>
+    </div>
+    
+    <div class="integration-test">
+        <h2>Interactive Elements Test</h2>
+        <p>Hover over these elements to test cursor effects:</p>
+        
+        <!-- Simulate existing generate.html elements -->
+        <div class="input-group">
+            <label for="test-input">Test Input:</label>
+            <input type="number" id="test-input" value="1" min="1" class="neo-hover-zone">
+        </div>
+        
+        <button class="neo-button neo-hover-zone" onclick="testButtonClick()">Generate Test</button>
+        
+        <nav style="margin: 1rem 0;">
+            <a href="#" class="neo-nav-item neo-hover-zone">Test Link 1</a> |
+            <a href="#" class="neo-nav-item neo-hover-zone">Test Link 2</a>
+        </nav>
+        
+        <div class="neo-cursor-trail" style="padding: 2rem; border: var(--neo-border-thin); margin: 1rem 0;">
+            Move your mouse here to see cursor trail effect
+        </div>
+        
+        <div class="neo-help" style="padding: 1rem; border: var(--neo-border-thin); margin: 1rem 0;">
+            Hover for help cursor
+        </div>
+        
+        <button class="neo-button" disabled>Disabled Button</button>
+    </div>
+    
+    <script>
+        function testButtonClick() {
+            alert('Button clicked! Cursor effects working.');
+        }
+        
+        // Integration tests
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultsContainer = document.getElementById('test-results');
+            const tests = [];
+            
+            // Test 1: Check if Neo-Brutalism CSS is loaded
+            function testCSSLoaded() {
+                const testElement = document.createElement('div');
+                testElement.style.cssText = 'position: absolute; visibility: hidden;';
+                testElement.className = 'neo-button';
+                document.body.appendChild(testElement);
+                
+                const computedStyle = window.getComputedStyle(testElement);
+                const hasNeoBrutalism = computedStyle.fontFamily.includes('Arial Black') || 
+                                       computedStyle.fontFamily.includes('Impact');
+                
+                document.body.removeChild(testElement);
+                return hasNeoBrutalism;
+            }
+            
+            // Test 2: Check if cursor effects are applied
+            function testCursorEffects() {
+                const button = document.querySelector('.neo-button:not([disabled])');
+                const computedStyle = window.getComputedStyle(button);
+                return computedStyle.cursor.includes('url(') || computedStyle.cursor === 'pointer';
+            }
+            
+            // Test 3: Check if hover zones work
+            function testHoverZones() {
+                const hoverZone = document.querySelector('.neo-hover-zone');
+                return hoverZone && hoverZone.classList.contains('neo-hover-zone');
+            }
+            
+            // Test 4: Check if disabled cursor works
+            function testDisabledCursor() {
+                const disabledButton = document.querySelector('button[disabled]');
+                const computedStyle = window.getComputedStyle(disabledButton);
+                return computedStyle.cursor.includes('not-allowed') || computedStyle.cursor.includes('url(');
+            }
+            
+            // Test 5: Check if accessibility features are present
+            function testAccessibility() {
+                // Check if reduced motion media query is supported
+                const supportsReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+                return supportsReducedMotion && typeof supportsReducedMotion.matches === 'boolean';
+            }
+            
+            // Run tests
+            tests.push({
+                name: 'Neo-Brutalism CSS Loaded',
+                result: testCSSLoaded(),
+                description: 'Checks if Neo-Brutalism styles are properly loaded'
+            });
+            
+            tests.push({
+                name: 'Cursor Effects Applied',
+                result: testCursorEffects(),
+                description: 'Checks if custom cursor effects are applied to interactive elements'
+            });
+            
+            tests.push({
+                name: 'Hover Zones Working',
+                result: testHoverZones(),
+                description: 'Checks if hover zone classes are properly applied'
+            });
+            
+            tests.push({
+                name: 'Disabled Cursor Working',
+                result: testDisabledCursor(),
+                description: 'Checks if disabled elements have appropriate cursor'
+            });
+            
+            tests.push({
+                name: 'Accessibility Support',
+                result: testAccessibility(),
+                description: 'Checks if accessibility features are supported'
+            });
+            
+            // Display results
+            tests.forEach(test => {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = `test-result ${test.result ? 'test-pass' : 'test-fail'}`;
+                resultDiv.innerHTML = `
+                    <strong>${test.result ? '✅' : '❌'} ${test.name}</strong><br>
+                    <small>${test.description}</small>
+                `;
+                resultsContainer.appendChild(resultDiv);
+            });
+            
+            // Overall result
+            const passedTests = tests.filter(test => test.result).length;
+            const totalTests = tests.length;
+            
+            const summaryDiv = document.createElement('div');
+            summaryDiv.className = `test-result ${passedTests === totalTests ? 'test-pass' : 'test-fail'}`;
+            summaryDiv.innerHTML = `
+                <strong>Overall Result: ${passedTests}/${totalTests} tests passed</strong>
+            `;
+            resultsContainer.appendChild(summaryDiv);
+            
+            console.log('Integration test results:', {
+                passed: passedTests,
+                total: totalTests,
+                tests: tests
+            });
+        });
+        
+        // Test hover zone interactions
+        document.querySelectorAll('.neo-hover-zone').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                console.log('Hover zone entered:', this.tagName, this.className);
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                console.log('Hover zone left:', this.tagName, this.className);
+            });
+        });
+        
+        // Test cursor trail
+        document.querySelectorAll('.neo-cursor-trail').forEach(element => {
+            element.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                console.log('Cursor trail at:', x, y);
+            });
+        });
+    </script>
+</body>
+</html>

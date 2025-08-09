@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid System Integration Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            margin: 20px;
+            font-family: var(--neo-font-primary);
+        }
+        
+        .demo-content {
+            background: var(--neo-white);
+            border: var(--neo-border-thick);
+            padding: var(--neo-space-md);
+            color: var(--neo-black);
+        }
+        
+        .demo-accent {
+            background: var(--neo-red);
+            border: var(--neo-border-thick);
+            padding: var(--neo-space-sm);
+            color: var(--neo-black);
+            font-weight: bold;
+        }
+        
+        .demo-secondary {
+            background: var(--neo-yellow);
+            border: var(--neo-border-thick);
+            padding: var(--neo-space-sm);
+            color: var(--neo-black);
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Grid System Integration</h1>
+    
+    <!-- Test integration with existing persona generator layout -->
+    <section class="neo-grid neo-grid--asymmetric-3col neo-gap--lg">
+        <div class="demo-content">
+            <h2>Persona Generator</h2>
+            <p>This would be the main content area for generating personas.</p>
+            <button class="neo-button">Generate Persona</button>
+        </div>
+        
+        <div class="demo-accent neo-span--2">
+            <h3>Generated Persona</h3>
+            <p>Name: Alex Thompson</p>
+            <p>Age: 28</p>
+            <p>Occupation: UX Designer</p>
+        </div>
+        
+        <div class="demo-secondary">
+            <h3>Options</h3>
+            <ul>
+                <li>Age Range</li>
+                <li>Profession</li>
+                <li>Location</li>
+            </ul>
+        </div>
+        
+        <div class="demo-content neo-place--start-2">
+            <h3>Recent Personas</h3>
+            <p>View previously generated personas...</p>
+        </div>
+    </section>
+    
+    <!-- Test overlapping elements with dashboard layout -->
+    <section style="margin-top: 40px;">
+        <h2>Dashboard Layout with Overlays</h2>
+        <div class="neo-grid neo-grid--responsive-chaos neo-gap--uneven">
+            <div class="neo-overlay-container demo-content">
+                <h3>Analytics Dashboard</h3>
+                <p>Main dashboard content goes here.</p>
+                <div class="neo-overlay neo-overlay--corner-tl"></div>
+                <div class="neo-overlay neo-overlay--corner-br"></div>
+            </div>
+            
+            <div class="demo-accent">
+                <h3>Filters</h3>
+                <p>Date range, categories, etc.</p>
+            </div>
+            
+            <div class="neo-stack-overlay demo-secondary">
+                <div class="neo-stack-layer-1"></div>
+                <div class="neo-stack-layer-2"></div>
+                <div class="neo-stack-content">
+                    <h3>Stacked Content</h3>
+                    <p>This demonstrates the stacking overlay system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Test responsive behavior -->
+    <section style="margin-top: 40px;">
+        <h2>Responsive Grid Test</h2>
+        <div class="neo-grid neo-grid--responsive-asymmetric neo-responsive-overlap">
+            <div class="demo-content neo-hide-mobile">
+                <h3>Desktop Only</h3>
+                <p>This content is hidden on mobile devices.</p>
+            </div>
+            
+            <div class="demo-accent neo-show-tablet-only">
+                <h3>Tablet Only</h3>
+                <p>This content only shows on tablet sizes.</p>
+            </div>
+            
+            <div class="demo-secondary">
+                <h3>Always Visible</h3>
+                <p>This content is visible on all screen sizes.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Test chaos grid with complex overlapping -->
+    <section style="margin-top: 40px;">
+        <h2>Chaos Grid with Complex Overlays</h2>
+        <div class="neo-grid neo-grid--chaos neo-chaos-overlay neo-gap--chaotic">
+            <div class="demo-content">Content 1</div>
+            <div class="demo-accent">Content 2</div>
+            <div class="demo-secondary">Content 3</div>
+            <div class="demo-content">Content 4</div>
+            <div class="demo-accent">Content 5</div>
+            <div class="demo-secondary">Content 6</div>
+        </div>
+    </section>
+    
+    <script>
+        // Log grid system status
+        console.log('Grid System Integration Test Loaded');
+        
+        // Test CSS Grid support
+        if (CSS.supports('display', 'grid')) {
+            console.log('✅ CSS Grid is supported');
+        } else {
+            console.log('❌ CSS Grid is not supported - using fallbacks');
+        }
+        
+        // Test responsive breakpoints
+        function logBreakpoint() {
+            const width = window.innerWidth;
+            let breakpoint = '';
+            
+            if (width < 480) {
+                breakpoint = 'Mobile (< 480px)';
+            } else if (width < 768) {
+                breakpoint = 'Tablet (480px - 767px)';
+            } else if (width < 1024) {
+                breakpoint = 'Desktop (768px - 1023px)';
+            } else if (width < 1200) {
+                breakpoint = 'Large (1024px - 1199px)';
+            } else {
+                breakpoint = 'XL (>= 1200px)';
+            }
+            
+            console.log(`Current breakpoint: ${breakpoint}`);
+        }
+        
+        logBreakpoint();
+        window.addEventListener('resize', logBreakpoint);
+        
+        // Test grid item positioning
+        const gridItems = document.querySelectorAll('.neo-grid > *');
+        console.log(`Found ${gridItems.length} grid items`);
+        
+        // Test overlay elements
+        const overlayElements = document.querySelectorAll('[class*="neo-overlay"]');
+        console.log(`Found ${overlayElements.length} overlay elements`);
+        
+        // Test responsive utilities
+        const responsiveElements = document.querySelectorAll('[class*="neo-hide-"], [class*="neo-show-"]');
+        console.log(`Found ${responsiveElements.length} responsive utility elements`);
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+/* Neo-Brutalism Cursor Effects System */
+
+/* Base cursor styles - pixel-art aesthetic */
+* {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect width="16" height="16" fill="white" stroke="black" stroke-width="2"/><rect x="4" y="4" width="8" height="8" fill="black"/></svg>'), auto;
+}
+
+/* Interactive element cursors */
+button,
+.neo-button,
+a,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="black"/><rect x="2" y="2" width="16" height="16" fill="white"/><rect x="4" y="4" width="12" height="12" fill="black"/><rect x="6" y="6" width="8" height="8" fill="red"/></svg>'), pointer;
+}
+
+/* Hover state cursors with immediate feedback */
+button:hover,
+.neo-button:hover,
+a:hover,
+[role="button"]:hover {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="red"/><rect x="2" y="2" width="16" height="16" fill="black"/><rect x="4" y="4" width="12" height="12" fill="white"/><rect x="6" y="6" width="8" height="8" fill="red"/></svg>'), pointer;
+}
+
+/* Text input cursors */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea,
+[contenteditable] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20"><rect x="6" y="0" width="4" height="20" fill="black"/><rect x="2" y="0" width="12" height="4" fill="black"/><rect x="2" y="16" width="12" height="4" fill="black"/></svg>'), text;
+}
+
+/* Disabled element cursors */
+button:disabled,
+.neo-button:disabled,
+.neo-button--disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="gray"/><rect x="2" y="2" width="16" height="16" fill="white"/><line x1="2" y1="2" x2="18" y2="18" stroke="red" stroke-width="3"/><line x1="18" y1="2" x2="2" y2="18" stroke="red" stroke-width="3"/></svg>'), not-allowed;
+}
+
+/* Drag and drop cursors */
+[draggable="true"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="black"/><rect x="2" y="2" width="16" height="16" fill="white"/><rect x="4" y="4" width="4" height="4" fill="black"/><rect x="12" y="4" width="4" height="4" fill="black"/><rect x="4" y="12" width="4" height="4" fill="black"/><rect x="12" y="12" width="4" height="4" fill="black"/></svg>'), move;
+}
+
+/* Resize cursors for resizable elements */
+.neo-resize-horizontal {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16"><rect x="0" y="6" width="6" height="4" fill="black"/><rect x="14" y="6" width="6" height="4" fill="black"/><polygon points="6,8 10,4 10,12" fill="black"/><polygon points="14,8 10,4 10,12" fill="black"/></svg>'), ew-resize;
+}
+
+.neo-resize-vertical {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20"><rect x="6" y="0" width="4" height="6" fill="black"/><rect x="6" y="14" width="4" height="6" fill="black"/><polygon points="8,6 4,10 12,10" fill="black"/><polygon points="8,14 4,10 12,10" fill="black"/></svg>'), ns-resize;
+}
+
+/* Loading/wait cursor */
+.neo-loading,
+.neo-wait {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="white" stroke="black" stroke-width="2"/><rect x="8" y="4" width="4" height="4" fill="black"/><rect x="12" y="8" width="4" height="4" fill="black"/><rect x="8" y="12" width="4" height="4" fill="black"/><rect x="4" y="8" width="4" height="4" fill="black"/></svg>'), wait;
+}
+
+/* Help/question cursor */
+.neo-help {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="white" stroke="black" stroke-width="2"/><rect x="6" y="4" width="8" height="2" fill="black"/><rect x="12" y="6" width="2" height="2" fill="black"/><rect x="10" y="8" width="2" height="4" fill="black"/><rect x="10" y="14" width="2" height="2" fill="black"/></svg>'), help;
+}
+
+/* Crosshair cursor for precise selection */
+.neo-crosshair {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="black" stroke-width="2"/><line x1="0" y1="10" x2="20" y2="10" stroke="black" stroke-width="2"/><rect x="8" y="8" width="4" height="4" fill="white" stroke="black" stroke-width="1"/></svg>'), crosshair;
+}
+
+/* Zoom cursors */
+.neo-zoom-in {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="8" cy="8" r="6" fill="white" stroke="black" stroke-width="2"/><line x1="6" y1="8" x2="10" y2="8" stroke="black" stroke-width="2"/><line x1="8" y1="6" x2="8" y2="10" stroke="black" stroke-width="2"/><line x1="13" y1="13" x2="18" y2="18" stroke="black" stroke-width="3"/></svg>'), zoom-in;
+}
+
+.neo-zoom-out {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="8" cy="8" r="6" fill="white" stroke="black" stroke-width="2"/><line x1="6" y1="8" x2="10" y2="8" stroke="black" stroke-width="2"/><line x1="13" y1="13" x2="18" y2="18" stroke="black" stroke-width="3"/></svg>'), zoom-out;
+}
+
+/* Hover zone effects - immediate visual feedback */
+.neo-hover-zone {
+  position: relative;
+  transition: none;
+}
+
+.neo-hover-zone::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid transparent;
+  pointer-events: none;
+  z-index: var(--neo-z-elevated);
+}
+
+.neo-hover-zone:hover::before {
+  border-color: var(--neo-red);
+  background: rgba(255, 0, 0, 0.1);
+}
+
+/* Interactive element hover zones */
+.neo-button.neo-hover-zone:hover::before {
+  border-color: var(--neo-black);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Form element hover zones */
+input.neo-hover-zone:hover::before,
+textarea.neo-hover-zone:hover::before {
+  border-color: var(--neo-blue);
+  background: rgba(0, 0, 255, 0.05);
+}
+
+/* Card hover zones */
+.neo-card.neo-hover-zone:hover::before {
+  border-color: var(--neo-green);
+  background: rgba(0, 255, 0, 0.05);
+}
+
+/* Navigation hover zones */
+.neo-nav-item.neo-hover-zone:hover::before {
+  border-color: var(--neo-yellow);
+  background: rgba(255, 255, 0, 0.1);
+}
+
+/* Cursor trail effect for enhanced feedback */
+.neo-cursor-trail {
+  position: relative;
+}
+
+.neo-cursor-trail::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--neo-red);
+  border: 2px solid var(--neo-black);
+  pointer-events: none;
+  z-index: var(--neo-z-tooltip);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--neo-duration-fast) var(--neo-timing-harsh);
+}
+
+.neo-cursor-trail:hover::after {
+  opacity: 1;
+}
+
+/* Accessibility: Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .neo-hover-zone::before,
+  .neo-cursor-trail::after {
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .neo-hover-zone:hover::before {
+    border-width: 4px;
+    background: rgba(255, 0, 0, 0.2);
+  }
+  
+  .neo-button.neo-hover-zone:hover::before {
+    border-width: 4px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Browser-specific cursor fallbacks */
+@supports not (cursor: url('data:image/svg+xml;utf8,<svg></svg>'), auto) {
+  * {
+    cursor: default;
+  }
+  
+  button,
+  .neo-button,
+  a,
+  [role="button"] {
+    cursor: pointer;
+  }
+  
+  input[type="text"],
+  textarea {
+    cursor: text;
+  }
+  
+  button:disabled,
+  input:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* Touch device adaptations */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  .neo-hover-zone::before,
+  .neo-cursor-trail::after {
+    display: none;
+  }
+  
+  /* Use system cursors on touch devices */
+  * {
+    cursor: auto;
+  }
+  
+  button,
+  .neo-button,
+  a {
+    cursor: pointer;
+  }
+}
+
+/* Print media - remove cursor effects */
+@media print {
+  .neo-hover-zone::before,
+  .neo-cursor-trail::after {
+    display: none !important;
+  }
+}

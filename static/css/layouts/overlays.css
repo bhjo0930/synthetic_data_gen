@@ -1,0 +1,258 @@
+/* Neo-Brutalism Overlay and Layering System */
+
+/* Base overlay container */
+.neo-overlay-container {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Overlay positioning utilities */
+.neo-overlay {
+  position: absolute;
+  pointer-events: none;
+}
+
+.neo-overlay--interactive {
+  pointer-events: auto;
+}
+
+/* Corner overlays for asymmetrical accents */
+.neo-overlay--corner-tl {
+  top: -8px;
+  left: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--neo-red);
+  border: 3px solid var(--neo-black);
+  z-index: 3;
+}
+
+.neo-overlay--corner-tr {
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--neo-yellow);
+  border: 3px solid var(--neo-black);
+  z-index: 3;
+}
+
+.neo-overlay--corner-bl {
+  bottom: -8px;
+  left: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--neo-green);
+  border: 3px solid var(--neo-black);
+  z-index: 3;
+}
+
+.neo-overlay--corner-br {
+  bottom: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: var(--neo-blue);
+  border: 3px solid var(--neo-black);
+  z-index: 3;
+}
+
+/* Edge overlays for intentional disruption */
+.neo-overlay--edge-top {
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 8px;
+  background: var(--neo-black);
+  z-index: 2;
+}
+
+.neo-overlay--edge-bottom {
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 8px;
+  background: var(--neo-black);
+  z-index: 2;
+}
+
+.neo-overlay--edge-left {
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 60px;
+  background: var(--neo-black);
+  z-index: 2;
+}
+
+.neo-overlay--edge-right {
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 60px;
+  background: var(--neo-black);
+  z-index: 2;
+}
+
+/* Asymmetrical content overlays */
+.neo-overlay--content-offset {
+  top: 20%;
+  left: 15%;
+  width: 70%;
+  height: 60%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 4px solid var(--neo-black);
+  z-index: 2;
+  padding: var(--neo-space-md);
+}
+
+.neo-overlay--content-corner {
+  top: 10%;
+  right: 10%;
+  width: 40%;
+  height: 40%;
+  background: var(--neo-yellow);
+  border: 4px solid var(--neo-black);
+  z-index: 2;
+  padding: var(--neo-space-sm);
+}
+
+/* Chaotic overlapping patterns */
+.neo-chaos-overlay::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 20%;
+  width: 32px;
+  height: 32px;
+  background: var(--neo-red);
+  border: 4px solid var(--neo-black);
+  z-index: 3;
+  transform: rotate(45deg);
+}
+
+.neo-chaos-overlay::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  right: 30%;
+  width: 40px;
+  height: 20px;
+  background: var(--neo-green);
+  border: 3px solid var(--neo-black);
+  z-index: 1;
+}
+
+/* Stacked overlays for complex layering */
+.neo-stack-overlay {
+  position: relative;
+}
+
+.neo-stack-overlay .neo-stack-layer-1 {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 100%;
+  height: 100%;
+  background: var(--neo-red);
+  border: 4px solid var(--neo-black);
+  z-index: 1;
+}
+
+.neo-stack-overlay .neo-stack-layer-2 {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 100%;
+  height: 100%;
+  background: var(--neo-yellow);
+  border: 4px solid var(--neo-black);
+  z-index: 2;
+}
+
+.neo-stack-overlay .neo-stack-content {
+  position: relative;
+  background: var(--neo-white);
+  border: 4px solid var(--neo-black);
+  z-index: 3;
+  padding: var(--neo-space-md);
+}
+
+/* Asymmetrical shadow overlays */
+.neo-shadow-overlay {
+  position: relative;
+}
+
+.neo-shadow-overlay::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 100%;
+  height: 100%;
+  background: var(--neo-black);
+  z-index: -1;
+}
+
+.neo-shadow-overlay--offset::before {
+  top: 12px;
+  left: 12px;
+}
+
+.neo-shadow-overlay--chaotic::before {
+  top: 4px;
+  left: 16px;
+  transform: skew(-5deg);
+}
+
+/* Interactive overlay states */
+.neo-overlay--hover-shift:hover {
+  transform: translate(4px, 4px);
+  transition: transform 0.1s var(--neo-timing-harsh);
+}
+
+.neo-overlay--hover-color:hover {
+  background: var(--neo-black);
+  color: var(--neo-white);
+  transition: all 0.1s var(--neo-timing-instant);
+}
+
+/* Responsive overlay adjustments */
+@media (max-width: 767px) {
+  .neo-overlay--corner-tl,
+  .neo-overlay--corner-tr,
+  .neo-overlay--corner-bl,
+  .neo-overlay--corner-br {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+  }
+  
+  .neo-overlay--content-offset {
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .neo-overlay--corner-tl,
+  .neo-overlay--corner-tr,
+  .neo-overlay--corner-bl,
+  .neo-overlay--corner-br {
+    width: 32px;
+    height: 32px;
+    border-width: 4px;
+  }
+  
+  .neo-chaos-overlay::before {
+    width: 48px;
+    height: 48px;
+    border-width: 6px;
+  }
+}

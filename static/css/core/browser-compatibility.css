@@ -1,0 +1,385 @@
+/* Neo-Brutalism Browser Compatibility and Feature Detection */
+
+/* CSS Feature Detection and Fallbacks */
+
+/* Grid Layout Fallbacks */
+@supports not (display: grid) {
+  .neo-main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px; /* Fallback for var(--neo-space-xl) */
+  }
+  
+  .neo-form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Fallback for var(--neo-space-lg) */
+  }
+  
+  .neo-form-grid .input-group {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 200px;
+  }
+  
+  .neo-form-grid .neo-input-full {
+    flex: 1 1 100%;
+  }
+  
+  .persona-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px; /* Fallback for var(--neo-space-lg) */
+  }
+  
+  .persona-card {
+    flex: 1 1 calc(33.333% - 16px);
+    min-width: 280px;
+  }
+}
+
+/* Custom Properties Fallbacks for older browsers */
+.neo-title {
+  /* Fallback values */
+  font-family: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+  background: #FFFFFF;
+  color: #000000;
+  border: 4px solid #000000;
+  box-shadow: 8px 8px 0px #000000;
+  padding: 24px;
+  
+  /* Modern values with custom properties */
+  font-family: var(--neo-font-primary, 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif);
+  background: var(--neo-white, #FFFFFF);
+  color: var(--neo-black, #000000);
+  border: var(--neo-border-thick, 4px solid #000000);
+  box-shadow: var(--neo-shadow-lg, 8px 8px 0px #000000);
+  padding: var(--neo-space-lg, 24px);
+}
+
+.neo-button {
+  /* Fallback values */
+  background: #FF0000;
+  color: #000000;
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  font-family: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+  padding: 12px 24px;
+  
+  /* Modern values with custom properties */
+  background: var(--neo-red, #FF0000);
+  color: var(--neo-black, #000000);
+  border: var(--neo-border-thick, 4px solid #000000);
+  box-shadow: var(--neo-shadow-md, 4px 4px 0px #000000);
+  font-family: var(--neo-font-primary, 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif);
+  padding: var(--neo-space-sm, 8px) var(--neo-space-lg, 24px);
+}
+
+.neo-card {
+  /* Fallback values */
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  padding: 24px;
+  
+  /* Modern values with custom properties */
+  background: var(--neo-white, #FFFFFF);
+  border: var(--neo-border-thick, 4px solid #000000);
+  box-shadow: var(--neo-shadow-md, 4px 4px 0px #000000);
+  padding: var(--neo-space-lg, 24px);
+}
+
+/* Transform Fallbacks */
+@supports not (transform: rotate(-1deg)) {
+  .neo-title {
+    /* Remove rotation for browsers that don't support transforms */
+    transform: none;
+  }
+  
+  .neo-card--generate,
+  .neo-card--management {
+    transform: none;
+  }
+  
+  .persona-card,
+  .persona-card:nth-child(2n),
+  .persona-card:nth-child(3n) {
+    transform: none;
+  }
+}
+
+/* Box Shadow Fallbacks */
+@supports not (box-shadow: 4px 4px 0px #000000) {
+  .neo-title,
+  .neo-button,
+  .neo-card,
+  .neo-input,
+  .neo-nav a {
+    /* Use thicker borders instead of shadows */
+    border-width: 6px;
+  }
+  
+  .neo-button:hover,
+  .neo-nav a:hover {
+    border-width: 8px;
+  }
+}
+
+/* Flexbox Fallbacks for older browsers */
+@supports not (display: flex) {
+  .neo-nav {
+    text-align: center;
+  }
+  
+  .neo-nav a {
+    display: inline-block;
+    margin: 0 8px 8px 0;
+  }
+  
+  .neo-button-group {
+    text-align: center;
+  }
+  
+  .neo-button-group .neo-button {
+    display: inline-block;
+    margin: 0 8px 8px 0;
+  }
+  
+  .neo-form-grid {
+    /* Use table layout as fallback */
+    display: table;
+    width: 100%;
+    border-spacing: 16px;
+  }
+  
+  .neo-form-grid .input-group {
+    display: table-cell;
+    width: 50%;
+    vertical-align: top;
+  }
+  
+  .neo-form-grid .neo-input-full {
+    display: table-row;
+    width: 100%;
+  }
+}
+
+/* Internet Explorer Specific Fixes */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* IE10+ specific styles */
+  .neo-title {
+    font-family: 'Arial Black', sans-serif;
+  }
+  
+  .neo-main {
+    display: block;
+  }
+  
+  .neo-card {
+    margin-bottom: 32px;
+  }
+  
+  .neo-form-grid {
+    display: block;
+  }
+  
+  .neo-form-grid .input-group {
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+    vertical-align: top;
+  }
+  
+  .neo-form-grid .neo-input-full {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+/* Safari Specific Fixes */
+@supports (-webkit-appearance: none) {
+  .neo-input,
+  .neo-select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+  }
+  
+  .neo-button {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+  }
+}
+
+/* Firefox Specific Fixes */
+@-moz-document url-prefix() {
+  .neo-input,
+  .neo-select {
+    -moz-appearance: none;
+  }
+  
+  .neo-button {
+    -moz-appearance: none;
+  }
+}
+
+/* Edge Legacy Specific Fixes */
+@supports (-ms-ime-align: auto) {
+  .neo-title {
+    font-family: 'Arial Black', sans-serif;
+  }
+  
+  .neo-main {
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+  }
+}
+
+/* Graceful Degradation for Older Browsers */
+
+/* For browsers that don't support CSS Grid */
+.neo-main-fallback {
+  display: block;
+}
+
+.neo-main-fallback .neo-card {
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+/* For browsers that don't support Flexbox */
+.neo-nav-fallback {
+  text-align: center;
+}
+
+.neo-nav-fallback a {
+  display: inline-block;
+  margin: 0 8px 8px 0;
+}
+
+/* For browsers that don't support Custom Properties */
+.no-custom-properties .neo-title {
+  font-family: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+  background: #FFFFFF;
+  color: #000000;
+  border: 4px solid #000000;
+  box-shadow: 8px 8px 0px #000000;
+  padding: 24px;
+}
+
+.no-custom-properties .neo-button {
+  background: #FF0000;
+  color: #000000;
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  font-family: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+  padding: 12px 24px;
+}
+
+.no-custom-properties .neo-card {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  padding: 24px;
+}
+
+/* Print Styles */
+@media print {
+  .neo-title,
+  .neo-button,
+  .neo-card,
+  .neo-nav a {
+    box-shadow: none;
+    transform: none;
+  }
+  
+  .neo-title::before,
+  .neo-title::after,
+  .neo-card::before,
+  .persona-card::before {
+    display: none;
+  }
+  
+  .neo-nav {
+    display: none;
+  }
+  
+  .neo-button-group {
+    display: none;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .neo-title,
+  .neo-button,
+  .neo-card,
+  .neo-input,
+  .neo-nav a {
+    border-width: 6px;
+  }
+  
+  .neo-title::before,
+  .neo-title::after,
+  .neo-card::before,
+  .persona-card::before {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .neo-title,
+  .neo-card--generate,
+  .neo-card--management,
+  .persona-card,
+  .persona-card:nth-child(2n),
+  .persona-card:nth-child(3n) {
+    transform: none;
+  }
+  
+  .neo-loading {
+    animation: none;
+  }
+  
+  .neo-button:hover,
+  .neo-nav a:hover {
+    transform: none;
+  }
+}
+
+/* Dark Mode Support (for browsers that support it) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --neo-white: #000000;
+    --neo-black: #FFFFFF;
+  }
+  
+  /* Fallback for browsers without custom property support */
+  .no-custom-properties body {
+    background: #000000;
+    color: #FFFFFF;
+  }
+  
+  .no-custom-properties .neo-title {
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    box-shadow: 8px 8px 0px #FFFFFF;
+  }
+  
+  .no-custom-properties .neo-button {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    box-shadow: 4px 4px 0px #FFFFFF;
+  }
+  
+  .no-custom-properties .neo-card {
+    background: #000000;
+    border-color: #FFFFFF;
+    box-shadow: 4px 4px 0px #FFFFFF;
+  }
+}

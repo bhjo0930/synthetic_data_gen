@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Peoples - Generator</title>
+    
+    <!-- Critical CSS inlined for immediate rendering -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        :root {
+            --neo-white: #FFFFFF;
+            --neo-black: #000000;
+            --neo-red: #FF0000;
+            --neo-green: #00FF00;
+            --neo-yellow: #FFFF00;
+            --neo-blue: #0000FF;
+            --neo-font-primary: 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+            --neo-border-thick: 4px solid #000000;
+            --neo-shadow-md: 4px 4px 0px #000000;
+            --neo-shadow-lg: 8px 8px 0px #000000;
+            --neo-space-md: 16px;
+            --neo-space-lg: 24px;
+            --neo-space-xl: 32px;
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--neo-font-primary);
+            background: var(--neo-white);
+            color: var(--neo-black);
+            line-height: 1.2;
+        }
+        
+        .neo-body {
+            padding: var(--neo-space-lg);
+            min-height: 100vh;
+        }
+        
+        .neo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .neo-header {
+            text-align: center;
+            margin-bottom: var(--neo-space-xl);
+            position: relative;
+        }
+        
+        .neo-title {
+            font-family: var(--neo-font-primary);
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--neo-black);
+            margin: 0;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            background: var(--neo-white);
+            border: var(--neo-border-thick);
+            padding: var(--neo-space-lg);
+            box-shadow: var(--neo-shadow-lg);
+            position: relative;
+            transform: rotate(-1deg);
+        }
+        
+        .neo-title::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 24px;
+            height: 24px;
+            background: var(--neo-red);
+            border: 2px solid var(--neo-black);
+            z-index: 2;
+        }
+        
+        .neo-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--neo-yellow);
+            border: 2px solid var(--neo-black);
+            z-index: 2;
+        }
+        
+        .neo-nav {
+            display: flex;
+            justify-content: center;
+            gap: var(--neo-space-md);
+            margin-bottom: var(--neo-space-xl);
+        }
+        
+        .neo-nav a {
+            background: var(--neo-white);
+            color: var(--neo-black);
+            text-decoration: none;
+            padding: 12px 24px;
+            border: var(--neo-border-thick);
+            box-shadow: var(--neo-shadow-md);
+            font-family: var(--neo-font-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: none;
+        }
+        
+        .neo-nav a:hover,
+        .neo-nav a.active {
+            background: var(--neo-black);
+            color: var(--neo-white);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--neo-black);
+        }
+        
+        .neo-main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--neo-space-xl);
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .neo-body { padding: var(--neo-space-md); }
+            .neo-title { font-size: 32px; padding: var(--neo-space-md); transform: none; }
+            .neo-nav { flex-direction: column; align-items: center; }
+        }
+        
+        @media (max-width: 480px) {
+            .neo-title { font-size: 24px; letter-spacing: -1px; }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .neo-title { transform: none; }
+            .neo-nav a:hover, .neo-nav a.active { transform: none; }
+        }
+        
+        @media (prefers-contrast: high) {
+            .neo-title, .neo-nav a { border-width: 6px; }
+        }
+    </style>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/neo-brutalism.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Fallback for browsers without JavaScript -->
+    <noscript>
+        <link rel="stylesheet" href="css/neo-brutalism.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </noscript>
+    
+    <!-- Feature detection script (inline for immediate execution) -->
+    <script>
+        // Immediate feature detection
+        (function() {
+            const html = document.documentElement;
+            
+            // Add no-js class, will be removed by feature detection script
+            html.classList.add('no-js');
+            
+            // Basic feature detection
+            if (!CSS.supports('display', 'grid')) html.classList.add('no-grid');
+            if (!CSS.supports('color', 'var(--test)')) html.classList.add('no-custom-properties');
+            if (!CSS.supports('transform', 'rotate(1deg)')) html.classList.add('no-transforms');
+            if (!CSS.supports('box-shadow', '4px 4px 0px #000000')) html.classList.add('no-box-shadow');
+            if (!CSS.supports('display', 'flex')) html.classList.add('no-flexbox');
+            
+            // Device detection
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) html.classList.add('touch-device');
+            if (window.innerWidth <= 768) html.classList.add('mobile-device');
+            
+            // Connection detection
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+                html.classList.add('slow-connection');
+            }
+        })();
+    </script>
+</head>
+<body class="neo-body">
+    <div class="neo-container">
+        <header class="neo-header">
+            <h1 class="neo-title"><i class="fas fa-users"></i> Virtual Peoples - Generator</h1>
+        </header>
+
+        <nav class="neo-nav">
+            <a href="/generate.html" class="active" aria-current="page">Generate People</a>
+            <a href="/search.html">Analytics Dashboard</a>
+        </nav>
+
+        <main class="neo-main">
+            <section class="neo-card neo-card--generate">
+                <div class="neo-card__header">
+                    <h2 class="neo-card__title">Generate Virtual People</h2>
+                    <div class="neo-card__meta">Generator</div>
+                </div>
+                
+                <div class="neo-form-grid">
+                    <div class="input-group">
+                        <label for="count">Number of People:</label>
+                        <input type="number" id="count" value="1" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="age_range_min">Age Range (Min):</label>
+                        <input type="number" id="age_range_min" placeholder="e.g., 20">
+                    </div>
+                    <div class="input-group">
+                        <label for="age_range_max">Age Range (Max):</label>
+                        <input type="number" id="age_range_max" placeholder="e.g., 30">
+                    </div>
+                    <div class="input-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender">
+                            <option value="">Any</option>
+                            <option value="남성">Male</option>
+                            <option value="여성">Female</option>
+                        </select>
+                    </div>
+                    <div class="input-group neo-input-full">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" placeholder="e.g., Seoul">
+                    </div>
+                </div>
+                
+                <div class="neo-button-group">
+                    <button id="generateBtn" class="neo-button neo-button--large">Generate People</button>
+                </div>
+                
+                <div id="generateResult" class="neo-result-box"></div>
+            </section>
+
+            <section class="neo-card neo-card--management neo-card--accent-blue">
+                <div class="neo-card__header">
+                    <h2 class="neo-card__title">Data Management</h2>
+                    <div class="neo-card__meta">Admin</div>
+                </div>
+                
+                <div class="neo-button-group">
+                    <button id="deleteAllBtn" class="neo-button neo-button--warning neo-button--large">Delete All Virtual People</button>
+                </div>
+                
+                <div id="deleteResult" class="neo-result-box"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Load JavaScript asynchronously -->
+    <script src="js/feature-detection.js" async></script>
+    <script src="generate_script.js" async></script>
+    <script src="neo-transitions.js" async></script>
+</body>
+</html>

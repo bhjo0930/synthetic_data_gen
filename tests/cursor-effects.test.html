@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Cursor Effects Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: var(--neo-font-primary);
+        }
+        
+        .test-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: var(--neo-border-thick);
+            background: var(--neo-bg-primary);
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .test-item {
+            padding: 1rem;
+            border: var(--neo-border-thin);
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cursor-demo {
+            width: 100px;
+            height: 100px;
+            border: var(--neo-border-thick);
+            display: inline-block;
+            margin: 0.5rem;
+            text-align: center;
+            line-height: 100px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Neo-Brutalism Cursor Effects Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>Basic Interactive Elements</h2>
+        <div class="test-grid">
+            <button class="neo-button test-item">Button</button>
+            <a href="#" class="test-item">Link</a>
+            <div role="button" tabindex="0" class="test-item">Role Button</div>
+            <input type="submit" value="Submit" class="test-item">
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Form Elements</h2>
+        <div class="test-grid">
+            <input type="text" placeholder="Text Input" class="test-item">
+            <input type="email" placeholder="Email Input" class="test-item">
+            <input type="password" placeholder="Password" class="test-item">
+            <textarea placeholder="Textarea" class="test-item"></textarea>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Disabled Elements</h2>
+        <div class="test-grid">
+            <button class="neo-button test-item" disabled>Disabled Button</button>
+            <input type="text" placeholder="Disabled Input" class="test-item" disabled>
+            <textarea placeholder="Disabled Textarea" class="test-item" disabled></textarea>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Special Cursor Types</h2>
+        <div class="test-grid">
+            <div class="cursor-demo neo-help">Help</div>
+            <div class="cursor-demo neo-loading">Loading</div>
+            <div class="cursor-demo neo-crosshair">Crosshair</div>
+            <div class="cursor-demo neo-zoom-in">Zoom In</div>
+            <div class="cursor-demo neo-zoom-out">Zoom Out</div>
+            <div class="cursor-demo neo-resize-horizontal">Resize H</div>
+            <div class="cursor-demo neo-resize-vertical">Resize V</div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Hover Zone Effects</h2>
+        <div class="test-grid">
+            <button class="neo-button neo-hover-zone test-item">Button with Hover Zone</button>
+            <input type="text" placeholder="Input with Hover Zone" class="neo-hover-zone test-item">
+            <div class="neo-card neo-hover-zone test-item">Card with Hover Zone</div>
+            <a href="#" class="neo-nav-item neo-hover-zone test-item">Nav Item with Hover Zone</a>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Cursor Trail Effects</h2>
+        <div class="test-grid">
+            <div class="neo-cursor-trail test-item">Hover for cursor trail</div>
+            <button class="neo-button neo-cursor-trail test-item">Button with trail</button>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Draggable Elements</h2>
+        <div class="test-grid">
+            <div draggable="true" class="test-item">Draggable Item 1</div>
+            <div draggable="true" class="test-item">Draggable Item 2</div>
+        </div>
+    </div>
+    
+    <script>
+        // Test cursor interaction behaviors
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Cursor Effects Test Suite Loaded');
+            
+            // Test hover zone effects
+            const hoverZones = document.querySelectorAll('.neo-hover-zone');
+            hoverZones.forEach(zone => {
+                zone.addEventListener('mouseenter', function() {
+                    console.log('Hover zone entered:', this.textContent || this.tagName);
+                });
+                
+                zone.addEventListener('mouseleave', function() {
+                    console.log('Hover zone left:', this.textContent || this.tagName);
+                });
+            });
+            
+            // Test cursor trail effects
+            const trailElements = document.querySelectorAll('.neo-cursor-trail');
+            trailElements.forEach(element => {
+                element.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Position the trail effect
+                    const trail = this.querySelector('::after');
+                    if (trail) {
+                        trail.style.left = x + 'px';
+                        trail.style.top = y + 'px';
+                    }
+                });
+            });
+            
+            // Test button interactions
+            const buttons = document.querySelectorAll('.neo-button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Button clicked:', this.textContent);
+                    
+                    // Visual feedback for click
+                    this.style.transform = 'translate(4px, 4px)';
+                    this.style.boxShadow = '0px 0px 0px var(--neo-black)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 100);
+                });
+            });
+            
+            // Test form interactions
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    console.log('Input focused:', this.placeholder || this.type);
+                });
+                
+                input.addEventListener('blur', function() {
+                    console.log('Input blurred:', this.placeholder || this.type);
+                });
+            });
+            
+            // Test draggable interactions
+            const draggables = document.querySelectorAll('[draggable="true"]');
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', function(e) {
+                    console.log('Drag started:', this.textContent);
+                    e.dataTransfer.setData('text/plain', this.textContent);
+                });
+                
+                draggable.addEventListener('dragend', function() {
+                    console.log('Drag ended:', this.textContent);
+                });
+            });
+            
+            // Browser compatibility test
+            function testCursorSupport() {
+                const testElement = document.createElement('div');
+                testElement.style.cursor = "url('data:image/svg+xml;utf8,<svg></svg>'), auto";
+                
+                if (testElement.style.cursor.includes('url')) {
+                    console.log('✅ Custom cursor URLs supported');
+                    return true;
+                } else {
+                    console.log('❌ Custom cursor URLs not supported - using fallbacks');
+                    return false;
+                }
+            }
+            
+            // Run compatibility test
+            const cursorSupported = testCursorSupport();
+            
+            // Display test results
+            const resultsDiv = document.createElement('div');
+            resultsDiv.className = 'test-section';
+            resultsDiv.innerHTML = `
+                <h2>Test Results</h2>
+                <p><strong>Custom Cursor Support:</strong> ${cursorSupported ? '✅ Supported' : '❌ Not Supported'}</p>
+                <p><strong>User Agent:</strong> ${navigator.userAgent}</p>
+                <p><strong>Touch Device:</strong> ${('ontouchstart' in window) ? '✅ Yes' : '❌ No'}</p>
+                <p><strong>Reduced Motion:</strong> ${window.matchMedia('(prefers-reduced-motion: reduce)').matches ? '✅ Enabled' : '❌ Disabled'}</p>
+                <p><strong>High Contrast:</strong> ${window.matchMedia('(prefers-contrast: high)').matches ? '✅ Enabled' : '❌ Disabled'}</p>
+            `;
+            document.body.appendChild(resultsDiv);
+        });
+    </script>
+</body>
+</html>

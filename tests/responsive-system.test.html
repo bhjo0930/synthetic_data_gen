@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Brutalism Responsive System Tests</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <style>
+        /* Test-specific styles */
+        .test-container {
+            margin: var(--neo-space-lg);
+            padding: var(--neo-space-md);
+            border: var(--neo-border-thick);
+            background: var(--neo-white);
+        }
+        
+        .test-section {
+            margin-bottom: var(--neo-space-xl);
+            padding: var(--neo-space-md);
+            border: 2px solid var(--neo-blue);
+        }
+        
+        .test-title {
+            font-family: var(--neo-font-primary);
+            font-weight: 900;
+            font-size: 18px;
+            color: var(--neo-black);
+            margin-bottom: var(--neo-space-md);
+            text-transform: uppercase;
+        }
+        
+        .test-description {
+            font-family: var(--neo-font-primary);
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--neo-black);
+            margin-bottom: var(--neo-space-sm);
+            background: var(--neo-yellow);
+            padding: var(--neo-space-xs);
+            border: 2px solid var(--neo-black);
+        }
+        
+        .measurement-display {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: var(--neo-red);
+            color: var(--neo-white);
+            padding: var(--neo-space-sm);
+            border: var(--neo-border-thick);
+            font-family: var(--neo-font-mono);
+            font-weight: 700;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="measurement-display" id="screenInfo">
+        Screen: <span id="screenSize"></span><br>
+        Viewport: <span id="viewportSize"></span>
+    </div>
+
+    <div class="test-container">
+        <h1 class="neo-heading--responsive">Neo-Brutalism Responsive System Tests</h1>
+        
+        <!-- Touch Target Tests -->
+        <div class="test-section">
+            <div class="test-title">Touch Target Size Tests</div>
+            <div class="test-description">All interactive elements should meet minimum 44px touch target requirements on mobile</div>
+            
+            <button class="neo-button neo-touch-friendly" id="touchButton1">Touch Test Button</button>
+            <button class="neo-button neo-button--small neo-touch-friendly" id="touchButton2">Small Touch Button</button>
+            <button class="neo-button neo-button--large neo-touch-friendly" id="touchButton3">Large Touch Button</button>
+            
+            <div style="margin-top: var(--neo-space-md);">
+                <input type="checkbox" class="neo-touch-friendly" id="touchCheckbox"> 
+                <label for="touchCheckbox">Touch-friendly checkbox</label>
+            </div>
+            
+            <div style="margin-top: var(--neo-space-md);">
+                <input type="text" class="neo-input--responsive" placeholder="Touch-friendly input" id="touchInput">
+            </div>
+        </div>
+
+        <!-- Responsive Grid Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Grid System Tests</div>
+            <div class="test-description">Grid layouts should adapt asymmetrically across breakpoints</div>
+            
+            <div class="neo-grid--responsive-asymmetric neo-spacing--responsive">
+                <div style="background: var(--neo-red); padding: var(--neo-space-md); border: var(--neo-border-thick);">Grid Item 1</div>
+                <div style="background: var(--neo-green); padding: var(--neo-space-md); border: var(--neo-border-thick);">Grid Item 2</div>
+                <div style="background: var(--neo-yellow); padding: var(--neo-space-md); border: var(--neo-border-thick);">Grid Item 3</div>
+            </div>
+            
+            <div class="neo-grid--responsive-chaos neo-spacing--responsive" style="margin-top: var(--neo-space-lg);">
+                <div style="background: var(--neo-blue); color: var(--neo-white); padding: var(--neo-space-md); border: var(--neo-border-thick);">Chaos 1</div>
+                <div style="background: var(--neo-red); padding: var(--neo-space-md); border: var(--neo-border-thick);">Chaos 2</div>
+                <div style="background: var(--neo-green); padding: var(--neo-space-md); border: var(--neo-border-thick);">Chaos 3</div>
+                <div style="background: var(--neo-yellow); padding: var(--neo-space-md); border: var(--neo-border-thick);">Chaos 4</div>
+            </div>
+        </div>
+
+        <!-- Responsive Typography Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Typography Tests</div>
+            <div class="test-description">Typography should scale appropriately across screen sizes</div>
+            
+            <h1 class="neo-heading--responsive">Responsive Heading H1</h1>
+            <h2 class="neo-heading--responsive" style="font-size: clamp(28px, 6vw, 36px);">Responsive Heading H2</h2>
+            <p class="neo-text--responsive">This is responsive body text that should scale appropriately across different screen sizes while maintaining readability and the Neo-Brutalism aesthetic.</p>
+            <p class="neo-text--responsive-align">This text has responsive alignment that changes based on screen size.</p>
+        </div>
+
+        <!-- Responsive Button Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Button Layout Tests</div>
+            <div class="test-description">Buttons should adapt their layout and sizing across breakpoints</div>
+            
+            <div class="neo-button-group--responsive">
+                <button class="neo-button neo-button--responsive">Responsive 1</button>
+                <button class="neo-button neo-button--responsive neo-button--secondary">Responsive 2</button>
+                <button class="neo-button neo-button--responsive neo-button--warning">Responsive 3</button>
+            </div>
+        </div>
+
+        <!-- Responsive Form Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Form Layout Tests</div>
+            <div class="test-description">Forms should adapt their layout complexity based on screen size</div>
+            
+            <form class="neo-form--responsive">
+                <div class="input-group">
+                    <label for="respName">Name</label>
+                    <input type="text" id="respName" class="neo-input--responsive" placeholder="Enter name">
+                </div>
+                
+                <div class="input-group">
+                    <label for="respEmail">Email</label>
+                    <input type="email" id="respEmail" class="neo-input--responsive" placeholder="Enter email">
+                </div>
+                
+                <div class="input-group neo-input--full">
+                    <label for="respMessage">Message</label>
+                    <textarea id="respMessage" class="neo-input--responsive" placeholder="Enter message" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="neo-button neo-button--responsive">Submit Form</button>
+            </form>
+        </div>
+
+        <!-- Responsive Navigation Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Navigation Tests</div>
+            <div class="test-description">Navigation should adapt from horizontal to vertical on smaller screens</div>
+            
+            <nav class="neo-nav--responsive">
+                <a href="#" class="neo-nav-item neo-button">Home</a>
+                <a href="#" class="neo-nav-item neo-button neo-button--secondary">About</a>
+                <a href="#" class="neo-nav-item neo-button neo-button--warning">Services</a>
+                <a href="#" class="neo-nav-item neo-button neo-button--info">Contact</a>
+            </nav>
+        </div>
+
+        <!-- Responsive Card Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Card Layout Tests</div>
+            <div class="test-description">Cards should adapt their width and layout across breakpoints</div>
+            
+            <div style="overflow: hidden;">
+                <div class="neo-card--responsive neo-responsive-overlap" style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-md);">
+                    <h3>Card 1</h3>
+                    <p>This card should adapt its width based on screen size.</p>
+                </div>
+                
+                <div class="neo-card--responsive neo-responsive-overlap" style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-md);">
+                    <h3>Card 2</h3>
+                    <p>Cards maintain Neo-Brutalism styling across all sizes.</p>
+                </div>
+                
+                <div class="neo-card--responsive neo-responsive-overlap" style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-md);">
+                    <h3>Card 3</h3>
+                    <p>Overlapping elements should appear on larger screens.</p>
+                </div>
+                
+                <div class="neo-card--responsive neo-responsive-overlap" style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-md);">
+                    <h3>Card 4</h3>
+                    <p>Four cards should fit on desktop screens.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Responsive Visibility Tests -->
+        <div class="test-section">
+            <div class="test-title">Responsive Visibility Tests</div>
+            <div class="test-description">Elements should show/hide appropriately across breakpoints</div>
+            
+            <div class="neo-show-mobile-only" style="background: var(--neo-red); color: var(--neo-white); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                Mobile Only Content
+            </div>
+            
+            <div class="neo-show-tablet-only" style="background: var(--neo-green); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                Tablet Only Content
+            </div>
+            
+            <div class="neo-show-desktop" style="background: var(--neo-blue); color: var(--neo-white); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                Desktop Content
+            </div>
+            
+            <div class="neo-hide-mobile" style="background: var(--neo-yellow); padding: var(--neo-space-md); border: var(--neo-border-thick);">
+                Hidden on Mobile
+            </div>
+        </div>
+
+        <!-- Complex Overlapping Tests -->
+        <div class="test-section">
+            <div class="test-title">Complex Overlapping Tests</div>
+            <div class="test-description">Complex overlapping should appear progressively on larger screens</div>
+            
+            <div class="neo-complex-overlap" style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-xl); margin: var(--neo-space-xl);">
+                <h3>Complex Overlap Element</h3>
+                <p>This element should show increasing complexity of overlapping decorative elements as screen size increases.</p>
+            </div>
+            
+            <div class="neo-extreme-overlap" style="background: var(--neo-white); border: var(--neo-border-thick); padding: var(--neo-space-xl); margin: var(--neo-space-xl);">
+                <h3>Extreme Overlap Element</h3>
+                <p>This element should show extreme overlapping effects only on very large screens (1200px+).</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="responsive-system.test.js"></script>
+</body>
+</html>

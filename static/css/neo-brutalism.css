@@ -3,7 +3,9 @@
 /* Core System - Load in order */
 @import url('./core/variables.css');
 @import url('./core/reset.css');
+@import url('./core/accessibility.css');
 @import url('./core/utilities.css');
+@import url('./core/browser-compatibility.css');
 
 /* Components - Will be loaded as they are implemented */
 @import url('./components/buttons.css');
@@ -11,14 +13,21 @@
 @import url('./components/cards.css');
 @import url('./components/navigation.css');
 @import url('./components/accents.css');
+@import url('./components/dashboard.css');
 /* @import url('./components/tables.css'); */
 
 /* Animations - Will be loaded as they are implemented */
 @import url('./animations/transitions.css');
 /* @import url('./animations/hover-effects.css'); */
-/* @import url('./animations/cursor-effects.css'); */
+@import url('./animations/cursor-effects.css');
 
 /* Layouts - Will be loaded as they are implemented */
-/* @import url('./layouts/grid.css'); */
-/* @import url('./layouts/overlays.css'); */
-/* @import url('./layouts/responsive.css'); */
+@import url('./layouts/grid.css');
+@import url('./layouts/overlays.css');
+@import url('./layouts/responsive.css');
+
+/* Performance optimizations */
+@import url('./performance.css');
+
+/* Integration styles for existing HTML structures */
+@import url('./integration.css');

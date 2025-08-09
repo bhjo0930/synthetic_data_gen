@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Neo-Brutalism Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border: 2px solid #333;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .test-description {
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .test-result {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .pass { color: green; }
+        .fail { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Dashboard Neo-Brutalism Transformation Tests</h1>
+        
+        <!-- Test 1: Header Styling -->
+        <div class="test-section">
+            <div class="test-title">Test 1: Header Component</div>
+            <div class="test-description">Testing OLAP header with Neo-Brutalism styling</div>
+            
+            <header class="olap-header">
+                <h1><i class="fas fa-users"></i> Virtual Peoples - Analysis Dashboard</h1>
+                <nav>
+                    <a href="#"><i class="fas fa-plus-circle"></i> Generate People</a>
+                    <a href="#" class="active"><i class="fas fa-chart-line"></i> Analytics</a>
+                </nav>
+            </header>
+            
+            <div class="test-result" id="headerTest">Testing header styling...</div>
+        </div>
+        
+        <!-- Test 2: Slicer Panel -->
+        <div class="test-section">
+            <div class="test-title">Test 2: Slicer Panel</div>
+            <div class="test-description">Testing filter panel with Neo-Brutalism design</div>
+            
+            <div style="height: 400px; display: flex;">
+                <aside class="slicer-panel" style="width: 320px;">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-sliders-h"></i> 다차원 필터</h3>
+                        <div class="panel-controls">
+                            <button class="neo-button neo-button--secondary" title="필터 초기화">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="neo-button" title="필터 적용">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="slicer-group">
+                        <div class="slicer-section">
+                            <div class="slicer-header">
+                                <i class="fas fa-user"></i>
+                                <span>Demographics</span>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </div>
+                            <div class="slicer-content">
+                                <div class="filter-item">
+                                    <label>Age Range</label>
+                                    <div class="range-inputs">
+                                        <input type="number" placeholder="Min" class="range-input">
+                                        <span>~</span>
+                                        <input type="number" placeholder="Max" class="range-input">
+                                    </div>
+                                </div>
+                                <div class="filter-item">
+                                    <label>Gender</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="male"> Male
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="female"> Female
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                
+                <div style="flex: 1; padding: 20px; background: #f8f8f8;">
+                    <p>Main content area would be here</p>
+                </div>
+            </div>
+            
+            <div class="test-result" id="slicerTest">Testing slicer panel styling...</div>
+        </div>
+        
+        <!-- Test 3: KPI Cards -->
+        <div class="test-section">
+            <div class="test-title">Test 3: KPI Cards</div>
+            <div class="test-description">Testing KPI cards with asymmetrical Neo-Brutalism design</div>
+            
+            <section class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-value">1,234</div>
+                    <div class="kpi-label">Total Virtual People</div>
+                    <div class="kpi-icon"><i class="fas fa-users"></i></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">32</div>
+                    <div class="kpi-label">Average Age</div>
+                    <div class="kpi-icon"><i class="fas fa-birthday-cake"></i></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">Seoul</div>
+                    <div class="kpi-label">Top Location</div>
+                    <div class="kpi-icon"><i class="fas fa-map-marker-alt"></i></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">60:40</div>
+                    <div class="kpi-label">Gender Ratio</div>
+                    <div class="kpi-icon"><i class="fas fa-venus-mars"></i></div>
+                </div>
+            </section>
+            
+            <div class="test-result" id="kpiTest">Testing KPI cards styling...</div>
+        </div>
+        
+        <!-- Test 4: Chart Tabs -->
+        <div class="test-section">
+            <div class="test-title">Test 4: Chart Tabs</div>
+            <div class="test-description">Testing chart navigation tabs with Neo-Brutalism styling</div>
+            
+            <div class="chart-tabs">
+                <button class="tab-button active">Overview</button>
+                <button class="tab-button">Demographics</button>
+                <button class="tab-button">Psychographics</button>
+                <button class="tab-button">Behavior</button>
+            </div>
+            
+            <div class="test-result" id="tabsTest">Testing chart tabs styling...</div>
+        </div>
+        
+        <!-- Test 5: Chart Cards -->
+        <div class="test-section">
+            <div class="test-title">Test 5: Chart Cards</div>
+            <div class="test-description">Testing chart containers with asymmetrical layouts</div>
+            
+            <div class="chart-grid-4">
+                <div class="chart-card">
+                    <h4>Age Distribution</h4>
+                    <div style="height: 200px; background: #f0f0f0; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
+                        Chart Placeholder
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h4>Gender Distribution</h4>
+                    <div style="height: 200px; background: #f0f0f0; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
+                        Chart Placeholder
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h4>Location Distribution</h4>
+                    <div style="height: 200px; background: #f0f0f0; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
+                        Chart Placeholder
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h4>Occupation Distribution</h4>
+                    <div style="height: 200px; background: #f0f0f0; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
+                        Chart Placeholder
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-result" id="chartsTest">Testing chart cards styling...</div>
+        </div>
+        
+        <!-- Test 6: Data Grid -->
+        <div class="test-section">
+            <div class="test-title">Test 6: Data Grid</div>
+            <div class="test-description">Testing data grid with Neo-Brutalism table styling</div>
+            
+            <section class="data-grid-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-list"></i> Detailed Data</h3>
+                    <div class="grid-controls">
+                        <span class="result-count">Total <span>1,234</span> people</span>
+                        <button class="neo-button neo-button--secondary">
+                            <i class="fas fa-download"></i> Export Excel
+                        </button>
+                    </div>
+                </div>
+                <div class="data-grid-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Location</th>
+                                <th>Occupation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>John Doe</td>
+                                <td>32</td>
+                                <td>Male</td>
+                                <td>Seoul</td>
+                                <td>Engineer</td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>Jane Smith</td>
+                                <td>28</td>
+                                <td>Female</td>
+                                <td>Busan</td>
+                                <td>Designer</td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td>Mike Johnson</td>
+                                <td>35</td>
+                                <td>Male</td>
+                                <td>Incheon</td>
+                                <td>Manager</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <div class="test-result" id="gridTest">Testing data grid styling...</div>
+        </div>
+        
+        <!-- Test 7: Responsive Design -->
+        <div class="test-section">
+            <div class="test-title">Test 7: Responsive Design</div>
+            <div class="test-description">Testing responsive behavior at different screen sizes</div>
+            
+            <div class="test-result" id="responsiveTest">Testing responsive design...</div>
+        </div>
+    </div>
+    
+    <script>
+        // Test runner
+        document.addEventListener('DOMContentLoaded', function() {
+            runTests();
+        });
+        
+        function runTests() {
+            console.log('Running Dashboard Neo-Brutalism Tests...');
+            
+            // Test 1: Header Styling
+            testHeaderStyling();
+            
+            // Test 2: Slicer Panel
+            testSlicerPanel();
+            
+            // Test 3: KPI Cards
+            testKPICards();
+            
+            // Test 4: Chart Tabs
+            testChartTabs();
+            
+            // Test 5: Chart Cards
+            testChartCards();
+            
+            // Test 6: Data Grid
+            testDataGrid();
+            
+            // Test 7: Responsive Design
+            testResponsiveDesign();
+        }
+        
+        function testHeaderStyling() {
+            const header = document.querySelector('.olap-header');
+            const result = document.getElementById('headerTest');
+            
+            if (!header) {
+                result.innerHTML = '<span class="fail">FAIL: Header element not found</span>';
+                return;
+            }
+            
+            const styles = window.getComputedStyle(header);
+            const tests = [
+                { name: 'Background Color', test: styles.backgroundColor === 'rgb(0, 0, 0)' },
+                { name: 'Color', test: styles.color === 'rgb(255, 255, 255)' },
+                { name: 'Border Bottom', test: styles.borderBottomWidth === '6px' }
+            ];
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    Header Test: ${passed}/${total} passed
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+            `;
+        }
+        
+        function testSlicerPanel() {
+            const panel = document.querySelector('.slicer-panel');
+            const result = document.getElementById('slicerTest');
+            
+            if (!panel) {
+                result.innerHTML = '<span class="fail">FAIL: Slicer panel not found</span>';
+                return;
+            }
+            
+            const styles = window.getComputedStyle(panel);
+            const tests = [
+                { name: 'Background Color', test: styles.backgroundColor === 'rgb(255, 255, 255)' },
+                { name: 'Border Right', test: styles.borderRightWidth === '6px' },
+                { name: 'Position', test: styles.position === 'relative' }
+            ];
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    Slicer Panel Test: ${passed}/${total} passed
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+            `;
+        }
+        
+        function testKPICards() {
+            const cards = document.querySelectorAll('.kpi-card');
+            const result = document.getElementById('kpiTest');
+            
+            if (cards.length === 0) {
+                result.innerHTML = '<span class="fail">FAIL: KPI cards not found</span>';
+                return;
+            }
+            
+            const firstCard = cards[0];
+            const styles = window.getComputedStyle(firstCard);
+            const tests = [
+                { name: 'Border Width', test: styles.borderWidth === '4px' },
+                { name: 'Box Shadow', test: styles.boxShadow !== 'none' },
+                { name: 'Position', test: styles.position === 'relative' }
+            ];
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    KPI Cards Test: ${passed}/${total} passed (${cards.length} cards found)
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+            `;
+        }
+        
+        function testChartTabs() {
+            const tabs = document.querySelectorAll('.tab-button');
+            const result = document.getElementById('tabsTest');
+            
+            if (tabs.length === 0) {
+                result.innerHTML = '<span class="fail">FAIL: Tab buttons not found</span>';
+                return;
+            }
+            
+            const firstTab = tabs[0];
+            const styles = window.getComputedStyle(firstTab);
+            const tests = [
+                { name: 'Border Width', test: styles.borderWidth === '4px' },
+                { name: 'Font Weight', test: styles.fontWeight === '900' },
+                { name: 'Text Transform', test: styles.textTransform === 'uppercase' }
+            ];
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    Chart Tabs Test: ${passed}/${total} passed (${tabs.length} tabs found)
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+            `;
+        }
+        
+        function testChartCards() {
+            const cards = document.querySelectorAll('.chart-card');
+            const result = document.getElementById('chartsTest');
+            
+            if (cards.length === 0) {
+                result.innerHTML = '<span class="fail">FAIL: Chart cards not found</span>';
+                return;
+            }
+            
+            const firstCard = cards[0];
+            const styles = window.getComputedStyle(firstCard);
+            const tests = [
+                { name: 'Border Width', test: styles.borderWidth === '4px' },
+                { name: 'Box Shadow', test: styles.boxShadow !== 'none' },
+                { name: 'Position', test: styles.position === 'relative' }
+            ];
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    Chart Cards Test: ${passed}/${total} passed (${cards.length} cards found)
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+            `;
+        }
+        
+        function testDataGrid() {
+            const grid = document.querySelector('.data-grid-container');
+            const result = document.getElementById('gridTest');
+            
+            if (!grid) {
+                result.innerHTML = '<span class="fail">FAIL: Data grid not found</span>';
+                return;
+            }
+            
+            const styles = window.getComputedStyle(grid);
+            const table = grid.querySelector('table');
+            const tests = [
+                { name: 'Border Width', test: styles.borderWidth === '4px' },
+                { name: 'Box Shadow', test: styles.boxShadow !== 'none' },
+                { name: 'Table Present', test: table !== null }
+            ];
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    Data Grid Test: ${passed}/${total} passed
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+            `;
+        }
+        
+        function testResponsiveDesign() {
+            const result = document.getElementById('responsiveTest');
+            
+            // Test media query support
+            const mediaQueries = [
+                { name: '1024px breakpoint', query: '(max-width: 1024px)' },
+                { name: '768px breakpoint', query: '(max-width: 768px)' },
+                { name: '480px breakpoint', query: '(max-width: 480px)' }
+            ];
+            
+            const tests = mediaQueries.map(mq => ({
+                name: mq.name,
+                test: window.matchMedia(mq.query) !== null
+            }));
+            
+            const passed = tests.filter(t => t.test).length;
+            const total = tests.length;
+            
+            result.innerHTML = `
+                <span class="${passed === total ? 'pass' : 'fail'}">
+                    Responsive Design Test: ${passed}/${total} passed
+                </span><br>
+                ${tests.map(t => `<span class="${t.test ? 'pass' : 'fail'}">${t.name}: ${t.test ? 'PASS' : 'FAIL'}</span>`).join('<br>')}
+                <br><span class="info">Current viewport: ${window.innerWidth}x${window.innerHeight}</span>
+            `;
+        }
+        
+        // Add interactive functionality to test components
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('slicer-header')) {
+                const section = e.target.closest('.slicer-section');
+                section.classList.toggle('collapsed');
+            }
+            
+            if (e.target.classList.contains('tab-button')) {
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

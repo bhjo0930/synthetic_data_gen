@@ -4,56 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Peoples - Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/neo-brutalism.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Critical CSS inline for performance -->
+    <style>
+      /* Critical CSS for above-the-fold content */
+      :root{--neo-white:#FFFFFF;--neo-black:#000000;--neo-red:#FF0000;--neo-blue:#0000FF;--neo-font-primary:'Arial Black','Helvetica Bold','Impact',sans-serif;--neo-border-thick:4px solid var(--neo-black);--neo-shadow-md:4px 4px 0px var(--neo-black);--neo-shadow-lg:8px 8px 0px var(--neo-black);--neo-space-lg:24px;--neo-space-xl:32px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--neo-font-primary);font-weight:900;line-height:1.2;background:var(--neo-white);color:var(--neo-black)}.neo-container{max-width:1200px;margin:0 auto;padding:var(--neo-space-lg);contain:layout}.neo-header{margin-bottom:var(--neo-space-xl)}.neo-title{font-size:clamp(24px,4vw,48px);font-weight:900;text-align:center;background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-lg);padding:var(--neo-space-lg);position:relative;transform:rotate(-1deg);contain:layout style paint}.neo-nav{display:flex;justify-content:center;gap:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);contain:layout}.neo-nav a{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);padding:12px var(--neo-space-lg);text-decoration:none;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}.neo-button{background:var(--neo-red);color:var(--neo-black);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);font-family:var(--neo-font-primary);font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:0.5px;padding:12px var(--neo-space-lg);cursor:pointer;contain:layout style paint}.neo-card{background:var(--neo-white);border:var(--neo-border-thick);box-shadow:var(--neo-shadow-md);padding:var(--neo-space-lg);margin-bottom:var(--neo-space-xl);position:relative;contain:layout style paint}.neo-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--neo-space-lg);margin-bottom:var(--neo-space-lg);contain:layout}.neo-input,.neo-select{background:var(--neo-white);color:var(--neo-black);border:var(--neo-border-thick);font-family:var(--neo-font-primary);font-weight:700;font-size:16px;padding:12px 16px;width:100%}@media (max-width:768px){.neo-form-grid{grid-template-columns:1fr;gap:16px}.neo-nav{flex-direction:column;gap:8px}.neo-title{font-size:24px;transform:none}}
+    </style>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" as="style">
+    
+    <!-- Load non-critical CSS asynchronously -->
+    <link rel="preload" href="css/neo-brutalism.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/neo-brutalism.css"></noscript>
+    
+    <!-- Icons loaded with lower priority -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
-<body>
-    <div class="container">
-        <h1><i class="fas fa-users"></i> Virtual Peoples - Generator</h1>
+<body class="neo-body">
+    <div class="neo-container">
+        <header class="neo-header">
+            <h1 class="neo-title"><i class="fas fa-users"></i> Virtual Peoples - Generator</h1>
+        </header>
 
-        <nav>
-            <a href="/generate.html">Generate People</a> |
+        <nav class="neo-nav">
+            <a href="/generate.html" class="active" aria-current="page">Generate People</a>
             <a href="/search.html">Analytics Dashboard</a>
         </nav>
 
-        <section class="generate-section">
-            <h2>Generate Virtual People</h2>
-            <div class="input-group">
-                <label for="count">Number of People:</label>
-                <input type="number" id="count" value="1" min="1">
-            </div>
-            <div class="input-group">
-                <label for="age_range_min">Age Range (Min):</label>
-                <input type="number" id="age_range_min" placeholder="e.g., 20">
-            </div>
-            <div class="input-group">
-                <label for="age_range_max">Age Range (Max):</label>
-                <input type="number" id="age_range_max" placeholder="e.g., 30">
-            </div>
-            <div class="input-group">
-                <label for="gender">Gender:</label>
-                <select id="gender">
-                    <option value="">Any</option>
-                    <option value="남성">Male</option>
-                    <option value="여성">Female</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="location">Location:</label>
-                <input type="text" id="location" placeholder="e.g., Seoul">
-            </div>
-            <button id="generateBtn" class="neo-button">Generate People</button>
-            <div id="generateResult" class="result-box"></div>
-        </section>
+        <main class="neo-main">
+            <section class="neo-card neo-card--generate">
+                <div class="neo-card__header">
+                    <h2 class="neo-card__title">Generate Virtual People</h2>
+                    <div class="neo-card__meta">Generator</div>
+                </div>
+                
+                <div class="neo-form-grid">
+                    <div class="input-group">
+                        <label for="count">Number of People:</label>
+                        <input type="number" id="count" value="1" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="age_range_min">Age Range (Min):</label>
+                        <input type="number" id="age_range_min" placeholder="e.g., 20">
+                    </div>
+                    <div class="input-group">
+                        <label for="age_range_max">Age Range (Max):</label>
+                        <input type="number" id="age_range_max" placeholder="e.g., 30">
+                    </div>
+                    <div class="input-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender">
+                            <option value="">Any</option>
+                            <option value="남성">Male</option>
+                            <option value="여성">Female</option>
+                        </select>
+                    </div>
+                    <div class="input-group neo-input-full">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" placeholder="e.g., Seoul">
+                    </div>
+                </div>
+                
+                <div class="neo-button-group">
+                    <button id="generateBtn" class="neo-button neo-button--large">Generate People</button>
+                </div>
+                
+                <div id="generateResult" class="neo-result-box"></div>
+            </section>
 
-        <section class="management-section">
-            <h2>Data Management</h2>
-            <button id="deleteAllBtn" class="neo-button neo-button--warning">Delete All Virtual People</button>
-            <div id="deleteResult" class="result-box"></div>
-        </section>
+            <section class="neo-card neo-card--management neo-card--accent-blue">
+                <div class="neo-card__header">
+                    <h2 class="neo-card__title">Data Management</h2>
+                    <div class="neo-card__meta">Admin</div>
+                </div>
+                
+                <div class="neo-button-group">
+                    <button id="deleteAllBtn" class="neo-button neo-button--warning neo-button--large">Delete All Virtual People</button>
+                </div>
+                
+                <div id="deleteResult" class="neo-result-box"></div>
+            </section>
+        </main>
     </div>
 
     <script src="generate_script.js"></script>
+    <script src="neo-transitions.js"></script>
 </body>
 </html>

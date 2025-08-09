@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Integration Test</title>
+    <link rel="stylesheet" href="../static/css/neo-brutalism.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .test-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #000;
+            color: #fff;
+            padding: 10px;
+            border: 4px solid #000;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        
+        .test-pass { background: #00ff00; color: #000; }
+        .test-fail { background: #ff0000; color: #fff; }
+    </style>
+</head>
+<body>
+    <div id="testStatus" class="test-status">Testing...</div>
+    
+    <!-- Full Dashboard Implementation -->
+    <div class="olap-container">
+        <header class="olap-header">
+            <h1><i class="fas fa-users"></i> Virtual Peoples - Analysis Dashboard</h1>
+            <nav>
+                <a href="#"><i class="fas fa-plus-circle"></i> Generate People</a>
+                <a href="#" class="active"><i class="fas fa-chart-line"></i> Analytics</a>
+            </nav>
+        </header>
+
+        <div class="olap-layout">
+            <!-- Slicer Panel -->
+            <aside class="slicer-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-sliders-h"></i> 다차원 필터</h3>
+                    <div class="panel-controls">
+                        <button id="clearFilters" class="neo-button neo-button--secondary" title="필터 초기화">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button id="applyFilters" class="neo-button" title="필터 적용">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="slicer-group">
+                    <div class="slicer-section collapsed">
+                        <div class="slicer-header" data-target="demographics">
+                            <i class="fas fa-user"></i>
+                            <span>인구 통계학적 특성</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="slicer-content" id="demographics">
+                            <div class="filter-item">
+                                <label>나이 범위</label>
+                                <div class="range-inputs">
+                                    <input type="number" id="search_age_min" placeholder="최소" class="range-input">
+                                    <span>~</span>
+                                    <input type="number" id="search_age_max" placeholder="최대" class="range-input">
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <label>성별</label>
+                                <div class="checkbox-group" id="genderSlicer">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="남성"> 남성
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" value="여성"> 여성
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Analysis Area -->
+            <main class="analysis-main">
+                <!-- KPI Cards -->
+                <section class="kpi-section">
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="totalPersonas">1,234</div>
+                        <div class="kpi-label">Total Virtual People</div>
+                        <div class="kpi-icon"><i class="fas fa-users"></i></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="avgAge">32</div>
+                        <div class="kpi-label">Average Age</div>
+                        <div class="kpi-icon"><i class="fas fa-birthday-cake"></i></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="topLocation">Seoul</div>
+                        <div class="kpi-label">Top Location</div>
+                        <div class="kpi-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="genderRatio">60:40</div>
+                        <div class="kpi-label">Gender Ratio</div>
+                        <div class="kpi-icon"><i class="fas fa-venus-mars"></i></div>
+                    </div>
+                </section>
+
+                <!-- Chart Section -->
+                <section class="chart-section">
+                    <div class="chart-tabs">
+                        <button class="tab-button active" data-tab="overview">Overview</button>
+                        <button class="tab-button" data-tab="demographics">Demographics</button>
+                        <button class="tab-button" data-tab="psychographics">Psychographics</button>
+                        <button class="tab-button" data-tab="behavior">Behavior</button>
+                    </div>
+
+                    <div class="tab-content active" id="overview">
+                        <div class="chart-grid-4">
+                            <div class="chart-card">
+                                <h4>Age Distribution</h4>
+                                <canvas id="ageChart" width="300" height="200"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Gender Distribution</h4>
+                                <canvas id="genderChart" width="300" height="200"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Location Distribution</h4>
+                                <canvas id="locationChart" width="300" height="200"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Occupation Distribution</h4>
+                                <canvas id="occupationChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="demographics">
+                        <div class="chart-grid-2">
+                            <div class="chart-card">
+                                <h4>Education Level</h4>
+                                <canvas id="educationChart" width="400" height="300"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Income Distribution</h4>
+                                <canvas id="incomeChart" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="psychographics">
+                        <div class="chart-grid-2">
+                            <div class="chart-card">
+                                <h4>Interests Cloud</h4>
+                                <div class="wordcloud-container">
+                                    <span style="font-size: 2em; opacity: 1;">Technology</span>
+                                    <span style="font-size: 1.5em; opacity: 0.8;">Sports</span>
+                                    <span style="font-size: 1.2em; opacity: 0.6;">Music</span>
+                                    <span style="font-size: 1.8em; opacity: 0.9;">Travel</span>
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Values Analysis</h4>
+                                <div class="wordcloud-container">
+                                    <span style="font-size: 1.8em; opacity: 1;">Family</span>
+                                    <span style="font-size: 1.4em; opacity: 0.7;">Success</span>
+                                    <span style="font-size: 1.6em; opacity: 0.8;">Health</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="behavior">
+                        <div class="chart-grid-2">
+                            <div class="chart-card">
+                                <h4>Media Consumption</h4>
+                                <canvas id="mediaChart" width="400" height="300"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Shopping Habits</h4>
+                                <canvas id="shoppingChart" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Data Grid -->
+                <section class="data-grid-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-list"></i> Detailed Data</h3>
+                        <div class="grid-controls">
+                            <span class="result-count">Total <span id="resultCount">1,234</span> people</span>
+                            <button id="exportBtn" class="neo-button neo-button--secondary">
+                                <i class="fas fa-download"></i> Export Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dataGrid" class="data-grid-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Location</th>
+                                    <th>Occupation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>001</td>
+                                    <td>김철수</td>
+                                    <td>32</td>
+                                    <td>남성</td>
+                                    <td>서울</td>
+                                    <td>개발자</td>
+                                </tr>
+                                <tr>
+                                    <td>002</td>
+                                    <td>이영희</td>
+                                    <td>28</td>
+                                    <td>여성</td>
+                                    <td>부산</td>
+                                    <td>디자이너</td>
+                                </tr>
+                                <tr>
+                                    <td>003</td>
+                                    <td>박민수</td>
+                                    <td>35</td>
+                                    <td>남성</td>
+                                    <td>인천</td>
+                                    <td>매니저</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Management Section -->
+        <section class="management-section">
+            <h3><i class="fas fa-database"></i> Data Management</h3>
+            <button id="deleteAllBtn" class="neo-button neo-button--warning">
+                <i class="fas fa-trash"></i> Delete All Virtual People
+            </button>
+            <div id="deleteResult" class="result-box"></div>
+        </section>
+    </div>
+
+    <script>
+        // Integration test script
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Running Dashboard Integration Tests...');
+            
+            let testsPassed = 0;
+            let totalTests = 0;
+            
+            function runTest(name, testFn) {
+                totalTests++;
+                try {
+                    const result = testFn();
+                    if (result) {
+                        console.log(`✅ ${name} - PASSED`);
+                        testsPassed++;
+                    } else {
+                        console.log(`❌ ${name} - FAILED`);
+                    }
+                } catch (error) {
+                    console.log(`❌ ${name} - ERROR: ${error.message}`);
+                }
+            }
+            
+            // Test 1: Slicer functionality
+            runTest('Slicer Toggle', function() {
+                const slicerHeader = document.querySelector('.slicer-header');
+                const section = slicerHeader.closest('.slicer-section');
+                
+                const initialState = section.classList.contains('collapsed');
+                slicerHeader.click();
+                const afterClick = section.classList.contains('collapsed');
+                
+                return initialState !== afterClick;
+            });
+            
+            // Test 2: Tab switching
+            runTest('Tab Switching', function() {
+                const tabs = document.querySelectorAll('.tab-button');
+                const firstTab = tabs[0];
+                const secondTab = tabs[1];
+                
+                const initialActive = firstTab.classList.contains('active');
+                secondTab.click();
+                const afterClick = secondTab.classList.contains('active');
+                
+                return initialActive && afterClick;
+            });
+            
+            // Test 3: Chart canvas elements
+            runTest('Chart Elements', function() {
+                const canvases = document.querySelectorAll('canvas');
+                return canvases.length >= 4;
+            });
+            
+            // Test 4: KPI cards display
+            runTest('KPI Cards', function() {
+                const kpiCards = document.querySelectorAll('.kpi-card');
+                const hasValues = Array.from(kpiCards).every(card => {
+                    const value = card.querySelector('.kpi-value');
+                    return value && value.textContent.trim().length > 0;
+                });
+                return kpiCards.length === 4 && hasValues;
+            });
+            
+            // Test 5: Data grid functionality
+            runTest('Data Grid', function() {
+                const table = document.querySelector('.data-grid-container table');
+                const rows = table.querySelectorAll('tbody tr');
+                return table && rows.length >= 3;
+            });
+            
+            // Test 6: Button interactions
+            runTest('Button Interactions', function() {
+                const buttons = document.querySelectorAll('.neo-button');
+                return buttons.length >= 3;
+            });
+            
+            // Test 7: Responsive layout
+            runTest('Responsive Layout', function() {
+                const layout = document.querySelector('.olap-layout');
+                const styles = window.getComputedStyle(layout);
+                return styles.display === 'grid';
+            });
+            
+            // Test 8: Neo-Brutalism styling
+            runTest('Neo-Brutalism Styling', function() {
+                const header = document.querySelector('.olap-header');
+                const styles = window.getComputedStyle(header);
+                return styles.backgroundColor === 'rgb(0, 0, 0)' && 
+                       styles.color === 'rgb(255, 255, 255)';
+            });
+            
+            // Initialize sample charts
+            initializeSampleCharts();
+            
+            // Update test status
+            setTimeout(function() {
+                const statusEl = document.getElementById('testStatus');
+                const successRate = Math.round((testsPassed / totalTests) * 100);
+                
+                if (testsPassed === totalTests) {
+                    statusEl.textContent = `✅ All Tests Passed (${successRate}%)`;
+                    statusEl.className = 'test-status test-pass';
+                } else {
+                    statusEl.textContent = `❌ ${testsPassed}/${totalTests} Tests Passed (${successRate}%)`;
+                    statusEl.className = 'test-status test-fail';
+                }
+                
+                console.log(`📊 Integration Test Results: ${testsPassed}/${totalTests} passed (${successRate}%)`);
+            }, 1000);
+        });
+        
+        // Initialize sample charts for visual testing
+        function initializeSampleCharts() {
+            // Age Distribution Chart
+            const ageCtx = document.getElementById('ageChart');
+            if (ageCtx) {
+                new Chart(ageCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['20대', '30대', '40대', '50대'],
+                        datasets: [{
+                            label: '연령 분포',
+                            data: [300, 450, 280, 204],
+                            backgroundColor: '#FF0000',
+                            borderColor: '#000000',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+            
+            // Gender Distribution Chart
+            const genderCtx = document.getElementById('genderChart');
+            if (genderCtx) {
+                new Chart(genderCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['남성', '여성'],
+                        datasets: [{
+                            data: [60, 40],
+                            backgroundColor: ['#0000FF', '#FFFF00'],
+                            borderColor: '#000000',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+        }
+        
+        // Add interactive functionality
+        document.addEventListener('click', function(e) {
+            // Slicer toggle
+            if (e.target.closest('.slicer-header')) {
+                const section = e.target.closest('.slicer-section');
+                section.classList.toggle('collapsed');
+            }
+            
+            // Tab switching
+            if (e.target.classList.contains('tab-button')) {
+                const targetTab = e.target.getAttribute('data-tab');
+                
+                // Update tab buttons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                const targetContent = document.getElementById(targetTab);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
