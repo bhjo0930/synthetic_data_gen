@@ -55,11 +55,50 @@
         color:#555;
       }
       
+      /* Analytics card styling */
+      .neo-card--analytics {
+        border-color: var(--neo-red) !important;
+        position: relative;
+        transform: rotate(0.5deg);
+      }
+      
+      .neo-card--analytics::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        width: 20px;
+        height: 20px;
+        background: var(--neo-red);
+        border: 2px solid var(--neo-black);
+        z-index: 4;
+      }
+      
+      .analytics-info {
+        margin-top: var(--neo-space-lg);
+        padding: 12px;
+        background: #FFF5F5;
+        border: 2px solid var(--neo-red);
+        border-radius: 0;
+        font-family: var(--neo-font-primary);
+      }
+      
+      .analytics-info .info-text {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--neo-black);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+      }
+      
       @media (max-width:1200px){
         .generate-layout{flex-direction:column;gap:var(--neo-space-lg)}
         .generate-left-panel{flex:none;width:100%}
         .generate-right-panel{flex:none}
         .neo-card--results{min-height:60vh}
+        .neo-card--analytics{transform:none}
       }
     </style>
     
@@ -124,6 +163,24 @@
                         
                         <div class="neo-button-group">
                             <button id="generateBtn" class="neo-button neo-button--large">Generate People</button>
+                        </div>
+                    </section>
+
+                    <!-- Analytics Navigation -->
+                    <section class="neo-card neo-card--analytics neo-card--accent-red">
+                        <div class="neo-card__header">
+                            <h2 class="neo-card__title">Analytics Dashboard</h2>
+                            <div class="neo-card__meta">Analysis</div>
+                        </div>
+                        
+                        <div class="neo-button-group">
+                            <button onclick="window.location.href='/search.html'" class="neo-button neo-button--secondary neo-button--large">
+                                <i class="fas fa-chart-line"></i> ANALYTICS DASHBOARD
+                            </button>
+                        </div>
+                        
+                        <div class="analytics-info">
+                            <p class="info-text">View detailed analytics, charts, and insights from generated virtual people data.</p>
                         </div>
                     </section>
 
