@@ -95,4 +95,4 @@ def delete_all_personas_api():
 if __name__ == '__main__':
     # DB 초기화 (테스트용)
     db.delete_all_personas()
-    app.run(debug=True, port=5050)
+    app.run(debug=True, host='0.0.0.0', port=5050)

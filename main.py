@@ -16,4 +16,4 @@ if __name__ == '__main__':
     print("3. 클라우드 기반의 분산 컴퓨팅 환경 (예: AWS Lambda, Kubernetes) 활용")
     print("4. LLM 연동 시, LLM API 호출 비용 및 속도 고려")
     print("현재 구현은 한국 인구통계 및 문화적 특성을 반영한 페르소나 생성 로직에 중점을 둡니다.")
-    app.run(debug=True, port=5050)
+    app.run(debug=True, host='0.0.0.0', port=5050)
