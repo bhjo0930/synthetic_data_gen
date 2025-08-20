@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>차트 데이터 정렬 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .result { margin: 10px 0; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Location 차트 데이터 정렬 테스트</h1>
+    
+    <div class="test-section">
+        <h2>1. 기존 방식 (문제가 있는 방식)</h2>
+        <div id="oldMethod"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. 수정된 방식 (정렬된 방식)</h2>
+        <div id="newMethod"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. 예상 분포 vs 차트 표시 비교</h2>
+        <div id="comparison"></div>
+    </div>
+
+    <script>
+        // 샘플 데이터 (실제 프로그램에서 생성될 수 있는 지역 분포)
+        const sampleLocationData = {
+            "광주광역시": 29,
+            "경기도": 264,
+            "서울특별시": 195,
+            "대전광역시": 30,
+            "부산광역시": 66,
+            "인천광역시": 57,
+            "울산광역시": 22,
+            "대구광역시": 47,
+            "세종특별자치시": 7,
+            "강원도": 28,
+            "충청북도": 30,
+            "충청남도": 39,
+            "전라북도": 33,
+            "전라남도": 31,
+            "경상북도": 48,
+            "경상남도": 62,
+            "제주특별자치도": 12
+        };
+
+        // 예상 분포 (프로그램 내부 데이터베이스 기준)
+        const expectedDistribution = {
+            "경기도": 26.4,
+            "서울특별시": 19.5,
+            "부산광역시": 6.6,
+            "경상남도": 6.2,
+            "인천광역시": 5.7,
+            "경상북도": 4.8,
+            "대구광역시": 4.7,
+            "충청남도": 3.9,
+            "전라북도": 3.3,
+            "전라남도": 3.1,
+            "대전광역시": 3.0,
+            "충청북도": 3.0,
+            "광주광역시": 2.9,
+            "강원도": 2.8,
+            "울산광역시": 2.2,
+            "제주특별자치도": 1.2,
+            "세종특별자치시": 0.7
+        };
+
+        function testOldMethod() {
+            console.log("=== 기존 방식 테스트 ===");
+            
+            const labels = Object.keys(sampleLocationData).sort(); // 알파벳순 정렬
+            const data = Object.values(sampleLocationData); // 원래 순서
+            
+            let result = "<h3>기존 방식 결과:</h3>";
+            result += "<table border='1'><tr><th>순서</th><th>라벨</th><th>데이터</th><th>실제 지역</th></tr>";
+            
+            const originalKeys = Object.keys(sampleLocationData);
+            
+            for (let i = 0; i < labels.length; i++) {
+                const isCorrect = labels[i] === originalKeys[i];
+                const className = isCorrect ? "success" : "error";
+                result += `<tr class="${className}">`;
+                result += `<td>${i + 1}</td>`;
+                result += `<td>${labels[i]}</td>`;
+                result += `<td>${data[i]}</td>`;
+                result += `<td>${originalKeys[i]} (${sampleLocationData[originalKeys[i]]})</td>`;
+                result += `</tr>`;
+            }
+            result += "</table>";
+            result += "<p class='error'>❌ 키와 값의 순서가 맞지 않아 잘못된 차트가 생성됩니다!</p>";
+            
+            document.getElementById('oldMethod').innerHTML = result;
+        }
+
+        function testNewMethod() {
+            console.log("=== 수정된 방식 테스트 ===");
+            
+            // 수정된 방식: 값 기준으로 정렬
+            const sortedEntries = Object.entries(sampleLocationData).sort((a, b) => b[1] - a[1]);
+            const labels = sortedEntries.map(entry => entry[0]);
+            const data = sortedEntries.map(entry => entry[1]);
+            
+            let result = "<h3>수정된 방식 결과:</h3>";
+            result += "<table border='1'><tr><th>순위</th><th>지역</th><th>인구수</th><th>비율</th></tr>";
+            
+            const total = data.reduce((sum, val) => sum + val, 0);
+            
+            for (let i = 0; i < labels.length; i++) {
+                const percentage = (data[i] / total * 100).toFixed(1);
+                result += `<tr>`;
+                result += `<td>${i + 1}</td>`;
+                result += `<td>${labels[i]}</td>`;
+                result += `<td>${data[i]}</td>`;
+                result += `<td>${percentage}%</td>`;
+                result += `</tr>`;
+            }
+            result += "</table>";
+            result += "<p class='success'>✅ 키와 값이 올바르게 매칭되어 정확한 차트가 생성됩니다!</p>";
+            
+            document.getElementById('newMethod').innerHTML = result;
+        }
+
+        function compareWithExpected() {
+            console.log("=== 예상 분포와 비교 ===");
+            
+            const sortedEntries = Object.entries(sampleLocationData).sort((a, b) => b[1] - a[1]);
+            const total = sortedEntries.reduce((sum, entry) => sum + entry[1], 0);
+            
+            let result = "<h3>예상 분포 vs 실제 차트 표시:</h3>";
+            result += "<table border='1'><tr><th>순위</th><th>지역</th><th>예상(%)</th><th>차트표시(%)</th><th>차이</th></tr>";
+            
+            // 예상 분포 순서 (큰 순서대로)
+            const expectedOrder = Object.entries(expectedDistribution).sort((a, b) => b[1] - a[1]);
+            
+            for (let i = 0; i < Math.min(expectedOrder.length, sortedEntries.length); i++) {
+                const expectedRegion = expectedOrder[i][0];
+                const expectedPercent = expectedOrder[i][1];
+                
+                const actualRegion = sortedEntries[i][0];
+                const actualPercent = (sortedEntries[i][1] / total * 100);
+                
+                const isCorrectOrder = expectedRegion === actualRegion;
+                const className = isCorrectOrder ? "success" : "error";
+                
+                result += `<tr class="${className}">`;
+                result += `<td>${i + 1}</td>`;
+                result += `<td>예상: ${expectedRegion}<br>실제: ${actualRegion}</td>`;
+                result += `<td>${expectedPercent}%</td>`;
+                result += `<td>${actualPercent.toFixed(1)}%</td>`;
+                result += `<td>${isCorrectOrder ? '✅ 일치' : '❌ 불일치'}</td>`;
+                result += `</tr>`;
+            }
+            result += "</table>";
+            
+            document.getElementById('comparison').innerHTML = result;
+        }
+
+        // 테스트 실행
+        testOldMethod();
+        testNewMethod();
+        compareWithExpected();
+        
+        console.log("차트 데이터 정렬 테스트 완료!");
+    </script>
+</body>
+</html>

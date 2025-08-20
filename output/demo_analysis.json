@@ -1,0 +1,35 @@
+{
+  "total_count": 100,
+  "age_stats": {
+    "mean": 30.0,
+    "std": 0.0,
+    "min": 30,
+    "max": 30
+  },
+  "income_stats": {
+    "mean": 3500000.0,
+    "std": 0.0,
+    "min": 3500000,
+    "max": 3500000
+  },
+  "distributions": {
+    "gender": {
+      "남성": 100
+    },
+    "education": {
+      "대학교": 100
+    },
+    "marital_status": {
+      "미혼": 100
+    },
+    "occupation": {
+      "사무직": 100
+    },
+    "location": {
+      "서울특별시": 100
+    }
+  },
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "quality_score": 100.0
+}

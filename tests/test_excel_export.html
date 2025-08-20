@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel Export 기능 테스트</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section { 
+            margin: 20px 0; 
+            padding: 20px; 
+            border: 2px solid #000;
+            background: #fff;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: 2px solid #000;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px;
+            box-shadow: 4px 4px 0px #000;
+        }
+        .test-button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+        .result { 
+            margin: 10px 0; 
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+        }
+        .success { 
+            color: green; 
+            border-color: green;
+            background: #e8f5e8;
+        }
+        .error { 
+            color: red; 
+            border-color: red;
+            background: #ffeaea;
+        }
+        .data-preview {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 12px;
+            background: #f8f8f8;
+        }
+    </style>
+    <!-- SheetJS 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="test-container">
+        <h1>📊 Excel Export 기능 테스트</h1>
+        
+        <div class="test-section">
+            <h2>1. 라이브러리 로드 확인</h2>
+            <button class="test-button" onclick="checkLibraries()">
+                <i class="fas fa-check"></i> 라이브러리 확인
+            </button>
+            <div id="libraryResult" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>2. 샘플 데이터 생성</h2>
+            <button class="test-button" onclick="generateSampleData()">
+                <i class="fas fa-users"></i> 샘플 데이터 생성
+            </button>
+            <div id="dataResult" class="result"></div>
+            <div id="dataPreview" class="data-preview" style="display:none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>3. 파일 내보내기 테스트</h2>
+            <button class="test-button" onclick="testExcelExport()" id="exportTestBtn" disabled>
+                <i class="fas fa-file-excel"></i> Excel 내보내기 테스트
+            </button>
+            <button class="test-button" onclick="testCsvExport()" id="csvTestBtn" disabled style="background: #28a745;">
+                <i class="fas fa-file-csv"></i> CSV 내보내기 테스트
+            </button>
+            <div id="exportResult" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>4. 다양한 데이터 타입 테스트</h2>
+            <button class="test-button" onclick="testComplexData()">
+                <i class="fas fa-database"></i> 복합 데이터 테스트
+            </button>
+            <div id="complexResult" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        let sampleData = [];
+
+        function checkLibraries() {
+            const result = document.getElementById('libraryResult');
+            let html = '<h3>라이브러리 상태:</h3>';
+            
+            // XLSX 라이브러리 확인
+            if (typeof XLSX !== 'undefined') {
+                html += '<div class="success">✅ SheetJS (XLSX) 라이브러리 로드됨</div>';
+                html += `<div>버전: ${XLSX.version || '알 수 없음'}</div>`;
+            } else {
+                html += '<div class="error">❌ SheetJS (XLSX) 라이브러리 로드 실패</div>';
+            }
+            
+            result.innerHTML = html;
+            result.className = typeof XLSX !== 'undefined' ? 'result success' : 'result error';
+        }
+
+        function generateSampleData() {
+            const result = document.getElementById('dataResult');
+            const preview = document.getElementById('dataPreview');
+            
+            try {
+                // 샘플 페르소나 데이터 생성
+                sampleData = [];
+                const regions = ['서울특별시', '경기도', '부산광역시', '대구광역시', '인천광역시'];
+                const genders = ['남성', '여성'];
+                const occupations = ['자영업', '회사원', '학생', '전문직', '교사'];
+                const educations = ['고등학교', '대학(4년제 미만)', '대학교(4년제 이상)', '대학원(석사 과정)'];
+                const maritalStatuses = ['미혼', '기혼', '이혼'];
+                
+                for (let i = 1; i <= 50; i++) {
+                    const persona = {
+                        name: `가상인물_${i.toString().padStart(3, '0')}`,
+                        age: Math.floor(Math.random() * 50) + 20,
+                        gender: genders[Math.floor(Math.random() * genders.length)],
+                        location: regions[Math.floor(Math.random() * regions.length)],
+                        occupation: occupations[Math.floor(Math.random() * occupations.length)],
+                        education: educations[Math.floor(Math.random() * educations.length)],
+                        income_bracket: `${Math.floor(Math.random() * 5) * 20 + 20}-${Math.floor(Math.random() * 5) * 20 + 40}%`,
+                        marital_status: maritalStatuses[Math.floor(Math.random() * maritalStatuses.length)],
+                        interests: ['독서', '영화감상', '운동', '여행'].slice(0, Math.floor(Math.random() * 3) + 1),
+                        values: ['가족', '성공', '건강', '자유'].slice(0, Math.floor(Math.random() * 2) + 1),
+                        lifestyle: ['활동적', '여유로운', '계획적'].slice(0, Math.floor(Math.random() * 2) + 1),
+                        personality: ['외향적', '신중한', '창의적'].slice(0, Math.floor(Math.random() * 2) + 1),
+                        media_consumption: '소셜미디어 3시간/일',
+                        shopping_habits: '온라인 쇼핑 선호',
+                        social_relations: '친구 많음'
+                    };
+                    sampleData.push(persona);
+                }
+                
+                result.innerHTML = `
+                    <div class="success">✅ ${sampleData.length}개 샘플 데이터 생성 완료</div>
+                    <div>첫 번째 데이터: ${sampleData[0].name} (${sampleData[0].age}세, ${sampleData[0].gender})</div>
+                `;
+                result.className = 'result success';
+                
+                // 데이터 미리보기
+                let previewHtml = '<h4>데이터 미리보기 (처음 5개):</h4>';
+                sampleData.slice(0, 5).forEach((persona, index) => {
+                    previewHtml += `
+                        <div style="margin: 5px 0; padding: 5px; border: 1px solid #ddd;">
+                            ${index + 1}. ${persona.name} - ${persona.age}세 ${persona.gender}, ${persona.location}, ${persona.occupation}
+                        </div>
+                    `;
+                });
+                preview.innerHTML = previewHtml;
+                preview.style.display = 'block';
+                
+                // 내보내기 버튼들 활성화
+                document.getElementById('exportTestBtn').disabled = false;
+                document.getElementById('csvTestBtn').disabled = false;
+                
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 데이터 생성 실패: ${error.message}</div>`;
+                result.className = 'result error';
+            }
+        }
+
+        function testExcelExport() {
+            const result = document.getElementById('exportResult');
+            
+            if (sampleData.length === 0) {
+                result.innerHTML = '<div class="error">❌ 먼저 샘플 데이터를 생성해주세요.</div>';
+                result.className = 'result error';
+                return;
+            }
+            
+            try {
+                console.log('Excel 내보내기 테스트 시작...');
+                
+                // Excel 데이터 준비 (실제 search.html과 동일한 로직)
+                const excelData = sampleData.map((persona, index) => {
+                    return {
+                        '순번': index + 1,
+                        '이름': persona.name || '미지정',
+                        '나이': persona.age || 0,
+                        '성별': persona.gender || '미지정',
+                        '지역': persona.location || '미지정',
+                        '직업': persona.occupation || '미지정',
+                        '교육수준': persona.education || '미지정',
+                        '소득분위': persona.income_bracket || '미지정',
+                        '결혼상태': persona.marital_status || '미지정',
+                        '관심사': Array.isArray(persona.interests) ? persona.interests.join(', ') : (persona.interests || ''),
+                        '가치관': Array.isArray(persona.values) ? persona.values.join(', ') : (persona.values || ''),
+                        '라이프스타일': Array.isArray(persona.lifestyle) ? persona.lifestyle.join(', ') : (persona.lifestyle || ''),
+                        '성격특성': Array.isArray(persona.personality) ? persona.personality.join(', ') : (persona.personality || ''),
+                        '미디어소비': persona.media_consumption || '',
+                        '쇼핑습관': persona.shopping_habits || '',
+                        '사회적관계': persona.social_relations || ''
+                    };
+                });
+
+                // 워크북 생성
+                const wb = XLSX.utils.book_new();
+                
+                // 워크시트 생성
+                const ws = XLSX.utils.json_to_sheet(excelData);
+                
+                // 컬럼 너비 설정
+                const colWidths = [
+                    { wch: 8 },  // 순번
+                    { wch: 12 }, // 이름
+                    { wch: 8 },  // 나이
+                    { wch: 8 },  // 성별
+                    { wch: 15 }, // 지역
+                    { wch: 15 }, // 직업
+                    { wch: 20 }, // 교육수준
+                    { wch: 12 }, // 소득분위
+                    { wch: 12 }, // 결혼상태
+                    { wch: 30 }, // 관심사
+                    { wch: 30 }, // 가치관
+                    { wch: 30 }, // 라이프스타일
+                    { wch: 30 }, // 성격특성
+                    { wch: 25 }, // 미디어소비
+                    { wch: 25 }, // 쇼핑습관
+                    { wch: 25 }  // 사회적관계
+                ];
+                ws['!cols'] = colWidths;
+
+                // 워크시트를 워크북에 추가
+                XLSX.utils.book_append_sheet(wb, ws, 'Test Data');
+                
+                // 파일명 생성
+                const now = new Date();
+                const dateStr = now.getFullYear() + 
+                              String(now.getMonth() + 1).padStart(2, '0') + 
+                              String(now.getDate()).padStart(2, '0') + '_' +
+                              String(now.getHours()).padStart(2, '0') + 
+                              String(now.getMinutes()).padStart(2, '0');
+                const filename = `Excel_Export_Test_${dateStr}.xlsx`;
+                
+                // Excel 파일 다운로드
+                XLSX.writeFile(wb, filename);
+                
+                result.innerHTML = `
+                    <div class="success">✅ Excel 파일 다운로드 완료!</div>
+                    <div>파일명: ${filename}</div>
+                    <div>데이터 수: ${sampleData.length}개</div>
+                    <div>컬럼 수: 16개</div>
+                `;
+                result.className = 'result success';
+                
+                console.log('Excel 파일 생성 성공:', filename);
+                
+            } catch (error) {
+                console.error('Excel 내보내기 오류:', error);
+                result.innerHTML = `<div class="error">❌ Excel 내보내기 실패: ${error.message}</div>`;
+                result.className = 'result error';
+            }
+        }
+
+        function testCsvExport() {
+            const result = document.getElementById('exportResult');
+            
+            if (sampleData.length === 0) {
+                result.innerHTML = '<div class="error">❌ 먼저 샘플 데이터를 생성해주세요.</div>';
+                result.className = 'result error';
+                return;
+            }
+            
+            try {
+                console.log('CSV 내보내기 테스트 시작...');
+                
+                // CSV 헤더 정의 (실제 search.html과 동일한 로직)
+                const headers = [
+                    '순번', '이름', '나이', '성별', '지역', '직업', '교육수준', '소득분위', '결혼상태',
+                    '관심사', '가치관', '라이프스타일', '성격특성', '미디어소비', '쇼핑습관', '사회적관계'
+                ];
+
+                // CSV 데이터 생성
+                const csvRows = [];
+                
+                // 헤더 추가
+                csvRows.push(headers.join(','));
+                
+                // 데이터 행 추가
+                sampleData.forEach((persona, index) => {
+                    const row = [
+                        index + 1,
+                        `"${(persona.name || '미지정').replace(/"/g, '""')}"`, // 쌍따옴표 이스케이프
+                        persona.age || 0,
+                        `"${(persona.gender || '미지정').replace(/"/g, '""')}"`,
+                        `"${(persona.location || '미지정').replace(/"/g, '""')}"`,
+                        `"${(persona.occupation || '미지정').replace(/"/g, '""')}"`,
+                        `"${(persona.education || '미지정').replace(/"/g, '""')}"`,
+                        `"${(persona.income_bracket || '미지정').replace(/"/g, '""')}"`,
+                        `"${(persona.marital_status || '미지정').replace(/"/g, '""')}"`,
+                        `"${(Array.isArray(persona.interests) ? persona.interests.join(', ') : (persona.interests || '')).replace(/"/g, '""')}"`,
+                        `"${(Array.isArray(persona.values) ? persona.values.join(', ') : (persona.values || '')).replace(/"/g, '""')}"`,
+                        `"${(Array.isArray(persona.lifestyle) ? persona.lifestyle.join(', ') : (persona.lifestyle || '')).replace(/"/g, '""')}"`,
+                        `"${(Array.isArray(persona.personality) ? persona.personality.join(', ') : (persona.personality || '')).replace(/"/g, '""')}"`,
+                        `"${(persona.media_consumption || '').replace(/"/g, '""')}"`,
+                        `"${(persona.shopping_habits || '').replace(/"/g, '""')}"`,
+                        `"${(persona.social_relations || '').replace(/"/g, '""')}"`
+                    ];
+                    csvRows.push(row.join(','));
+                });
+
+                // CSV 문자열 생성
+                const csvContent = csvRows.join('\n');
+                
+                // BOM 추가 (한글 깨짐 방지)
+                const BOM = '\uFEFF';
+                const csvWithBOM = BOM + csvContent;
+
+                // Blob 생성
+                const blob = new Blob([csvWithBOM], { type: 'text/csv;charset=utf-8;' });
+                
+                // 파일명 생성
+                const now = new Date();
+                const dateStr = now.getFullYear() + 
+                              String(now.getMonth() + 1).padStart(2, '0') + 
+                              String(now.getDate()).padStart(2, '0') + '_' +
+                              String(now.getHours()).padStart(2, '0') + 
+                              String(now.getMinutes()).padStart(2, '0');
+                const filename = `CSV_Export_Test_${dateStr}.csv`;
+                
+                // 다운로드 링크 생성 및 클릭
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', filename);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                }
+                
+                result.innerHTML = `
+                    <div class="success">✅ CSV 파일 다운로드 완료!</div>
+                    <div>파일명: ${filename}</div>
+                    <div>데이터 수: ${sampleData.length}개</div>
+                    <div>컬럼 수: 16개</div>
+                    <div>인코딩: UTF-8 with BOM (한글 지원)</div>
+                `;
+                result.className = 'result success';
+                
+                console.log('CSV 파일 생성 성공:', filename);
+                
+            } catch (error) {
+                console.error('CSV 내보내기 오류:', error);
+                result.innerHTML = `<div class="error">❌ CSV 내보내기 실패: ${error.message}</div>`;
+                result.className = 'result error';
+            }
+        }
+
+        function testComplexData() {
+            const result = document.getElementById('complexResult');
+            
+            try {
+                // 복잡한 데이터 타입 테스트 (Excel & CSV 모두)
+                const complexData = [
+                    {
+                        '순번': 1,
+                        '문자열': '한글 텍스트',
+                        '숫자': 12345,
+                        '날짜': new Date().toLocaleDateString(),
+                        '배열': ['항목1', '항목2', '항목3'].join(', '),
+                        '불린': 'true',
+                        '특수문자': '!@#$%^&*()_+',
+                        '긴텍스트': '이것은 매우 긴 텍스트입니다. '.repeat(5),
+                        '빈값': '',
+                        '쌍따옴표': 'He said "Hello"',
+                        '콤마포함': 'A, B, C'
+                    }
+                ];
+
+                // Excel 테스트
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.json_to_sheet(complexData);
+                XLSX.utils.book_append_sheet(wb, ws, 'Complex Data Test');
+                const excelFilename = `Complex_Excel_Test_${Date.now()}.xlsx`;
+                XLSX.writeFile(wb, excelFilename);
+                
+                // CSV 테스트
+                const headers = Object.keys(complexData[0]);
+                const csvRows = [headers.join(',')];
+                complexData.forEach(row => {
+                    const values = headers.map(header => {
+                        const value = String(row[header] || '');
+                        return `"${value.replace(/"/g, '""')}"`;
+                    });
+                    csvRows.push(values.join(','));
+                });
+                
+                const csvContent = '\uFEFF' + csvRows.join('\n'); // BOM 추가
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const csvFilename = `Complex_CSV_Test_${Date.now()}.csv`;
+                
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', csvFilename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                result.innerHTML = `
+                    <div class="success">✅ 복합 데이터 타입 테스트 완료!</div>
+                    <div>Excel 파일: ${excelFilename}</div>
+                    <div>CSV 파일: ${csvFilename}</div>
+                    <div>다양한 데이터 타입 처리 확인 (특수문자, 쌍따옴표, 콤마 등)</div>
+                `;
+                result.className = 'result success';
+                
+            } catch (error) {
+                result.innerHTML = `<div class="error">❌ 복합 데이터 테스트 실패: ${error.message}</div>`;
+                result.className = 'result error';
+            }
+        }
+
+        // 페이지 로드시 자동 라이브러리 확인
+        window.addEventListener('load', () => {
+            setTimeout(checkLibraries, 500);
+        });
+    </script>
+</body>
+</html>
