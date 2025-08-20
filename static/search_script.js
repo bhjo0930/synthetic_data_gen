@@ -827,32 +827,32 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        let html = '<table style="border-collapse: collapse; width: 100%; font-size: 0.9em;">';
+        let html = '<table style="border-collapse: collapse; width: 100%; font-size: 0.9em; border: 4px solid #000000;">';
         
         // 헤더
-        html += '<thead><tr><th style="border: 1px solid #ddd; padding: 8px; background: #f8f9fa;">' + 
+        html += '<thead><tr><th style="border: 4px solid #000000; padding: 10px; background: #FFFF00; color: #000000; font-weight: 900; font-family: Arial Black, Impact, sans-serif; text-transform: uppercase;">' + 
                 getFieldLabel(rowField) + '</th>';
         pivotData.cols.forEach(col => {
-            html += '<th style="border: 1px solid #ddd; padding: 8px; background: #f8f9fa;">' + col + '</th>';
+            html += '<th style="border: 4px solid #000000; padding: 10px; background: #FFFF00; color: #000000; font-weight: 900; font-family: Arial Black, Impact, sans-serif; text-transform: uppercase;">' + col + '</th>';
         });
-        html += '<th style="border: 1px solid #ddd; padding: 8px; background: #e9ecef; font-weight: bold;">합계</th></tr></thead>';
+        html += '<th style="border: 4px solid #000000; padding: 10px; background: #FF0000; color: #FFFFFF; font-weight: 900; font-family: Arial Black, Impact, sans-serif; text-transform: uppercase;">합계</th></tr></thead>';
         
         // 데이터
         html += '<tbody>';
         pivotData.rows.forEach(row => {
-            html += '<tr><td style="border: 1px solid #ddd; padding: 8px; background: #f8f9fa; font-weight: bold;">' + row + '</td>';
+            html += '<tr><td style="border: 2px solid #000000; padding: 10px; background: #0000FF; color: #FFFFFF; font-weight: 900; font-family: Arial Black, Impact, sans-serif;">' + row + '</td>';
             let rowTotal = 0;
             pivotData.cols.forEach(col => {
                 const value = (pivotData.data[row] && pivotData.data[row][col]) || 0;
                 rowTotal += value;
-                html += '<td style="border: 1px solid #ddd; padding: 8px; text-align: center;">' + value + '</td>';
+                html += '<td style="border: 2px solid #000000; padding: 10px; text-align: center; font-family: Arial, sans-serif; font-weight: bold;">' + value + '</td>';
             });
-            html += '<td style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">' + rowTotal + '</td>';
+            html += '<td style="border: 2px solid #000000; padding: 10px; text-align: center; font-weight: 900; background: #00FF00; color: #000000; font-family: Arial Black, Impact, sans-serif;">' + rowTotal + '</td>';
             html += '</tr>';
         });
         
         // 합계 행
-        html += '<tr><td style="border: 1px solid #ddd; padding: 8px; background: #e9ecef; font-weight: bold;">합계</td>';
+        html += '<tr><td style="border: 2px solid #000000; padding: 10px; background: #FF00FF; color: #FFFFFF; font-weight: 900; font-family: Arial Black, Impact, sans-serif;">합계</td>';
         let grandTotal = 0;
         pivotData.cols.forEach(col => {
             let colTotal = 0;
@@ -862,9 +862,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             grandTotal += colTotal;
-            html += '<td style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">' + colTotal + '</td>';
+            html += '<td style="border: 2px solid #000000; padding: 10px; text-align: center; font-weight: 900; background: #00FF00; color: #000000; font-family: Arial Black, Impact, sans-serif;">' + colTotal + '</td>';
         });
-        html += '<td style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold; background: #dee2e6;">' + grandTotal + '</td>';
+        html += '<td style="border: 2px solid #000000; padding: 10px; text-align: center; font-weight: 900; background: #FF0000; color: #FFFFFF; font-family: Arial Black, Impact, sans-serif;">' + grandTotal + '</td>';
         html += '</tr></tbody></table>';
         
         container.innerHTML = html;
@@ -894,13 +894,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        let html = '<table style="border-collapse: collapse; width: 100%; font-size: 0.85em;">';
+        let html = '<table style="border-collapse: collapse; width: 100%; font-size: 0.85em; border: 4px solid #000000;">';
         
         // 헤더
         html += '<thead><tr>';
         const headers = ['이름', '나이', '성별', '지역', '직업', '교육', '소득', '결혼상태'];
         headers.forEach(header => {
-            html += '<th style="border: 1px solid #ddd; padding: 6px; background: #f8f9fa; font-weight: bold; white-space: nowrap;">' + header + '</th>';
+            html += '<th style="border: 4px solid #000000; padding: 8px; background: #FFFF00; color: #000000; font-weight: 900; font-family: Arial Black, Impact, sans-serif; text-transform: uppercase; white-space: nowrap;">' + header + '</th>';
         });
         html += '</tr></thead>';
         
@@ -908,16 +908,16 @@ document.addEventListener('DOMContentLoaded', () => {
         html += '<tbody>';
         const displayData = data.slice(0, 100);
         displayData.forEach((persona, index) => {
-            const rowClass = index % 2 === 0 ? 'background: #f9f9f9;' : 'background: white;';
+            const rowClass = index % 2 === 0 ? 'background: #FFFFFF;' : 'background: #F0F0F0;';
             html += `<tr style="${rowClass}">
-                <td style="border: 1px solid #ddd; padding: 6px;">${persona.name}</td>
-                <td style="border: 1px solid #ddd; padding: 6px; text-align: center;">${persona.age}</td>
-                <td style="border: 1px solid #ddd; padding: 6px; text-align: center;">${persona.gender}</td>
-                <td style="border: 1px solid #ddd; padding: 6px;">${persona.location}</td>
-                <td style="border: 1px solid #ddd; padding: 6px;">${persona.occupation}</td>
-                <td style="border: 1px solid #ddd; padding: 6px;">${persona.education}</td>
-                <td style="border: 1px solid #ddd; padding: 6px;">${persona.income_bracket}</td>
-                <td style="border: 1px solid #ddd; padding: 6px;">${persona.marital_status}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif; font-weight: bold;">${persona.name}</td>
+                <td style="border: 2px solid #000000; padding: 8px; text-align: center; font-family: Arial, sans-serif;">${persona.age}</td>
+                <td style="border: 2px solid #000000; padding: 8px; text-align: center; font-family: Arial, sans-serif;">${persona.gender}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.location}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.occupation}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.education}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.income_bracket}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.marital_status}</td>
             </tr>`;
         });
         html += '</tbody></table>';
