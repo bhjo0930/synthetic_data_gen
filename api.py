@@ -9,13 +9,26 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# 전역 변수로 지연 초기화
+generator = None
+db = None
+
+def get_generator():
+    global generator
+    if generator is None:
+        generator = PersonaGenerator()
+    return generator
+
+def get_db():
+    global db
+    if db is None:
+        db = PersonaDatabase()
+    return db
+
 # Health check endpoint (빠른 응답을 위해 초기화 전에 설정)
 @app.route('/health')
 def health_check():
     return jsonify({"status": "healthy", "service": "synthetic-data-gen"}), 200
-
-generator = PersonaGenerator()
-db = PersonaDatabase()
 
 # 정적 파일 서빙 설정
 @app.route('/static/<path:filename>')
@@ -49,13 +62,13 @@ def generate_personas_api():
     demographics = data.get('demographics', {})
     diversity_constraints = data.get('diversity_constraints', {})
 
-    personas = generator.generate_personas(count=count, 
+    personas = get_generator().generate_personas(count=count, 
                                            demographics_constraints=demographics,
                                            diversity_constraints=diversity_constraints)
     
     # 생성된 페르소나를 DB에 저장
     for persona in personas:
-        db.insert_persona(persona)
+        get_db().insert_persona(persona)
         
     return jsonify({"message": f"{len(personas)} personas generated and saved.",
                     "personas": personas})
@@ -82,22 +95,22 @@ def search_personas_api():
     # None 값 필터링
     filters = {k: v for k, v in filters.items() if v is not None}
 
-    personas = db.search_personas(filters=filters)
+    personas = get_db().search_personas(filters=filters)
     return jsonify(personas)
 
 @app.route('/api/personas/<persona_id>', methods=['GET'])
 def get_persona_api(persona_id):
-    persona = db.get_persona(persona_id)
+    persona = get_db().get_persona(persona_id)
     if persona:
         return jsonify(persona)
     return jsonify({"message": "Persona not found"}), 404
 
 @app.route('/api/personas/delete_all', methods=['POST'])
 def delete_all_personas_api():
-    db.delete_all_personas()
+    get_db().delete_all_personas()
     return jsonify({"message": "All personas deleted from database."})
 
 if __name__ == '__main__':
     # DB 초기화 (테스트용)
-    db.delete_all_personas()
+    get_db().delete_all_personas()
     app.run(debug=True, host='0.0.0.0', port=5050)

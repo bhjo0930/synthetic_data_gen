@@ -44,12 +44,15 @@ gcloud run deploy $SERVICE_NAME \
     --platform managed \
     --region $REGION \
     --allow-unauthenticated \
-    --memory 2Gi \
-    --cpu 2 \
-    --concurrency 80 \
-    --max-instances 10 \
-    --timeout 3600 \
-    --port 8080
+    --memory 1Gi \
+    --cpu 1 \
+    --concurrency 20 \
+    --max-instances 5 \
+    --timeout 900 \
+    --port 8080 \
+    --set-env-vars="FLASK_ENV=production,PYTHONUNBUFFERED=1" \
+    --cpu-boost \
+    --execution-environment gen2
 
 # 6. 배포 완료 확인
 echo

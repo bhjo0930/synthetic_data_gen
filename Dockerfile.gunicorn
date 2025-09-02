@@ -29,5 +29,9 @@ ENV PYTHONUNBUFFERED=1
 # 포트 노출
 EXPOSE 8080
 
-# Flask를 직접 실행 (디버그용)
-CMD python -c "import os; from api import app; app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)), debug=False)"
+# Health check 추가
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Gunicorn을 사용하여 Flask 앱 실행 (직접 설정)
+CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120 --keep-alive 2 --log-level info --access-logfile - --error-logfile - api:app
