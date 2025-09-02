@@ -10,13 +10,18 @@ worker_class = "gthread"
 threads = 8  # I/O 집약적 작업을 위한 멀티 스레딩
 
 # 타임아웃 설정
-timeout = 3600  # 1시간 (대용량 데이터 생성 고려)
+timeout = 300  # 5분 (Cloud Run 시작 타임아웃 고려)
 keepalive = 2
+graceful_timeout = 30  # Graceful shutdown timeout
 
 # 메모리 관리
 max_requests = 100
 max_requests_jitter = 10
 preload_app = True
+
+# 시작 시간 최적화
+worker_start_timeout = 60  # Worker 시작 타임아웃
+bind_timeout = 30  # 바인딩 타임아웃
 
 # 로깅 설정
 loglevel = "info"

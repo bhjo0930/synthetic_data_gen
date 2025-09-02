@@ -7,6 +7,7 @@ WORKDIR /app
 # 시스템 패키지 업데이트 및 필요한 패키지 설치
 RUN apt-get update && apt-get install -y \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Python 의존성 파일 복사 및 설치
@@ -23,9 +24,14 @@ RUN mkdir -p /app/data && chmod 777 /app/data
 ENV PYTHONPATH=/app
 ENV FLASK_ENV=production
 ENV PORT=8080
+ENV PYTHONUNBUFFERED=1
 
 # 포트 노출
 EXPOSE 8080
+
+# Health check 추가
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
 
 # Gunicorn을 사용하여 Flask 앱 실행 (설정 파일 사용)
 CMD exec gunicorn --config gunicorn.conf.py api:app

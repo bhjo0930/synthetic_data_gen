@@ -9,6 +9,11 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# Health check endpoint (빠른 응답을 위해 초기화 전에 설정)
+@app.route('/health')
+def health_check():
+    return jsonify({"status": "healthy", "service": "synthetic-data-gen"}), 200
+
 generator = PersonaGenerator()
 db = PersonaDatabase()
 
