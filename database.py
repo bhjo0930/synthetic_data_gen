@@ -1,9 +1,16 @@
 import sqlite3
 import json
+import os
 from datetime import datetime
 
 class PersonaDatabase:
-    def __init__(self, db_path='personas.db'):
+    def __init__(self, db_path=None):
+        if db_path is None:
+            # Cloud Run 환경에서는 /tmp 디렉토리 사용, 로컬에서는 현재 디렉토리
+            if os.environ.get('PORT'):  # Cloud Run 환경 감지
+                db_path = '/tmp/personas.db'
+            else:
+                db_path = 'personas.db'
         self.db_path = db_path
         self._create_tables()
 
