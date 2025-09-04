@@ -2,9 +2,10 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from persona_generator import PersonaGenerator
-from database import PersonaDatabase
+from database_factory import get_database, DatabaseFactory
 import json
 import os
+import logging
 
 app = Flask(__name__)
 CORS(app)
@@ -22,13 +23,31 @@ def get_generator():
 def get_db():
     global db
     if db is None:
-        db = PersonaDatabase()
+        db = get_database()
     return db
 
 # Health check endpoint (빠른 응답을 위해 초기화 전에 설정)
 @app.route('/health')
 def health_check():
-    return jsonify({"status": "healthy", "service": "synthetic-data-gen"}), 200
+    try:
+        db_health = get_db().health_check()
+        db_info = DatabaseFactory.get_database_info()
+        
+        return jsonify({
+            "status": "healthy" if db_health else "degraded",
+            "service": "synthetic-data-gen",
+            "database": {
+                "type": db_info['selected_type'],
+                "healthy": db_health,
+                "configuration": db_info['configuration']
+            }
+        }), 200 if db_health else 503
+    except Exception as e:
+        return jsonify({
+            "status": "unhealthy",
+            "service": "synthetic-data-gen",
+            "error": str(e)
+        }), 500
 
 # 정적 파일 서빙 설정
 @app.route('/static/<path:filename>')
@@ -62,16 +81,23 @@ def generate_personas_api():
     demographics = data.get('demographics', {})
     diversity_constraints = data.get('diversity_constraints', {})
 
-    personas = get_generator().generate_personas(count=count, 
-                                           demographics_constraints=demographics,
-                                           diversity_constraints=diversity_constraints)
+    result = get_generator().generate_personas(count=count, 
+                                               demographics_constraints=demographics,
+                                               diversity_constraints=diversity_constraints)
+    
+    personas = result["personas"]
+    generation_stats = result["generation_stats"]
     
     # 생성된 페르소나를 DB에 저장
     for persona in personas:
         get_db().insert_persona(persona)
-        
-    return jsonify({"message": f"{len(personas)} personas generated and saved.",
-                    "personas": personas})
+    
+    return jsonify({
+        "message": f"{len(personas)} valid personas generated and saved.",
+        "personas": personas,
+        "generation_stats": generation_stats,
+        "success_rate": f"{result['success_rate']:.1f}%"
+    })
 
 @app.route('/api/personas/search', methods=['GET'])
 def search_personas_api():
@@ -95,7 +121,11 @@ def search_personas_api():
     # None 값 필터링
     filters = {k: v for k, v in filters.items() if v is not None}
 
-    personas = get_db().search_personas(filters=filters)
+    # limit과 offset 매개변수 추가 (기본값: limit=1000, offset=0)
+    limit = request.args.get('limit', type=int, default=1000)
+    offset = request.args.get('offset', type=int, default=0)
+
+    personas = get_db().search_personas(filters=filters, limit=limit, offset=offset)
     return jsonify(personas)
 
 @app.route('/api/personas/<persona_id>', methods=['GET'])
@@ -109,6 +139,24 @@ def get_persona_api(persona_id):
 def delete_all_personas_api():
     get_db().delete_all_personas()
     return jsonify({"message": "All personas deleted from database."})
+
+@app.route('/api/personas/stats', methods=['GET'])
+def get_personas_stats_api():
+    """데이터베이스 통계 정보를 반환합니다"""
+    try:
+        stats = get_db().get_statistics()
+        return jsonify(stats)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/database/info', methods=['GET'])
+def get_database_info_api():
+    """현재 데이터베이스 설정 정보를 반환합니다"""
+    try:
+        info = DatabaseFactory.get_database_info()
+        return jsonify(info)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     # DB 초기화 (테스트용)
