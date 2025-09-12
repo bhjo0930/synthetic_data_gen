@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>설문조사 결과 분석</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; margin: 2em; background-color: #f9f9f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; }
+        h2 { color: #34495e; text-align: center; font-weight: normal; }
+        table { border-collapse: collapse; width: 80%; margin: 2em auto; box-shadow: 0 2px 15px rgba(0,0,0,0.1); background-color: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .container { max-width: 900px; margin: auto; }
+        .bar-container { width: 80%; margin: 2em auto; padding: 2em; box-shadow: 0 2px 15px rgba(0,0,0,0.1); background-color: white; border-radius: 8px; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 10px; }
+        .bar-label { width: 30%; padding-right: 10px; text-align: right; }
+        .bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 5px; }
+        .bar { height: 28px; line-height: 28px; background-color: #5cacee; text-align: right; padding-right: 8px; color: white; border-radius: 5px; white-space: nowrap; overflow: hidden; box-sizing: border-box; transition: width 0.5s ease-in-out; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 설문조사 결과 분석</h1>
+        <h2>여러분은 평소 스케줄을 어떻게 관리하고 계시나요?</h2>
+        
+        <h3>📋 요약 테이블</h3>
+        <table>
+            <tr>
+                <th>선택지</th>
+                <th>응답 수</th>
+                <th>비율 (%)</th>
+            </tr>
+            <tr><td>1. 핸드폰 달력 또는 관련 앱에 메모한다</td><td>225</td><td>74.75%</td></tr><tr><td>2. 따로 메모는 하지 않고 머릿속으로 기억한다</td><td>0</td><td>0.00%</td></tr><tr><td>3. 실제 달력에 메모한다</td><td>58</td><td>19.27%</td></tr><tr><td>4. 다이어리에 메모한다</td><td>14</td><td>4.65%</td></tr><tr><td>5. 그때그때 다르다</td><td>3</td><td>1.00%</td></tr><tr><td>기타/무효</td><td>1</td><td>0.33%</td></tr>
+        </table>
+
+        <h3>📈 시각화</h3>
+        <div class="bar-container">
+            <div class="bar-row">
+                <div class="bar-label">1. 핸드폰 달력 또는 관련 앱에 메모한다</div>
+                <div class="bar-wrapper">
+                    <div class="bar" style="width: 74.75%;">74.75%</div>
+                </div>
+            </div><div class="bar-row">
+                <div class="bar-label">2. 따로 메모는 하지 않고 머릿속으로 기억한다</div>
+                <div class="bar-wrapper">
+                    <div class="bar" style="width: 0.00%;">0.00%</div>
+                </div>
+            </div><div class="bar-row">
+                <div class="bar-label">3. 실제 달력에 메모한다</div>
+                <div class="bar-wrapper">
+                    <div class="bar" style="width: 19.27%;">19.27%</div>
+                </div>
+            </div><div class="bar-row">
+                <div class="bar-label">4. 다이어리에 메모한다</div>
+                <div class="bar-wrapper">
+                    <div class="bar" style="width: 4.65%;">4.65%</div>
+                </div>
+            </div><div class="bar-row">
+                <div class="bar-label">5. 그때그때 다르다</div>
+                <div class="bar-wrapper">
+                    <div class="bar" style="width: 1.00%;">1.00%</div>
+                </div>
+            </div><div class="bar-row">
+                <div class="bar-label">기타/무효</div>
+                <div class="bar-wrapper">
+                    <div class="bar" style="width: 0.33%;">0.33%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
