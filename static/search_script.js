@@ -3,7 +3,8 @@ window.currentData = [];
 window.filteredData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'http://127.0.0.1:5050/api/personas';
+    // 동적으로 현재 호스트의 API URL 생성
+    const API_BASE_URL = `${window.location.origin}/api/personas`;
 
     // Chart 인스턴스 저장용 변수
     let ageChart, genderChart, locationChart, occupationChart;
@@ -106,11 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const occupationData = {};
 
         personas.forEach(persona => {
-            const ageGroup = `${Math.floor(persona.age / 10) * 10}대`;
+            const age = persona.demographics?.age || persona.age || 0;
+            const ageGroup = `${Math.floor(age / 10) * 10}대`;
             ageData[ageGroup] = (ageData[ageGroup] || 0) + 1;
-            genderData[persona.gender] = (genderData[persona.gender] || 0) + 1;
-            locationData[persona.location] = (locationData[persona.location] || 0) + 1;
-            occupationData[persona.occupation] = (occupationData[persona.occupation] || 0) + 1;
+            
+            const gender = persona.demographics?.gender || persona.gender || '미지정';
+            genderData[gender] = (genderData[gender] || 0) + 1;
+            
+            const location = persona.demographics?.location || persona.location || '미지정';
+            locationData[location] = (locationData[location] || 0) + 1;
+            
+            const occupation = persona.demographics?.occupation || persona.occupation || '미지정';
+            occupationData[occupation] = (occupationData[occupation] || 0) + 1;
         });
 
         // 기존 차트 파괴
@@ -440,15 +448,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadAllData() {
+        console.log('🔄 데이터 로드 시작 - API URL:', `${API_BASE_URL}/search`);
         fetch(`${API_BASE_URL}/search`)
-            .then(response => response.json())
+            .then(response => {
+                console.log('📡 API 응답 수신 - Status:', response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log('📈 데이터 받음 - 개수:', data.length);
+                console.log('🔍 첫 번째 데이터:', data[0]);
                 window.currentData = data;
                 window.filteredData = data;
                 updateOLAPDashboard();
+                console.log('✅ 대시보드 업데이트 완료');
             })
             .catch(error => {
-                console.error('Error loading data:', error);
+                console.error('❌ 데이터 로드 오류:', error);
             });
     }
 
@@ -497,32 +512,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function matchesFilters(persona, filters) {
         // 나이 범위 체크
-        if (filters.age_min && persona.age < filters.age_min) return false;
-        if (filters.age_max && persona.age > filters.age_max) return false;
+        const age = persona.demographics?.age || persona.age || 0;
+        if (filters.age_min && age < filters.age_min) return false;
+        if (filters.age_max && age > filters.age_max) return false;
         
         // 체크박스 필터 체크
-        if (filters.gender.length > 0 && !filters.gender.includes(persona.gender)) return false;
-        if (filters.education.length > 0 && !filters.education.includes(persona.education)) return false;
-        if (filters.income_bracket.length > 0 && !filters.income_bracket.includes(persona.income_bracket)) return false;
-        if (filters.marital_status.length > 0 && !filters.marital_status.includes(persona.marital_status)) return false;
+        const gender = persona.demographics?.gender || persona.gender;
+        const education = persona.demographics?.education || persona.education;
+        const income_bracket = persona.demographics?.income_bracket || persona.income_bracket;
+        const marital_status = persona.demographics?.marital_status || persona.marital_status;
+        
+        if (filters.gender.length > 0 && !filters.gender.includes(gender)) return false;
+        if (filters.education.length > 0 && !filters.education.includes(education)) return false;
+        if (filters.income_bracket.length > 0 && !filters.income_bracket.includes(income_bracket)) return false;
+        if (filters.marital_status.length > 0 && !filters.marital_status.includes(marital_status)) return false;
         
         // 텍스트 필터 체크
-        if (filters.location && !persona.location.toLowerCase().includes(filters.location.toLowerCase())) return false;
-        if (filters.occupation && !persona.occupation.toLowerCase().includes(filters.occupation.toLowerCase())) return false;
+        const location = persona.demographics?.location || persona.location;
+        const occupation = persona.demographics?.occupation || persona.occupation;
         
-        // 배열 필드 체크
-        if (filters.interests && !persona.interests.some(interest => 
+        if (filters.location && location && !location.toLowerCase().includes(filters.location.toLowerCase())) return false;
+        if (filters.occupation && occupation && !occupation.toLowerCase().includes(filters.occupation.toLowerCase())) return false;
+        
+        // 배열 필드 체크 (중첩 데이터 구조 고려)
+        const interests = (persona.behavioral_patterns?.interests) || persona.interests || [];
+        const values = (persona.psychological_attributes?.values) || persona.values || [];
+        const lifestyle_attributes = (persona.psychological_attributes?.lifestyle_attributes) || persona.lifestyle_attributes || [];
+        const social_relations = (persona.social_relations?.relations) || persona.social_relations || [];
+        
+        if (filters.interests && interests.length > 0 && !interests.some(interest => 
             interest.toLowerCase().includes(filters.interests.toLowerCase()))) return false;
-        if (filters.value && !persona.values.some(value => 
+        if (filters.value && values.length > 0 && !values.some(value => 
             value.toLowerCase().includes(filters.value.toLowerCase()))) return false;
-        if (filters.lifestyle_attribute && !persona.lifestyle_attributes.some(attr => 
+        if (filters.lifestyle_attribute && lifestyle_attributes.length > 0 && !lifestyle_attributes.some(attr => 
             attr.toLowerCase().includes(filters.lifestyle_attribute.toLowerCase()))) return false;
-        if (filters.social_relations && !persona.social_relations.some(rel => 
+        if (filters.social_relations && social_relations.length > 0 && !social_relations.some(rel => 
             rel.toLowerCase().includes(filters.social_relations.toLowerCase()))) return false;
         
+        // 성격 특성 체크 (객체 형태)
+        if (filters.personality_trait) {
+            const personality_traits = (persona.psychological_attributes?.personality_traits) || persona.personality_traits || {};
+            const personalityValues = Object.values(personality_traits).join(' ').toLowerCase();
+            const personalityKeys = Object.keys(personality_traits).join(' ').toLowerCase();
+            const searchTerm = filters.personality_trait.toLowerCase();
+            if (!personalityValues.includes(searchTerm) && !personalityKeys.includes(searchTerm)) return false;
+        }
+        
         // 일반 텍스트 필드 체크
-        if (filters.media_consumption && !persona.media_consumption.toLowerCase().includes(filters.media_consumption.toLowerCase())) return false;
-        if (filters.shopping_habit && !persona.shopping_habit.toLowerCase().includes(filters.shopping_habit.toLowerCase())) return false;
+        const media_consumption = (persona.behavioral_patterns?.media_consumption) || persona.media_consumption;
+        const shopping_habit = (persona.behavioral_patterns?.shopping_habit) || persona.shopping_habit;
+        
+        if (filters.media_consumption && media_consumption && !media_consumption.toLowerCase().includes(filters.media_consumption.toLowerCase())) return false;
+        if (filters.shopping_habit && shopping_habit && !shopping_habit.toLowerCase().includes(filters.shopping_habit.toLowerCase())) return false;
         
         return true;
     }
@@ -557,13 +598,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('totalPersonas').textContent = data.length;
         
         if (data.length > 0) {
-            const avgAge = Math.round(data.reduce((sum, p) => sum + p.age, 0) / data.length);
+            const avgAge = Math.round(data.reduce((sum, p) => {
+                const age = p.demographics?.age || p.age || 0;
+                return sum + age;
+            }, 0) / data.length);
             document.getElementById('avgAge').textContent = avgAge;
             
             // 최빈 지역
             const locationCounts = {};
             data.forEach(p => {
-                locationCounts[p.location] = (locationCounts[p.location] || 0) + 1;
+                const location = p.demographics?.location || p.location || '미지정';
+                locationCounts[location] = (locationCounts[location] || 0) + 1;
             });
             const topLocation = Object.keys(locationCounts).reduce((a, b) => 
                 locationCounts[a] > locationCounts[b] ? a : b);
@@ -572,7 +617,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 성별 비율
             const genderCounts = {};
             data.forEach(p => {
-                genderCounts[p.gender] = (genderCounts[p.gender] || 0) + 1;
+                const gender = p.demographics?.gender || p.gender || '미지정';
+                genderCounts[gender] = (genderCounts[gender] || 0) + 1;
             });
             const maleCount = genderCounts['남성'] || 0;
             const femaleCount = genderCounts['여성'] || 0;
@@ -594,7 +640,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 교육 수준 차트
         const educationData = {};
         personas.forEach(persona => {
-            educationData[persona.education] = (educationData[persona.education] || 0) + 1;
+            const education = persona.demographics?.education || persona.education || '미지정';
+            educationData[education] = (educationData[education] || 0) + 1;
         });
 
         if (educationChart) educationChart.destroy();
@@ -623,7 +670,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 소득 분위 차트
         const incomeData = {};
         personas.forEach(persona => {
-            incomeData[persona.income_bracket] = (incomeData[persona.income_bracket] || 0) + 1;
+            const income = persona.demographics?.income_bracket || persona.income_bracket || '미지정';
+            incomeData[income] = (incomeData[income] || 0) + 1;
         });
 
         if (incomeChart) incomeChart.destroy();
@@ -673,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 미디어 소비 차트
         const mediaData = {};
         personas.forEach(persona => {
-            const media = persona.media_consumption || '기타';
+            const media = (persona.behavioral_patterns?.media_consumption) || persona.media_consumption || '기타';
             mediaData[media] = (mediaData[media] || 0) + 1;
         });
 
@@ -703,7 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 쇼핑 습관 차트
         const shoppingData = {};
         personas.forEach(persona => {
-            const shopping = persona.shopping_habit || '기타';
+            const shopping = (persona.behavioral_patterns?.shopping_habit) || persona.shopping_habit || '기타';
             shoppingData[shopping] = (shoppingData[shopping] || 0) + 1;
         });
 
@@ -730,13 +778,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function drawWordClouds(personas) {
         // 간단한 워드클라우드 시뮬레이션
         drawSimpleWordCloud('interestsWordcloud', 
-            personas.flatMap(p => p.interests || []), '관심사');
+            personas.flatMap(p => (p.behavioral_patterns?.interests) || p.interests || []), '관심사');
         drawSimpleWordCloud('valuesWordcloud', 
-            personas.flatMap(p => p.values || []), '가치관');
+            personas.flatMap(p => (p.psychological_attributes?.values) || p.values || []), '가치관');
         drawSimpleWordCloud('socialWordcloud', 
-            personas.flatMap(p => p.social_relations || []), '사회적 관계');
+            personas.flatMap(p => (p.social_relations?.relations) || p.social_relations || []), '사회적 관계');
         drawSimpleWordCloud('lifestyleWordcloud', 
-            personas.flatMap(p => p.lifestyle_attributes || []), '라이프스타일');
+            personas.flatMap(p => (p.psychological_attributes?.lifestyle_attributes) || p.lifestyle_attributes || []), '라이프스타일');
     }
 
     function drawSimpleWordCloud(containerId, words, title) {
@@ -779,9 +827,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const rowValues = new Set();
         const colValues = new Set();
         
-        data.forEach(persona => {
+        console.log('📈 피벗 데이터 생성 시작 - Row:', rowField, 'Col:', colField);
+        console.log('📄 데이터 개수:', data.length);
+        
+        data.forEach((persona, index) => {
             let rowValue = getFieldValue(persona, rowField);
             let colValue = getFieldValue(persona, colField);
+            
+            if (index < 3) { // 처음 3개 로그 출력
+                console.log(`🔍 [${index}] Row(${rowField}): "${rowValue}", Col(${colField}): "${colValue}"`);
+                console.log(`🔍 [${index}] 원본 데이터:`, persona.demographics);
+            }
             
             rowValues.add(rowValue);
             colValues.add(colValue);
@@ -801,21 +857,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function getFieldValue(persona, field) {
         switch (field) {
             case 'age_group':
-                return `${Math.floor(persona.age / 10) * 10}대`;
+                const age = persona.demographics?.age || persona.age || 0;
+                return `${Math.floor(age / 10) * 10}대`;
             case 'gender':
-                return persona.gender;
+                return persona.demographics?.gender || persona.gender || '미지정';
             case 'location':
-                return persona.location;
+                return persona.demographics?.location || persona.location || '미지정';
             case 'education':
-                return persona.education;
+                return persona.demographics?.education || persona.education || '미지정';
             case 'occupation':
-                return persona.occupation;
+                return persona.demographics?.occupation || persona.occupation || '미지정';
             case 'income_bracket':
-                return persona.income_bracket;
+                return persona.demographics?.income_bracket || persona.income_bracket || '미지정';
             case 'marital_status':
-                return persona.marital_status;
+                return persona.demographics?.marital_status || persona.marital_status || '미지정';
             default:
-                return persona[field] || '기타';
+                return persona[field] || persona.demographics?.[field] || '기타';
         }
     }
 
@@ -910,14 +967,14 @@ document.addEventListener('DOMContentLoaded', () => {
         displayData.forEach((persona, index) => {
             const rowClass = index % 2 === 0 ? 'background: #FFFFFF;' : 'background: #F0F0F0;';
             html += `<tr style="${rowClass}">
-                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif; font-weight: bold;">${persona.name}</td>
-                <td style="border: 2px solid #000000; padding: 8px; text-align: center; font-family: Arial, sans-serif;">${persona.age}</td>
-                <td style="border: 2px solid #000000; padding: 8px; text-align: center; font-family: Arial, sans-serif;">${persona.gender}</td>
-                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.location}</td>
-                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.occupation}</td>
-                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.education}</td>
-                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.income_bracket}</td>
-                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.marital_status}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif; font-weight: bold;">${persona.name || persona.demographics?.name || '가상인물_' + Math.random().toString(36).substr(2, 9)}</td>
+                <td style="border: 2px solid #000000; padding: 8px; text-align: center; font-family: Arial, sans-serif;">${persona.demographics?.age || persona.age || 'N/A'}</td>
+                <td style="border: 2px solid #000000; padding: 8px; text-align: center; font-family: Arial, sans-serif;">${persona.demographics?.gender || persona.gender || 'N/A'}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.demographics?.location || persona.location || 'N/A'}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.demographics?.occupation || persona.occupation || 'N/A'}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.demographics?.education || persona.education || 'N/A'}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.demographics?.income_bracket || persona.income_bracket || 'N/A'}</td>
+                <td style="border: 2px solid #000000; padding: 8px; font-family: Arial, sans-serif;">${persona.demographics?.marital_status || persona.marital_status || 'N/A'}</td>
             </tr>`;
         });
         html += '</tbody></table>';
@@ -951,20 +1008,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const excelData = data.map((persona, index) => {
                 return {
                     '순번': index + 1,
-                    '이름': safeStringify(persona.name),
-                    '나이': persona.age || 0,
-                    '성별': safeStringify(persona.gender),
-                    '지역': safeStringify(persona.location),
-                    '직업': safeStringify(persona.occupation),
-                    '교육수준': safeStringify(persona.education),
-                    '소득분위': safeStringify(persona.income_bracket),
-                    '결혼상태': safeStringify(persona.marital_status),
-                    '관심사': safeStringify(persona.interests),
-                    '가치관': safeStringify(persona.values),
-                    '라이프스타일': safeStringify(persona.lifestyle),
-                    '성격특성': safeStringify(persona.personality),
-                    '미디어소비': safeStringify(persona.media_consumption),
-                    '쇼핑습관': safeStringify(persona.shopping_habits),
+                    '이름': safeStringify(persona.name || persona.demographics?.name || '가상인물'),
+                    '나이': persona.demographics?.age || persona.age || 0,
+                    '성별': safeStringify(persona.demographics?.gender || persona.gender),
+                    '지역': safeStringify(persona.demographics?.location || persona.location),
+                    '직업': safeStringify(persona.demographics?.occupation || persona.occupation),
+                    '교육수준': safeStringify(persona.demographics?.education || persona.education),
+                    '소득분위': safeStringify(persona.demographics?.income_bracket || persona.income_bracket),
+                    '결혼상태': safeStringify(persona.demographics?.marital_status || persona.marital_status),
+                    '관심사': safeStringify(persona.behavioral_patterns?.interests || persona.interests),
+                    '가치관': safeStringify(persona.psychological_attributes?.values || persona.values),
+                    '라이프스타일': safeStringify(persona.psychological_attributes?.lifestyle_attributes || persona.lifestyle),
+                    '성격특성': safeStringify(persona.psychological_attributes?.personality_traits || persona.personality),
+                    '미디어소비': safeStringify(persona.behavioral_patterns?.media_consumption || persona.media_consumption),
+                    '쇼핑습관': safeStringify(persona.behavioral_patterns?.shopping_habit || persona.shopping_habits),
                     '사회적관계': safeStringify(persona.social_relations)
                 };
             });
@@ -1114,20 +1171,20 @@ document.addEventListener('DOMContentLoaded', () => {
             data.forEach((persona, index) => {
                 const row = [
                     index + 1,
-                    safeCsvEscape(persona.name),
-                    persona.age || 0,
-                    safeCsvEscape(persona.gender),
-                    safeCsvEscape(persona.location),
-                    safeCsvEscape(persona.occupation),
-                    safeCsvEscape(persona.education),
-                    safeCsvEscape(persona.income_bracket),
-                    safeCsvEscape(persona.marital_status),
-                    safeCsvEscape(persona.interests),
-                    safeCsvEscape(persona.values),
-                    safeCsvEscape(persona.lifestyle),
-                    safeCsvEscape(persona.personality),
-                    safeCsvEscape(persona.media_consumption),
-                    safeCsvEscape(persona.shopping_habits),
+                    safeCsvEscape(persona.name || persona.demographics?.name || '가상인물'),
+                    persona.demographics?.age || persona.age || 0,
+                    safeCsvEscape(persona.demographics?.gender || persona.gender),
+                    safeCsvEscape(persona.demographics?.location || persona.location),
+                    safeCsvEscape(persona.demographics?.occupation || persona.occupation),
+                    safeCsvEscape(persona.demographics?.education || persona.education),
+                    safeCsvEscape(persona.demographics?.income_bracket || persona.income_bracket),
+                    safeCsvEscape(persona.demographics?.marital_status || persona.marital_status),
+                    safeCsvEscape(persona.behavioral_patterns?.interests || persona.interests),
+                    safeCsvEscape(persona.psychological_attributes?.values || persona.values),
+                    safeCsvEscape(persona.psychological_attributes?.lifestyle_attributes || persona.lifestyle),
+                    safeCsvEscape(persona.psychological_attributes?.personality_traits || persona.personality),
+                    safeCsvEscape(persona.behavioral_patterns?.media_consumption || persona.media_consumption),
+                    safeCsvEscape(persona.behavioral_patterns?.shopping_habit || persona.shopping_habits),
                     safeCsvEscape(persona.social_relations)
                 ];
                 csvRows.push(row.join(','));

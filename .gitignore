@@ -88,3 +88,35 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Cloud deployment
+.gcloudignore
+service-account-key.json
+google-credentials.json
+gcp-*.json
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Personal/Local configuration
+.env.local
+.env.production
+.env.development
+config.local.json
+local_settings.py
+
+# Deployment artifacts
+deployment-artifacts/
+terraform.tfstate*
+.terraform/
+
+# IDE specific
+.vscode/settings.json
+.idea/workspace.xml
+*.iml
+
+# Testing temporary files
+test-results/
+coverage-reports/
+playwright-report/

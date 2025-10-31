@@ -1,10 +1,10 @@
 import os
 from api import app
-from database import PersonaDatabase
+from database_factory import get_database
 
 if __name__ == '__main__':
     # 애플리케이션 시작 시 데이터베이스 초기화 (선택 사항)
-    # db = PersonaDatabase()
+    # db = get_database()
     # db.delete_all_personas()
     
     # Cloud Run에서는 PORT 환경변수를 사용

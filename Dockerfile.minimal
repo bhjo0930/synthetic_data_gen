@@ -1,0 +1,23 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY minimal_api.py .
+
+RUN pip install --no-cache-dir Flask
+
+ENV PYTHONPATH=/app
+ENV FLASK_ENV=production
+ENV PORT=8080
+ENV PYTHONUNBUFFERED=1
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+CMD python -c "import os; from minimal_api import app; app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)), debug=False)"

@@ -31,10 +31,11 @@ gcloud services enable \
 echo "3. Docker 인증 설정 중..."
 gcloud auth configure-docker --quiet
 
-# 4. Docker 이미지 빌드 및 푸시
+# 4. Docker 이미지 빌드 및 푸시 (x86-64 플랫폼 지정)
 echo "4. Docker 이미지 빌드 및 푸시 중..."
 IMAGE_NAME="gcr.io/$PROJECT_ID/$SERVICE_NAME"
-docker build -t $IMAGE_NAME .
+echo "Building for linux/amd64 platform (required for Cloud Run)..."
+docker build --platform linux/amd64 -t $IMAGE_NAME .
 docker push $IMAGE_NAME
 
 # 5. Cloud Run에 배포
@@ -44,13 +45,13 @@ gcloud run deploy $SERVICE_NAME \
     --platform managed \
     --region $REGION \
     --allow-unauthenticated \
-    --memory 1Gi \
-    --cpu 1 \
-    --concurrency 20 \
-    --max-instances 5 \
+    --memory 2Gi \
+    --cpu 2 \
+    --concurrency 10 \
+    --max-instances 3 \
     --timeout 900 \
     --port 8080 \
-    --set-env-vars="FLASK_ENV=production,PYTHONUNBUFFERED=1" \
+    --set-env-vars="FLASK_ENV=production,PYTHONUNBUFFERED=1,DATABASE_TYPE=supabase,SUPABASE_URL=https://your-project-id.supabase.co,SUPABASE_ANON_KEY=your-anon-key" \
     --cpu-boost \
     --execution-environment gen2
 

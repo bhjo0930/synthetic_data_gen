@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'http://127.0.0.1:5050/api/personas';
+    // 동적으로 현재 호스트의 API URL 생성
+    const API_BASE_URL = `${window.location.origin}/api/personas`;
 
     // --- 페르소나 생성 --- //
     const generateBtn = document.getElementById('generateBtn');
